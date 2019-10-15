@@ -5259,9 +5259,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.App\\HarrisPharamacy.App.csproj",
-      "projectName": "HarrisPharamacy.App",
-      "projectPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.App\\HarrisPharamacy.App.csproj",
+      "projectUniqueName": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.App\\HarrisPharmacy.App.csproj",
+      "projectName": "HarrisPharmacy.App",
+      "projectPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.App\\HarrisPharmacy.App.csproj",
       "packagesPath": "C:\\Users\\tjada\\.nuget\\packages\\",
       "outputPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.App\\obj\\",
       "projectStyle": "PackageReference",

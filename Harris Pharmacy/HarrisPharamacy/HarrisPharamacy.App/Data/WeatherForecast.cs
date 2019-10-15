@@ -1,6 +1,6 @@
 using System;
 
-namespace HarrisPharamacy.App.Data
+namespace HarrisPharmacy.App.Data
 {
     public class WeatherForecast
     {

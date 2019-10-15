@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HarrisPharamacy.App.Data
+namespace HarrisPharmacy.App.Data
 {
     public class WeatherForecastService
     {

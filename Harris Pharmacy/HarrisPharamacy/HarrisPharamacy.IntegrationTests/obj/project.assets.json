@@ -6521,9 +6521,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharamacy.IntegrationTests.csproj",
-      "projectName": "HarrisPharamacy.IntegrationTests",
-      "projectPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharamacy.IntegrationTests.csproj",
+      "projectUniqueName": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj",
+      "projectName": "HarrisPharmacy.IntegrationTests",
+      "projectPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj",
       "packagesPath": "C:\\Users\\tjada\\.nuget\\packages\\",
       "outputPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\obj\\",
       "projectStyle": "PackageReference",

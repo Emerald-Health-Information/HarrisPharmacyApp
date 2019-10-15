@@ -5,7 +5,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace HarrisPharamacy.App.Pages
+namespace HarrisPharmacy.App.Pages
 {
     #line hidden
     using System;
@@ -64,14 +64,14 @@ using Microsoft.JSInterop;
 #nullable disable
 #nullable restore
 #line 8 "D:\470Repo\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\_Imports.razor"
-using HarrisPharamacy.App;
+using HarrisPharmacy.App;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 9 "D:\470Repo\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\_Imports.razor"
-using HarrisPharamacy.App.Shared;
+using HarrisPharmacy.App.Shared;
 
 #line default
 #line hidden
