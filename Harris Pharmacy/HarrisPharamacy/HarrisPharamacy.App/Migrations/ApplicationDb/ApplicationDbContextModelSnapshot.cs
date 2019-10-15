@@ -71,6 +71,31 @@ namespace HarrisPharmacy.App.Migrations.ApplicationDb
                     b.ToTable("FormFields");
                 });
 
+            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Patients.Patient", b =>
+                {
+                    b.Property<string>("PatientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PatientId");
+
+                    b.ToTable("Patient");
+                });
+
             modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Forms.FormField", b =>
                 {
                     b.HasOne("HarrisPharmacy.App.Data.Entities.Forms.Form", "Form")
