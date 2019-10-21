@@ -6515,23 +6515,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Grayson\\.nuget\\packages\\": {},
+    "C:\\Users\\tjada\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharmacy.UnitTests\\HarrisPharmacy.UnitTests.csproj",
+      "projectUniqueName": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharmacy.UnitTests\\HarrisPharmacy.UnitTests.csproj",
       "projectName": "HarrisPharmacy.UnitTests",
-      "projectPath": "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharmacy.UnitTests\\HarrisPharmacy.UnitTests.csproj",
-      "packagesPath": "C:\\Users\\Grayson\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharmacy.UnitTests\\obj\\",
+      "projectPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharmacy.UnitTests\\HarrisPharmacy.UnitTests.csproj",
+      "packagesPath": "C:\\Users\\tjada\\.nuget\\packages\\",
+      "outputPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharmacy.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Grayson\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\tjada\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

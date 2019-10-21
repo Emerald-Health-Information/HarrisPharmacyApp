@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj": {}
+    "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj": {
+    "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj",
+        "projectUniqueName": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj",
         "projectName": "HarrisPharmacy.IntegrationTests",
-        "projectPath": "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj",
-        "packagesPath": "C:\\Users\\Grayson\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Grayson\\Source\\Repos\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\obj\\",
+        "projectPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\HarrisPharmacy.IntegrationTests.csproj",
+        "packagesPath": "C:\\Users\\tjada\\.nuget\\packages\\",
+        "outputPath": "D:\\470Repo\\harrison1-cosc-470-2019\\Harris Pharmacy\\HarrisPharamacy\\HarrisPharamacy.IntegrationTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Grayson\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tjada\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
