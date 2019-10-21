@@ -1,5 +1,6 @@
 using HarrisPharmacy.App.Areas.Identity;
 using HarrisPharmacy.App.Data;
+using HarrisPharmacy.App.Data.Interfaces;
 using HarrisPharmacy.App.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -37,6 +38,8 @@ namespace HarrisPharmacy.App
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
+            services.AddTransient<IFormService, FormService>();
             services.AddSingleton<WeatherForecastService>();
         }
 

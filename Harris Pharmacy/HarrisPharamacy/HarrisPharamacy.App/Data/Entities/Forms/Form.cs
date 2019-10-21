@@ -27,9 +27,20 @@ namespace HarrisPharmacy.App.Data.Entities.Forms
         public string CreatorId { get; set; }
 
         /// <summary>
-        /// The list of form fields belonging to this form - reference navigation property
+        /// The list of form fields that use this form this form uses - reference navigation property
         /// </summary>
-        public List<FormField> FormFields
-        { get; set; }
+        public List<FormWithFields> FormWithFields { get; set; }
+    }
+
+    /// <summary>
+    /// The bridge table for the forms
+    /// </summary>
+    public class FormWithFields : BaseEntity
+    {
+        public string FormWithFieldsId { get; set; }
+        public string FormId { get; set; }
+        public Form Form { get; set; }
+        public string FormFieldId { get; set; }
+        public FormField FormField { get; set; }
     }
 }
