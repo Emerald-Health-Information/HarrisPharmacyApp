@@ -6,18 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\ApplicationDb\20191015203103_forms.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191015203103_forms.Designer.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191015203225_forms.cs" />
-    <Compile Remove="Migrations\ApplicationDb\20191015203225_forms.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

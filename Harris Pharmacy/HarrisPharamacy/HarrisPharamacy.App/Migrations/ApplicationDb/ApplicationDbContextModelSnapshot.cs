@@ -58,23 +58,60 @@ namespace HarrisPharmacy.App.Migrations.ApplicationDb
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FormId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<string>("FieldName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FormInputType")
                         .HasColumnType("int");
 
-                    b.HasKey("FormFieldId");
+                    b.Property<bool>("UseValues")
+                        .HasColumnType("bit");
 
-                    b.HasIndex("FormId");
+                    b.Property<string>("Values")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FormFieldId");
 
                     b.ToTable("FormFields");
                 });
 
-            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Forms.FormField", b =>
+            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Forms.FormWithFields", b =>
                 {
+                    b.Property<string>("FormWithFieldsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FormFieldId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("FormId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FormWithFieldsId");
+
+                    b.HasIndex("FormFieldId");
+
+                    b.HasIndex("FormId");
+
+                    b.ToTable("FormWithFields");
+                });
+
+            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Forms.FormWithFields", b =>
+                {
+                    b.HasOne("HarrisPharmacy.App.Data.Entities.Forms.FormField", "FormField")
+                        .WithMany("FormWithFields")
+                        .HasForeignKey("FormFieldId");
+
                     b.HasOne("HarrisPharmacy.App.Data.Entities.Forms.Form", "Form")
-                        .WithMany("FormFields")
+                        .WithMany("FormWithFields")
                         .HasForeignKey("FormId");
                 });
 #pragma warning restore 612, 618
