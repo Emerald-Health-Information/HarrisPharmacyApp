@@ -24,5 +24,21 @@ namespace HarrisPharmacy.App.Data.Entities.Patients
         /// Last name of a patient
         /// </summary>
         public string LastName { get; set; }
+
+        /// <summary>
+        /// Age of a patient
+        /// </summary>
+        public string Age { get; set; }
+
+        /// <summary>
+        /// Mental Status of a patient
+        /// </summary>
+        public string MentalStatus { get; set; }
+
+        /// <summary>
+        /// Sex of a patient
+        /// </summary>
+        public string Sex { get; set; }
+
     }
 }

@@ -152,3 +152,5 @@ C:\Users\Grayson\Source\Repos\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPhar
 C:\Users\Grayson\Source\Repos\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\obj\Debug\netcoreapp3.0\HarrisPharmacy.App.csproj.CopyComplete
 C:\Users\Grayson\Source\Repos\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\obj\Debug\netcoreapp3.0\HarrisPharmacy.App.dll
 C:\Users\Grayson\Source\Repos\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\obj\Debug\netcoreapp3.0\HarrisPharmacy.App.pdb
+C:\Users\Grayson\Source\Repos\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\obj\Debug\netcoreapp3.0\RazorDeclaration\Pages\Patients.razor.g.cs
+C:\Users\Grayson\Source\Repos\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\obj\Debug\netcoreapp3.0\Razor\Pages\Patients.razor.g.cs

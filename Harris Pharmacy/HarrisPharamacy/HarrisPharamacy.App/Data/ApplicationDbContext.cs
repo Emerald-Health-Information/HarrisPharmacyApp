@@ -12,7 +12,7 @@ namespace HarrisPharmacy.App.Data
 
         public DbSet<Form> Forms { get; set; }
         public DbSet<FormField> FormFields { get; set; }
-
         public DbSet<Patient> Patient { get; set; }
+        public DbSet<PatientList> PatientList { get; set; }
     }
 }

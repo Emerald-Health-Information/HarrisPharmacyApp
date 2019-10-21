@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HarrisPharmacy.App.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191015203332_forms")]
-    partial class forms
+    [Migration("20191016221009_patientList")]
+    partial class patientList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,11 +63,76 @@ namespace HarrisPharmacy.App.Migrations.ApplicationDb
                     b.Property<string>("FormId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("FormInputType")
+                        .HasColumnType("int");
+
                     b.HasKey("FormFieldId");
 
                     b.HasIndex("FormId");
 
                     b.ToTable("FormFields");
+                });
+
+            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Patients.Patient", b =>
+                {
+                    b.Property<string>("PatientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Age")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MentalStatus")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PatientId");
+
+                    b.ToTable("Patient");
+                });
+
+            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Patients.PatientList", b =>
+                {
+                    b.Property<string>("PatientListId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PatientListId");
+
+                    b.ToTable("PatientList");
                 });
 
             modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Forms.FormField", b =>
