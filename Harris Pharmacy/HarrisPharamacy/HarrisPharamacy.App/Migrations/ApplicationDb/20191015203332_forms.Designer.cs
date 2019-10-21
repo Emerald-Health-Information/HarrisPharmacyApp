@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HarrisPharmacy.App.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20191015214328_patients")]
-    partial class patients
+    [Migration("20191015203332_forms")]
+    partial class forms
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,39 +63,11 @@ namespace HarrisPharmacy.App.Migrations.ApplicationDb
                     b.Property<string>("FormId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("FormInputType")
-                        .HasColumnType("int");
-
                     b.HasKey("FormFieldId");
 
                     b.HasIndex("FormId");
 
                     b.ToTable("FormFields");
-                });
-
-            modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Patients.Patient", b =>
-                {
-                    b.Property<string>("PatientId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PatientId");
-
-                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("HarrisPharmacy.App.Data.Entities.Forms.FormField", b =>
