@@ -28,12 +28,12 @@ namespace HarrisPharmacy.App
         {
             services.AddDbContext<AuthDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("AuthContextConnection")));
+                    Configuration.GetConnectionString("AuthContextConnection")), (ServiceLifetime.Transient));
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<AuthDbContext>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbConnectionString")));
+                options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbConnectionString")), (ServiceLifetime.Transient));
 
             services.AddRazorPages();
             services.AddServerSideBlazor();

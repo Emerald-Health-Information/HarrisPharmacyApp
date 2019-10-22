@@ -31,16 +31,4 @@ namespace HarrisPharmacy.App.Data.Entities.Forms
         /// </summary>
         public List<FormWithFields> FormWithFields { get; set; }
     }
-
-    /// <summary>
-    /// The bridge table for the forms
-    /// </summary>
-    public class FormWithFields : BaseEntity
-    {
-        public string FormWithFieldsId { get; set; }
-        public string FormId { get; set; }
-        public Form Form { get; set; }
-        public string FormFieldId { get; set; }
-        public FormField FormField { get; set; }
-    }
 }

@@ -3,8 +3,7 @@
 @using HarrisPharmacy.App.Data.Entities.Forms
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Mvc.Rendering
-@using Microsoft.AspNetCore.Components
+
 @inject IFormService FormService
 
 <h1>Forms</h1>
@@ -37,36 +36,30 @@ else
             </select>
         </div>
     </div>
-    <div class="row" style="padding-top:50px">
-        <div class="col-md-4">
-            <label class="control-label">Form Name: @FormSelected.Name</label>
-        </div>
-    </div>
 
-}
-
-@if (FormsList != null) // Insert form
-{
-    <input placeholder="Name" bind="@Name" />
-    <br />
-    <input placeholder="Last Name" bind="@Description" />
-    <br />
-    <input />
-    <select class="custom-select" multiple="multiple">
-        @foreach (var var in Items)
+    @if (FormSelected != null)
+    {
+        foreach (var formWithField in FormSelected.FormWithFields)
         {
-            <option value=@var.Value>@var.Text</option>
-        }
-    </select>
+            var field = formWithField.FormField;
+            @if (field != null)
+            {<div class="row" style="padding-top:10px">
+                    <div class="col-md-4">
+                        <label for="@field.FieldName">@field.FieldName</label>
+                        <input type="@field.FormInputType" />
+                    </div>
+                </div>
+            }
 
-    // <button @onclick="@Insert" class="btn btn-warning">Insert</button>
+        }
+    }
+
 }
 
 @code {
     public List<Form> FormsList;
     public Form FormSelected;
     public List<FormField> FormFields;
-    public List<SelectListItem> Items { get; set; } = null!;
 
     public string Name;
     public string Description;
@@ -74,42 +67,21 @@ else
     protected override async Task OnInitializedAsync()
     {
         FormsList = await FormService.GetFormsAsync();
-        Items = await FormService.GetFormFieldsMultiSelectListAsync();
-    }
 
+        // If forms list isn't null, set the selected form to the first one
+        //FormSelected = FormsList?[0];
+
+    }
+    protected async Task<FormField> GetField(FormWithFields formWithField)
+    {
+        return await FormService.GetFormField(formWithField.FormFieldId);
+    }
     protected async void FormClicked(ChangeEventArgs e)
     {
+
         FormSelected = await FormService.GetFormAsync(e.Value.ToString());
         this.StateHasChanged();
     }
-
-    private void CheckboxChanged(ChangeEventArgs e, string key)
-    {
-        var i = this.Items.FirstOrDefault(i => i.Value == key);
-        if (i != null)
-        {
-            i.Selected = (bool)e.Value;
-        }
-    }
-
-    /// <summary>
-    /// Inserts a new form into the db using form service
-    /// </summary>
-    /// <returns></returns>
-    //protected async Task Insert()
-    //{
-
-    //    Form form = new Form()
-    //    {
-    //        FormId = Guid.NewGuid().ToString(),
-    //        Name = Name,
-    //        Description = Description,
-    //    };
-
-    //    await FormService.InsertFormAsync(form);
-    //    ClearFields();
-    //    await OnInitializedAsync();
-    //}
 
     protected void ClearFields()
     {

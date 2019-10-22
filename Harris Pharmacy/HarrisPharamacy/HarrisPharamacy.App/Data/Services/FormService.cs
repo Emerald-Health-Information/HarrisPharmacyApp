@@ -6,7 +6,6 @@ using HarrisPharmacy.App.Data.Entities.Forms;
 using HarrisPharmacy.App.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HarrisPharmacy.App.Data.Services
 {
@@ -29,7 +28,19 @@ namespace HarrisPharmacy.App.Data.Services
         /// <returns> A list of all the forms in the database</returns>
         public async Task<List<Form>> GetFormsAsync()
         {
-            return await _applicationDbContext.Forms.ToListAsync();
+            return await _applicationDbContext.Forms
+                .Include(f => f.FormWithFields)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Get a list of all the FormsFields in the database
+        /// </summary>
+        /// <returns> A list of all the FormFields in the database</returns>
+        public async Task<List<FormField>> GetFormFieldsAsync()
+        {
+            return await _applicationDbContext.FormFields
+                .ToListAsync();
         }
 
         /// <summary>
@@ -39,7 +50,26 @@ namespace HarrisPharmacy.App.Data.Services
         /// <returns></returns>
         public async Task<Form> GetFormAsync(string formId)
         {
-            return await _applicationDbContext.Forms.FindAsync(formId);
+            var form = await _applicationDbContext.Forms
+                 .Include(f => f.FormWithFields)
+                     .ThenInclude(f => f.FormField)
+                 .SingleOrDefaultAsync(f => f.FormId == formId);
+
+            return form;
+        }
+
+        /// <summary>
+        /// Gets the formField with the corresponding formFieldId
+        /// </summary>
+        /// <param name="formFieldId"> the formFieldId of the formField you are trying to retrieve </param>
+        /// <returns></returns>
+        public async Task<FormField> GetFormField(string formFieldId)
+        {
+            var formField = await _applicationDbContext.FormFields
+                .Include(f => f.FormWithFields)
+                .SingleOrDefaultAsync(f => f.FormFieldId == formFieldId);
+
+            return formField;
         }
 
         /// <summary>
@@ -60,7 +90,7 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="f"> the form to be updated </param>
         /// <returns></returns>
-        public async Task<Form> UpdateStudentAsync(Form f)
+        public async Task<Form> UpdateFormAsync(Form f)
         {
             var form = await _applicationDbContext.Forms.FindAsync(f.FormId);
 
@@ -78,27 +108,36 @@ namespace HarrisPharmacy.App.Data.Services
             return form;
         }
 
-        public async Task<Form> DeleteStudentAsync(string id)
+        /// <summary>
+        /// Deletes a form with the supplied id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<Form> DeleteFormAsync(string id)
         {
-            var student = await _applicationDbContext.Forms.FindAsync(id);
+            var form = await _applicationDbContext.Forms.FindAsync(id);
 
-            if (student == null)
+            if (form == null)
                 return null;
 
-            _applicationDbContext.Forms.Remove(student);
+            _applicationDbContext.Forms.Remove(form);
             await _applicationDbContext.SaveChangesAsync();
 
-            return student;
+            return form;
         }
 
-        public async Task<List<SelectListItem>> GetFormFieldsMultiSelectListAsync()
+        /// <summary>
+        /// Returns all of the form fields as a list of select list items
+        /// </summary>
+        /// <returns></returns>
+        public List<SelectListItem> GetFormFieldsMultiSelectListAsync()
         {
             return _applicationDbContext.FormFields.Select(a =>
-               new SelectListItem
-               {
-                   Value = a.FormFieldId.ToString(),
-                   Text = a.FieldName
-               }).ToList();
+             new SelectListItem
+             {
+                 Value = a.FormFieldId.ToString(),
+                 Text = a.FieldName
+             }).ToList();
         }
 
         private bool FormExists(string id)
