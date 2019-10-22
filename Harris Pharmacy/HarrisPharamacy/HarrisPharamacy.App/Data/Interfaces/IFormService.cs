@@ -23,5 +23,7 @@ namespace HarrisPharmacy.App.Data.Interfaces
         List<SelectListItem> GetFormFieldsMultiSelectListAsync();
 
         Task<List<FormField>> GetFormFieldsAsync();
+
+        Task<FormField> GetFormField(string formFieldId);
     }
 }

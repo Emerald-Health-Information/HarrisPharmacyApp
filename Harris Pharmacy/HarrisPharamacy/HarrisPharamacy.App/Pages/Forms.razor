@@ -36,11 +36,23 @@ else
             </select>
         </div>
     </div>
-    <div class="row" style="padding-top:50px">
-        <div class="col-md-4">
-            <label class="control-label">Form Name: @FormSelected.Name</label>
-        </div>
-    </div>
+
+    @if (FormSelected != null)
+    {
+        foreach (var formWithField in FormSelected.FormWithFields)
+        {
+            var field = formWithField.FormField;
+            @if (field != null)
+            {<div class="row" style="padding-top:10px">
+                    <div class="col-md-4">
+                        <label for="@field.FieldName">@field.FieldName</label>
+                        <input type="@field.FormInputType" />
+                    </div>
+                </div>
+            }
+
+        }
+    }
 
 }
 
@@ -56,10 +68,17 @@ else
     {
         FormsList = await FormService.GetFormsAsync();
 
-    }
+        // If forms list isn't null, set the selected form to the first one
+        //FormSelected = FormsList?[0];
 
+    }
+    protected async Task<FormField> GetField(FormWithFields formWithField)
+    {
+        return await FormService.GetFormField(formWithField.FormFieldId);
+    }
     protected async void FormClicked(ChangeEventArgs e)
     {
+
         FormSelected = await FormService.GetFormAsync(e.Value.ToString());
         this.StateHasChanged();
     }
