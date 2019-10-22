@@ -16,10 +16,12 @@ namespace HarrisPharmacy.App.Data.Interfaces
 
         Task<Form> InsertFormAsync(Form form);
 
-        Task<Form> UpdateStudentAsync(Form f);
+        Task<Form> UpdateFormAsync(Form f);
 
-        Task<Form> DeleteStudentAsync(string id);
+        Task<Form> DeleteFormAsync(string id);
 
-        Task<List<SelectListItem>> GetFormFieldsMultiSelectListAsync();
+        List<SelectListItem> GetFormFieldsMultiSelectListAsync();
+
+        Task<List<FormField>> GetFormFieldsAsync();
     }
 }
