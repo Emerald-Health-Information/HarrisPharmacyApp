@@ -115,15 +115,15 @@ namespace HarrisPharmacy.App.Data.Services
         /// <returns></returns>
         public async Task<Form> DeleteFormAsync(string id)
         {
-            var student = await _applicationDbContext.Forms.FindAsync(id);
+            var form = await _applicationDbContext.Forms.FindAsync(id);
 
-            if (student == null)
+            if (form == null)
                 return null;
 
-            _applicationDbContext.Forms.Remove(student);
+            _applicationDbContext.Forms.Remove(form);
             await _applicationDbContext.SaveChangesAsync();
 
-            return student;
+            return form;
         }
 
         /// <summary>
