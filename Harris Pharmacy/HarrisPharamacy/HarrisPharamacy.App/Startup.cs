@@ -13,6 +13,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace HarrisPharmacy.App
 {
+    /// <summary>
+    /// Startup class for the application
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)

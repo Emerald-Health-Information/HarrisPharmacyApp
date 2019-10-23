@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HarrisPharmacy.App.Data.Services
 {
+    /// <summary>
+    /// The service class for forms that allows the front end to interact with the database
+    /// </summary>
     public class FormService : IFormService
     {
         private readonly ApplicationDbContext _applicationDbContext;
