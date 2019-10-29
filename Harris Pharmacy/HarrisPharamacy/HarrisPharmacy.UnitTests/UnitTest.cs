@@ -1,5 +1,3 @@
-using System;
-using HarrisPharmacy.App.Data.Interfaces;
 using HarrisPharmacy.App.Data.Services;
 using Xunit;
 
