@@ -1,0 +1,84 @@
+﻿@page "/appointment"
+
+@using System.Net
+@using HarrisPharmacy.App.Data
+@using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Interfaces
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Data.SqlClient
+@inject IAppointmentService AppointmentService
+@inject ApplicationDbContext Context
+
+<h3>Appointments</h3>
+<h5>Patient Id</h5>
+<input @bind="@PatientId" type="text" placeholder="Patient Id" />
+<h5>User Id</h5>
+<input @bind="@UserId" type="text" placeholder="User Id" />
+<h5>Start Time</h5>
+<input @bind="@StartTime" type="text" placeholder="Start Time" />
+<h5>End Time</h5>
+<input @bind="@EndTime" type="text" placeholder="End Time" />
+<h5>Location</h5>
+<input @bind="@Location" type="text" placeholder="Location" />
+<h5>Description</h5>
+<input @bind="@Description" type="text" placeholder="Location" />
+<br />
+<button @onclick="@CreateAppointment" class="btn btn-warning">Add Appointment</button>
+<h5>Delete Appointment</h5>
+<input @bind="@Delete" type="text" placeholder="Appt id" />
+<button @onclick="@DeleteAppointment" class="btn btn-warning">Delete Appointment</button>
+
+@code {
+    public SelectListItem Item { get; set; } = null!;
+
+    private string PatientId { get; set; }
+    private string UserId { get; set; }
+    private string StartTime { get; set; }
+    private string EndTime { get; set; }
+    private string Location { get; set; }
+    private string Description { get; set; }
+    private string Delete { get; set; }
+    /// <summary>
+    /// Inserts a new Appointment into the db using appointment service
+    /// </summary>
+    /// <returns></returns>
+    protected async Task CreateAppointment()
+    {
+        PatientList appointment = new PatientList()
+        {
+            PatientListId = Guid.NewGuid().ToString(),
+            UserId = UserId,
+            StartTime = StartTime,
+            EndTime = EndTime,
+            Location = Location,
+            Description = Description,
+        };
+        await AppointmentService.InsertAsync(appointment);
+        ClearFields();
+        await OnInitializedAsync();
+    }
+    /// <summary>
+    /// Delete an Appointment from the db
+    /// </summary>
+    /// <returns></returns>
+    protected async Task DeleteAppointment()
+    {
+        await AppointmentService.DeleteAsync(Delete);
+        ClearFields();
+        await OnInitializedAsync();
+    }
+    /// <summary>
+    /// Clear fields on the page
+    /// </summary>
+    protected void ClearFields()
+    {
+        PatientId = string.Empty;
+        UserId = string.Empty;
+        StartTime = string.Empty;
+        EndTime = string.Empty;
+        Location = string.Empty;
+        Delete = string.Empty;
+        Description = string.Empty;
+    }
+}

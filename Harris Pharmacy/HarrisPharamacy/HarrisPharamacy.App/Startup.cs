@@ -43,6 +43,7 @@ namespace HarrisPharmacy.App
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
             services.AddTransient<IFormService, FormService>();
+            services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddSingleton<WeatherForecastService>();
         }
 
