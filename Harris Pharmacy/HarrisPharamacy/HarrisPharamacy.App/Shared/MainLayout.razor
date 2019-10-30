@@ -1,16 +1,29 @@
 ﻿@inherits Microsoft.AspNetCore.Components.LayoutComponentBase
+<AuthorizeView>
+    <Authorized>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+        <div class="main">
+            <div class="top-row px-4">
+                <LoginDisplay />
+                <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+            </div>
 
-<div class="main">
-    <div class="top-row px-4">
-        <LoginDisplay />
-        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
-    </div>
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
 
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+        <!-- TODO: Replace with a login page/component -->
+        <div class="main">
+            <div class="top-row px-4">
+                <a href="Identity/Account/Register">Register</a>
+                <a href="Identity/Account/Login">Log in</a>
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
