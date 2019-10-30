@@ -21,8 +21,13 @@
 <input @bind="@EndTime" type="text" placeholder="End Time" />
 <h5>Location</h5>
 <input @bind="@Location" type="text" placeholder="Location" />
+<h5>Description</h5>
+<input @bind="@Description" type="text" placeholder="Location" />
 <br />
 <button @onclick="@CreateAppointment" class="btn btn-warning">Add Appointment</button>
+<h5>Delete Appointment</h5>
+<input @bind="@Delete" type="text" placeholder="Appt id" />
+<button @onclick="@DeleteAppointment" class="btn btn-warning">Delete Appointment</button>
 
 @code {
     public SelectListItem Item { get; set; } = null!;
@@ -32,6 +37,8 @@
     private string StartTime { get; set; }
     private string EndTime { get; set; }
     private string Location { get; set; }
+    private string Description { get; set; }
+    private string Delete { get; set; }
     /// <summary>
     /// Inserts a new Appointment into the db using appointment service
     /// </summary>
@@ -45,11 +52,25 @@
             StartTime = StartTime,
             EndTime = EndTime,
             Location = Location,
+            Description = Description,
         };
         await AppointmentService.InsertAsync(appointment);
         ClearFields();
         await OnInitializedAsync();
     }
+    /// <summary>
+    /// Delete an Appointment from the db
+    /// </summary>
+    /// <returns></returns>
+    protected async Task DeleteAppointment()
+    {
+        await AppointmentService.DeleteAsync(Delete);
+        ClearFields();
+        await OnInitializedAsync();
+    }
+    /// <summary>
+    /// Clear fields on the page
+    /// </summary>
     protected void ClearFields()
     {
         PatientId = string.Empty;
@@ -57,5 +78,7 @@
         StartTime = string.Empty;
         EndTime = string.Empty;
         Location = string.Empty;
+        Delete = string.Empty;
+        Description = string.Empty;
     }
 }
