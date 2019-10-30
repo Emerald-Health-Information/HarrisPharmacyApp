@@ -143,6 +143,53 @@ namespace HarrisPharmacy.App.Data.Services
              }).ToList();
         }
 
+        /// <summary>
+        /// Creates a form with the selected formFields
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="selectedFormFields"></param>
+        /// <returns></returns>
+        public async Task<Form> CreateFormAsync(string name, string description, List<FormField> selectedFormFields)
+        {
+            // The list of all the formsWithFields
+            List<FormWithFields> formsWithFields = new List<FormWithFields>();
+
+            // Create a new form
+            var form = new Form()
+            {
+                FormId = Guid.NewGuid().ToString(),
+                Name = name,
+                Description = description,
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now,
+            };
+
+            // Create all the new FormWithFields
+            foreach (var formField in selectedFormFields)
+            {
+                var formWithFields = new FormWithFields()
+                {
+                    FormWithFieldsId = Guid.NewGuid().ToString(),
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    Description = description,
+                    Form = form,
+                    FormField = formField,
+                    FormId = form.FormId,
+                    FormFieldId = formField.FormFieldId
+                };
+                formsWithFields.Add(formWithFields);
+
+                // TODO: Update formFields list with the FormWithFields Ids
+            }
+
+            // TODO: Save all to db
+            _applicationDbContext.FormWithFields.AddRange(formsWithFields);
+
+            return await InsertFormAsync(form);
+        }
+
         private bool FormExists(string id)
         {
             return _applicationDbContext.Forms.Any(e => e.FormId == id);

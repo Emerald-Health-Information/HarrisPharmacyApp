@@ -64,5 +64,14 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <param name="formFieldId"> the formFieldId of the formField you are trying to retrieve </param>
         /// <returns></returns>
         Task<FormField> GetFormField(string formFieldId);
+
+        /// <summary>
+        /// Creates a form with the selected formFields
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="selectedFormFields"></param>
+        /// <returns></returns>
+        Task<Form> CreateFormAsync(string name, string description, List<FormField> selectedFormFields);
     }
 }

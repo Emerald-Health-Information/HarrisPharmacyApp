@@ -1,0 +1,22 @@
+﻿@using HarrisPharmacy.App.Data.Entities.Forms
+@using Microsoft.AspNetCore.Components
+<h3>FormComponent</h3>
+
+@foreach (var formWithField in Form.FormWithFields)
+{
+    var field = formWithField.FormField;
+    @if (field != null)
+    {<div class="row" style="padding-top:10px">
+            <div class="col-md-4">
+                <label for="@field.FieldName">@field.FieldName</label>
+                <input type="@field.FormInputType" />
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public Form Form { get; set; }
+
+}

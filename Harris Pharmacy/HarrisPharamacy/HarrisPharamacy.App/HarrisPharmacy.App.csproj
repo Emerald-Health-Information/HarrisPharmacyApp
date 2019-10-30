@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\470Repo\harrison1-cosc-470-2019\Harris Pharmacy\HarrisPharamacy\HarrisPharamacy.App\HarrisPharmacy.App.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
