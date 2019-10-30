@@ -39,19 +39,8 @@ else
 
     @if (FormSelected != null)
     {
-        foreach (var formWithField in FormSelected.FormWithFields)
-        {
-            var field = formWithField.FormField;
-            @if (field != null)
-            {<div class="row" style="padding-top:10px">
-                    <div class="col-md-4">
-                        <label for="@field.FieldName">@field.FieldName</label>
-                        <input type="@field.FormInputType" />
-                    </div>
-                </div>
-            }
+        <FormComponent Form="FormSelected" />
 
-        }
     }
 
 }
