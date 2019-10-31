@@ -20,11 +20,7 @@ else if (FormsList.Count == 0)
 }
 else
 {
-    <div class="row">
-        <div class="col-md-4">
-            <label class="control-label">Form</label>
-        </div>
-    </div>
+
     <div class="row" style="padding-top:10px">
         <div class="col-md-4">
             <select @onchange="@FormClicked" class="form-control">
@@ -36,7 +32,7 @@ else
             </select>
         </div>
     </div>
-
+    <br />
     @if (FormSelected != null)
     {
         <FormComponent Form="FormSelected" />

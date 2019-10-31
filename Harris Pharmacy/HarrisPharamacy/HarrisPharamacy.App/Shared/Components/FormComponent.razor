@@ -1,22 +1,36 @@
 ﻿@using HarrisPharmacy.App.Data.Entities.Forms
 @using Microsoft.AspNetCore.Components
-<h3>FormComponent</h3>
 
-@foreach (var formWithField in Form.FormWithFields)
-{
-    var field = formWithField.FormField;
-    @if (field != null)
-    {<div class="row" style="padding-top:10px">
-            <div class="col-md-4">
-                <label for="@field.FieldName">@field.FieldName</label>
-                <input type="@field.FormInputType" />
+<h3 class="h3">@Form.Name</h3>
+<form>
+    @foreach (var formWithField in Form.FormWithFields)
+    {
+        var field = formWithField.FormField;
+        @if (field != null)
+        {<div class="form-group" style="padding-top:10px">
+                <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                <input class="form-control" type="@field.FormInputType" />
             </div>
-        </div>
+        }
     }
-}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    @*@if (submit)
+        {
+            <ModalComponent Title="Test"
+                            Message="Test" />
+        }*@
+</form>
 
 @code {
     [Parameter]
     public Form Form { get; set; }
+
+    //private bool submit = false;
+
+    //private void HandleValidSubmit()
+    //{
+    //    submit = true;
+    //}
 
 }

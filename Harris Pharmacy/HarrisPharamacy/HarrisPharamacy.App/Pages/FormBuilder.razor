@@ -13,16 +13,21 @@
 <h3>Create a new form</h3>
 @if (Items != null) // CreateForm form
 {
-    <input @bind="@Name" type="text" placeholder="Form name" />
+
+    <label class="col-form-label">Form Name:</label>
+    <input class="input-group-text" @bind="@Name" type="text" />
     <br />
-    <input type="text" placeholder="Form description" @bind="@Description" />
+    <label class="col-form-label">Description of form:</label>
+    <input class="input-group-text" type="text" @bind="@Description" />
     <br />
     @if (SelectedFormFields.Count != 0)
     {
-        foreach (var field in SelectedFormFields)
-        {
-            <p>@field.FieldName </p>
-        }
+        <ul class="list-group-flush">
+            @foreach (var field in SelectedFormFields)
+            {
+                <li class="list-group-item-info">@field.FieldName </li>
+            }
+        </ul>
     }
     <h5>Add Additional fields</h5>
     <select class="custom-select" @onchange="UpdateItem">
