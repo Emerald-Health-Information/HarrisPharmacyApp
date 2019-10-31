@@ -1,0 +1,47 @@
+﻿@page "/patientinfo"
+@using System.Net
+@using HarrisPharmacy.App.Data
+@using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Interfaces
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Data.SqlClient
+@inject ApplicationDbContext Context
+
+<h1>Patient Information</h1>
+
+
+<p><b>Patient Name: </b> @fName @lName</p>
+<p><b>Health Care Number: </b></p>
+<p><b>Sex: </b> @sex</p>
+<p><b>Age: </b> @age</p>
+<p><b>City:</b></p>
+<p><b>Province:</b></p>
+<p><b>Address:</b></p>
+
+<p><b>Patient Notes:</b></p>
+<textarea name="textarea" rows="10">Write something here</textarea>
+<div align="right">
+    <button type="button">Finish</button>
+</div>
+
+
+@code {
+    private string fName;
+    private string lName;
+    private string healthNumber;
+    private string age;
+    private string sex;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var patient = Context.Patients
+            .Where(p => p.PatientId == "000001").FirstOrDefault();
+
+        fName = patient.FirstName;
+        lName = patient.LastName;
+        age = patient.Age;
+        sex = patient.Sex;
+
+    }
+}
