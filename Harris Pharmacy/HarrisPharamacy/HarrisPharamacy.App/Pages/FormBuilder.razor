@@ -13,29 +13,39 @@
 <h3>Create a new form</h3>
 @if (Items != null) // CreateForm form
 {
-    <input @bind="@Name" type="text" placeholder="Form name" />
-    <br />
-    <input type="text" placeholder="Form description" @bind="@Description" />
-    <br />
-    @if (SelectedFormFields.Count != 0)
-    {
-        foreach (var field in SelectedFormFields)
+    <div class="form-group">
+        <label class="col-form-label">Form Name: </label>
+        <input class="form-control" @bind="@Name" type="text" />
+        <br />
+        <label class="col-form-label">Brief Description of the form: </label>
+        <input class="form-control" type="text" @bind="@Description" />
+        <br />
+        @if (SelectedFormFields.Count != 0)
         {
-            <p>@field.FieldName </p>
+            <label class="col-form-label">Additional Fields: </label>
+            <ul class="list-group-flush">
+                @foreach (var field in SelectedFormFields)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        @field.FieldName
+                        <i @onclick="RemoveField" class="fas fa-trash-alt"></i>
+                    </li>
+
+                }
+            </ul>
         }
-    }
-    <h5>Add Additional fields</h5>
-    <select class="custom-select" @onchange="UpdateItem">
-        @foreach (var var in Items)
-        {
-            <option value=@var.Value>@var.Text</option>
-        }
-    </select>
+        <h5>Add Additional fields</h5>
+        <select class="custom-select" @onchange="UpdateItem">
+            @foreach (var var in Items)
+            {
+                <option value=@var.Value>@var.Text</option>
+            }
+        </select>
 
-    <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
+        <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
 
-    <button @onclick="@CreateForm" class="btn btn-warning">Create Form</button>
-
+        <button @onclick="@CreateForm" class="btn btn-warning">Create Form</button>
+    </div>
 }
 
 @code {
@@ -66,6 +76,17 @@
     protected void UpdateItem(ChangeEventArgs e)
     {
         Item = Items.FirstOrDefault(j => j.Value == e.Value.ToString());
+    }
+    /// <summary>
+    /// Removes the selected item from the list
+    /// </summary>
+    /// <param name="e"></param>
+    protected void RemoveField(EventArgs e)
+    {
+        var i = Items.FirstOrDefault(j => j.Value == Item.Value);
+        if (i == null) return;
+        SelectedFormFields.Remove(FormFields.Find(f => f.FormFieldId == i.Value));
+        this.StateHasChanged();
     }
 
     /// <summary>
