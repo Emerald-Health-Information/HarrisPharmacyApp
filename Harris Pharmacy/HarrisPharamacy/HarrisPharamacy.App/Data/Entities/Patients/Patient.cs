@@ -39,5 +39,6 @@ namespace HarrisPharmacy.App.Data.Entities.Patients
         /// Sex of patient
         /// </summary>
         public string Sex { get; set; }
+        
     }
 }
