@@ -1,0 +1,59 @@
+﻿@using System.Net
+@using HarrisPharmacy.App.Data
+@using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Interfaces
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Data.SqlClient
+@using Microsoft.AspNetCore.Components.Web;
+@inject IAppointmentService AppointmentService
+@inject ApplicationDbContext Context
+@inject NavigationManager navigationManager
+
+@if (totalPatients > 0)
+{
+    @for (var i = 0; i < totalPatients; i++)
+    {
+        <div class="patient-item">
+            @{ AssignPatient(i); }
+            <p>Patient Name: @patient.FirstName @patient.LastName</p>
+            <p>Location: @PatientList.ElementAt(i).Location</p>
+            <p>Time: @PatientList.ElementAt(i).StartTime - @PatientList.ElementAt(i).EndTime</p>
+            <p>Description: @PatientList.ElementAt(i).Description</p>
+            <button @onclick="@(e => GoToPatient(PatientList.ElementAt(i-1).PatientId))">Access Appointment</button>
+        </div>
+        <br/>
+    }
+}
+else
+{
+    <p><i>There are no appointments for @UserId.</i></p>
+}
+
+@code {
+    [Parameter] public string UserId { get; set; }
+    public static List<PatientList> PatientList { get; set; }
+    public int totalPatients = 0;
+    public Patient patient;
+    protected override async Task OnInitializedAsync()
+    {
+        PatientList = await AppointmentService.GetPatientListUserAsync(UserId);
+        if (PatientList != null)
+        {
+            totalPatients = PatientList.Count();
+        }
+    }
+}
+
+@functions {
+    protected void AssignPatient(int index)
+    {
+        patient = Context.Patients.Where(p => p.PatientId == PatientList.ElementAt(index).PatientId).FirstOrDefault();
+    }
+
+    protected void GoToPatient(string pid)
+    {
+        navigationManager.NavigateTo("patientinfo/" + pid);
+        StateHasChanged();
+    }
+}
