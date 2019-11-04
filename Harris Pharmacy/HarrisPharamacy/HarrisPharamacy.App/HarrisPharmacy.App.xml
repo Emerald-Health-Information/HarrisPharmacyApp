@@ -184,6 +184,45 @@
             Location for the appointment
             </summary>
         </member>
+        <member name="T:HarrisPharmacy.App.Data.Interfaces.IAppointmentService">
+            <summary>
+            The interface for the service class for appointments that allows the front end to interact with the database
+            </summary>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Interfaces.IAppointmentService.GetPatientListAsync">
+            <summary>
+            Gets the list of all the Appointments in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Interfaces.IAppointmentService.GetAppointmentAsync(System.String)">
+            <summary>
+            Gets the Appointment with the corresponding patient id
+            </summary>
+            <param name="patientId"> the patient id of the appointment you are trying to retrieve </param>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Interfaces.IAppointmentService.InsertAsync(HarrisPharmacy.App.Data.Entities.Patients.PatientList)">
+            <summary>
+            Inserts the new Appointment into the database
+            </summary>
+            <param name="appointment"> The form to be inserted </param>
+            <returns> The form entity </returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Interfaces.IAppointmentService.UpdateAppointmentAsync(HarrisPharmacy.App.Data.Entities.Patients.PatientList)">
+            <summary>
+            Updates the appointment
+            </summary>
+            <param name="a"> the form to be updated </param>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Interfaces.IAppointmentService.DeleteAsync(System.String)">
+            <summary>
+            Deletes a appointment with the supplied id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:HarrisPharmacy.App.Data.Interfaces.IFormService">
             <summary>
             The interface for the service class for forms that allows the front end to interact with the database
@@ -242,6 +281,15 @@
             <param name="formFieldId"> the formFieldId of the formField you are trying to retrieve </param>
             <returns></returns>
         </member>
+        <member name="M:HarrisPharmacy.App.Data.Interfaces.IFormService.CreateFormAsync(System.String,System.String,System.Collections.Generic.List{HarrisPharmacy.App.Data.Entities.Forms.FormField})">
+            <summary>
+            Creates a form with the selected formFields
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="selectedFormFields"></param>
+            <returns></returns>
+        </member>
         <member name="T:HarrisPharmacy.App.Data.Interfaces.IMathService">
             <summary>
             Interface for the Service class for any math related things
@@ -252,6 +300,51 @@
             Increments the count variable
             </summary>
             <param name="currentCount"></param>
+            <returns></returns>
+        </member>
+        <member name="T:HarrisPharmacy.App.Data.Services.AppointmentService">
+            <summary>
+            The service class for appointments that allows the front end to connect to the database
+            </summary>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.AppointmentService.#ctor(HarrisPharmacy.App.Data.ApplicationDbContext)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="applicationDbContext">the injected db context</param>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.AppointmentService.DeleteAsync(System.String)">
+            <summary>
+            Deletes appointment with the supplied id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.AppointmentService.GetAppointmentAsync(System.String)">
+            <summary>
+            Gets the appointment with the corresponding appointment id 
+            </summary>
+            <param name="patientListId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.AppointmentService.GetPatientListAsync">
+            <summary>
+            Gets a list of all the appointments in the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.AppointmentService.InsertAsync(HarrisPharmacy.App.Data.Entities.Patients.PatientList)">
+            <summary>
+            Inserts a new appointment into the database
+            </summary>
+            <param name="appointment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.AppointmentService.UpdateAppointmentAsync(HarrisPharmacy.App.Data.Entities.Patients.PatientList)">
+            <summary>
+            Updates an appointment in the database
+            </summary>
+            <param name="a"></param>
             <returns></returns>
         </member>
         <member name="T:HarrisPharmacy.App.Data.Services.FormService">
@@ -318,6 +411,15 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:HarrisPharmacy.App.Data.Services.FormService.CreateFormAsync(System.String,System.String,System.Collections.Generic.List{HarrisPharmacy.App.Data.Entities.Forms.FormField})">
+            <summary>
+            Creates a form with the selected formFields
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="selectedFormFields"></param>
+            <returns></returns>
+        </member>
         <member name="T:HarrisPharmacy.App.Data.Services.MathServices">
             <summary>
             Service class for any math related things
@@ -333,6 +435,23 @@
         <member name="T:HarrisPharmacy.App.Startup">
             <summary>
             Startup class for the application
+            </summary>
+        </member>
+        <member name="M:HarrisPharmacy.App.Pages.Appointment.CreateAppointment">
+            <summary>
+            Inserts a new Appointment into the db using appointment service
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Pages.Appointment.DeleteAppointment">
+            <summary>
+            Delete an Appointment from the db
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:HarrisPharmacy.App.Pages.Appointment.ClearFields">
+            <summary>
+            Clear fields on the page
             </summary>
         </member>
         <member name="M:HarrisPharmacy.App.Pages.FormBuilder.OnInitializedAsync">

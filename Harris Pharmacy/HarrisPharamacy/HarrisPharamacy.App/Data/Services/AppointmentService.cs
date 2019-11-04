@@ -61,6 +61,16 @@ namespace HarrisPharmacy.App.Data.Services
                 .ToListAsync();
         }
         /// <summary>
+        /// Gets a list of all the appointments in the database that are assigned to a specific user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<List<PatientList>> GetPatientListUserAsync(string userId)
+        {
+            List<PatientList> patientList = await _applicationDbContext.PatientLists.ToListAsync();
+            return patientList.FindAll(pl => userId.Contains(pl.UserId));
+        }
+        /// <summary>
         /// Inserts a new appointment into the database
         /// </summary>
         /// <param name="appointment"></param>

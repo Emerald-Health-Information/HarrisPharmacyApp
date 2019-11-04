@@ -14,10 +14,17 @@ namespace HarrisPharmacy.App.Data.Interfaces
     public interface IAppointmentService
     {
         /// <summary>
-        /// Gets the list of all the Appointments in the database
+        /// Gets the list of all the appointments in the database
         /// </summary>
         /// <returns></returns>
         Task<List<PatientList>> GetPatientListAsync();
+
+        /// <summary>
+        /// Gets the list of all the appointments in the database for a specific user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<List<PatientList>> GetPatientListUserAsync(string userId);
 
         /// <summary>
         /// Gets the Appointment with the corresponding patient id
