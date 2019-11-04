@@ -1,5 +1,6 @@
 ﻿@using HarrisPharmacy.App.Data.Entities.Forms
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Razor.TagHelpers
 
 <h3 class="h3">@Form.Name</h3>
 <form>
@@ -14,23 +15,47 @@
         }
     }
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-    @*@if (submit)
-        {
-            <ModalComponent Title="Test"
-                            Message="Test" />
-        }*@
+    <button type="button" @onclick="@ToggleModal" class="btn btn-primary">Submit</button>
 </form>
-
+@if (_showModal)
+{
+    <!--The modal TODO: Move to modal component, make it actually submit the form-->
+    <div class="modal" tabindex="-1" style="display:block" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Success</h3>
+                    <button type="button" class="close" @onclick="@ToggleModal" data-dismiss="modal">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="p-1">Your form has been submitted successfully</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-block btn-info" @onclick="@ToggleModal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 @code {
+    /// <summary>
+    /// The form being displayed
+    /// </summary>
     [Parameter]
     public Form Form { get; set; }
+    /// <summary>
+    /// the private backing field for showing the modal
+    /// </summary>
+    private bool _showModal = false;
 
-    //private bool submit = false;
-
-    //private void HandleValidSubmit()
-    //{
-    //    submit = true;
-    //}
+    /// <summary>
+    /// Toggles the modal on/off
+    /// </summary>
+    protected void ToggleModal()
+    {
+        _showModal = !_showModal;
+    }
 
 }

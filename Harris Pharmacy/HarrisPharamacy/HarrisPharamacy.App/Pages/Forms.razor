@@ -20,7 +20,6 @@ else if (FormsList.Count == 0)
 }
 else
 {
-
     <div class="row" style="padding-top:10px">
         <div class="col-md-4">
             <select @onchange="@FormClicked" class="form-control">
@@ -32,7 +31,7 @@ else
             </select>
         </div>
     </div>
-    <br />
+    <br/>
     @if (FormSelected != null)
     {
         <FormComponent Form="FormSelected" />
@@ -42,36 +41,34 @@ else
 }
 
 @code {
+    /// <summary>
+    /// List of the forms
+    /// </summary>
     public List<Form> FormsList;
+    /// <summary>
+    /// Currently selected form
+    /// </summary>
     public Form FormSelected;
-    public List<FormField> FormFields;
 
-    public string Name;
-    public string Description;
-
+    /// <summary>
+    /// Method invoked when the component is ready to start, having received its initial parameters from its parent in the render tree.
+    /// Gets the forms from the form services and assigns them to FormsList
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
         FormsList = await FormService.GetFormsAsync();
-
-        // If forms list isn't null, set the selected form to the first one
-        //FormSelected = FormsList?[0];
-
     }
-    protected async Task<FormField> GetField(FormWithFields formWithField)
-    {
-        return await FormService.GetFormField(formWithField.FormFieldId);
-    }
+    /// <summary>
+    /// Updates the state when the selected form changes
+    /// and assigns the form to FormSelected
+    /// </summary>
+    /// <param name="e"></param>
     protected async void FormClicked(ChangeEventArgs e)
     {
 
         FormSelected = await FormService.GetFormAsync(e.Value.ToString());
         this.StateHasChanged();
-    }
-
-    protected void ClearFields()
-    {
-        Name = string.Empty;
-        Description = string.Empty;
     }
 
 }

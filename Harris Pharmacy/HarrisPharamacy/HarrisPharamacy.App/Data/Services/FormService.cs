@@ -180,8 +180,6 @@ namespace HarrisPharmacy.App.Data.Services
                     FormFieldId = formField.FormFieldId
                 };
                 formsWithFields.Add(formWithFields);
-
-                // TODO: Update formFields list with the FormWithFields Ids
             }
 
             // TODO: Save all to db
