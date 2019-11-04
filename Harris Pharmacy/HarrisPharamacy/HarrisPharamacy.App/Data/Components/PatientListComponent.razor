@@ -14,14 +14,16 @@
 {
     @for (var i = 0; i < totalPatients; i++)
     {
-        <div class="patient-item">
-            @{ AssignPatient(i); }
+    <div class="patient-item">
+        @{ AssignPatient(i); }
+        @if(patient != null){
             <p>Patient Name: @patient.FirstName @patient.LastName</p>
             <p>Location: @PatientList.ElementAt(i).Location</p>
             <p>Time: @PatientList.ElementAt(i).StartTime - @PatientList.ElementAt(i).EndTime</p>
             <p>Description: @PatientList.ElementAt(i).Description</p>
-            <button @onclick="@(e => GoToPatient(PatientList.ElementAt(i-1).PatientId))">Access Appointment</button>
-        </div>
+            <button @onclick="@(e => GoToPatient(PatientList.ElementAt(i-1).PatientListId))">Access Appointment</button>
+        }
+    </div>
         <br/>
     }
 }

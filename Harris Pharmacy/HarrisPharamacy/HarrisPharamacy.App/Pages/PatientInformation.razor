@@ -47,8 +47,7 @@
         var patient = Context.Patients
             .Where(p => p.PatientId == appt.PatientId).FirstOrDefault();
 
-       
-
+     
         fName = patient.FirstName;
         lName = patient.LastName;
         age = patient.Age;
@@ -58,7 +57,7 @@
 
     public async void finish()
     {
-        await s.DeleteAsync(appt.PatientId);
+        await s.DeleteAsync(appt.PatientListId);
         nm.NavigateTo("patients");
     }
 }
