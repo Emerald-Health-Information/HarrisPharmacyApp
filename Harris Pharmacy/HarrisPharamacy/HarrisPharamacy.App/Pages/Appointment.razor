@@ -22,11 +22,6 @@ else if (PatientsList.Count == 0)
 }
 else
 {
-    <div class="row">
-        <div class="col-md-4">
-            <label class="control-label">Form</label>
-        </div>
-    </div>
     <div class="row" style="padding-top:10px">
         <div class="col-md-4">
             <select @bind="@PatientId" class="form-control">
@@ -43,7 +38,7 @@ else
 <h5>User Id</h5>
 <input @bind="@UserId" type="text" placeholder="User Id" />
 <h5>Start Time</h5>
-<input @bind="@StartTime" type="datetime-local" name="Start Time"/>
+<input @bind="@StartTime" type="datetime-local" name="Start Time" />
 <h5>End Time</h5>
 <input @bind="@EndTime" type="datetime-local" name="End Time" />
 <h5>Location</h5>
@@ -53,13 +48,38 @@ else
 <br />
 <button @onclick="@CreateAppointment" class="btn btn-warning">Add Appointment</button>
 <h5>Delete Appointment</h5>
-<input @bind="@Delete" type="text" placeholder="Appt id" />
+@if (AppointmentList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (AppointmentList.Count == 0)
+{
+    <p>No Appointments to display</p>
+}
+else
+{
+    <div class="row" style="padding-top:10px">
+        <div class="col-md-4">
+            <select @bind="@Delete" class="form-control">
+                <option value="">-- Choose Appointment --</option>
+                @foreach (var appt in AppointmentList)
+                {
+                    <option value="@appt.PatientListId">@appt.PatientId @appt.Description</option>
+                }
+            </select>
+        </div>
+    </div>
+
+}
+<br />
 <button @onclick="@DeleteAppointment" class="btn btn-warning">Delete Appointment</button>
 
 @code {
     public List<Patient> PatientsList;
     public Patient PatientSelected;
     public SelectListItem Item { get; set; } = null!;
+    public List<PatientList> AppointmentList;
+
 
     private string PatientId { get; set; }
     private string UserId { get; set; }
@@ -72,6 +92,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         PatientsList = await AppointmentService.GetPatientsAsync();
+        AppointmentList = await AppointmentService.GetPatientListAsync();
     }
 
     /// <summary>
