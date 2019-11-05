@@ -33,6 +33,8 @@ namespace HarrisPharmacy.IntegrationTests
         [InlineData("/FormBuilder")]
         [InlineData("/Forms")]
         [InlineData("/Patients")]
+        [InlineData("/PatientInformation")]
+        [InlineData("/Appointment")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
             // Arrange
