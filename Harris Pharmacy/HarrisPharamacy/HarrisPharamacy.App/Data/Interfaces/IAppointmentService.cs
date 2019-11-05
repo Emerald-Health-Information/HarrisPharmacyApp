@@ -24,11 +24,10 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <returns></returns>
         Task<List<Patient>> GetPatientsAsync();
         /// <summary>
-        /// Gets the list of all the appointments in the database
+        /// Gets a list of all the appointments in the database
         /// </summary>
         /// <returns></returns>
         Task<List<PatientList>> GetPatientListAsync();
-
         /// <summary>
         /// Gets the Appointment with the corresponding patient id
         /// </summary>
@@ -56,5 +55,11 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Task<PatientList> DeleteAsync(string id);
+        /// <summary>
+        /// Gets a list of all the appointments in the databse that ar assigned to a specific user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<List<PatientList>> GetPatientListUserAsync(string userId);
     }
 }
