@@ -24,7 +24,7 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <returns></returns>
         Task<List<Patient>> GetPatientsAsync();
         /// <summary>
-        /// Gets the list of all the Appointments in the database
+        /// Gets the list of all the appointments in the database
         /// </summary>
         /// <returns></returns>
         Task<List<PatientList>> GetPatientListAsync();
