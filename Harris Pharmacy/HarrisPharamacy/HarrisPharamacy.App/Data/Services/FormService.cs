@@ -82,7 +82,7 @@ namespace HarrisPharmacy.App.Data.Services
         /// <returns> The form entity </returns>
         public async Task<Form> InsertFormAsync(Form form)
         {
-            await _applicationDbContext.Forms.AddAsync(form);
+            var result = await _applicationDbContext.Forms.AddAsync(form);
             await _applicationDbContext.SaveChangesAsync();
 
             return form;
@@ -188,7 +188,12 @@ namespace HarrisPharmacy.App.Data.Services
             return await InsertFormAsync(form);
         }
 
-        private bool FormExists(string id)
+        /// <summary>
+        /// See if the form exists given the Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool FormExists(string id)
         {
             return _applicationDbContext.Forms.Any(e => e.FormId == id);
         }

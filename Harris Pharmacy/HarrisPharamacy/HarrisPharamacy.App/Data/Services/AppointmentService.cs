@@ -14,6 +14,25 @@ namespace HarrisPharmacy.App.Data.Services
     /// </summary>
     public class AppointmentService : IAppointmentService
     {
+        /// <summary>
+        /// Get a patient given a patient id
+        /// </summary>
+        /// <param name="patientId"></param>
+        /// <returns></returns>
+        public async Task<Patient> GetPatientAsync(string patientId)
+        {
+            return await _applicationDbContext.Patients
+                .SingleOrDefaultAsync(f => f.PatientId == patientId);
+        }
+        /// <summary>
+        /// Get a list of all the patients in the database
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Patient>> GetPatientsAsync()
+        {
+            return await _applicationDbContext.Patients
+                .ToListAsync();
+        }
         private readonly ApplicationDbContext _applicationDbContext;
         /// <summary>
         /// Default constructor
@@ -103,5 +122,6 @@ namespace HarrisPharmacy.App.Data.Services
 
             return appointment;
         }
+
     }
 }

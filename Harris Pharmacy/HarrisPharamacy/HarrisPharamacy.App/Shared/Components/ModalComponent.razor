@@ -1,0 +1,37 @@
+﻿@using HarrisPharmacy.App.Models
+@using Microsoft.AspNetCore.Components
+
+<div class="modal" tabindex="-1" style="display:block" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">@Title</h3>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="p-1">@Message</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-block btn-info" @onclick="@InvokeParentMethod">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public String Title { get; set; }
+    [Parameter]
+    public String Message { get; set; }
+
+    [Parameter]
+    public Action ParentMethod { get; set; }
+
+    private void InvokeParentMethod()
+    {
+        ParentMethod?.Invoke();
+    }
+
+}
