@@ -100,11 +100,6 @@ namespace HarrisPharmacy.App.Data.Services
             if (form == null)
                 return null;
 
-            form.Name = f.Name;
-
-            form.DateUpdated = DateTime.Now;
-            form.Description = f.Description;
-
             _applicationDbContext.Forms.Update(form);
             await _applicationDbContext.SaveChangesAsync();
 

@@ -9,7 +9,10 @@ using Xunit;
 
 namespace HarrisPharmacy.UnitTests
 {
-    public class FormsTests
+    /// <summary>
+    /// A class for unit testing things to do with forms
+    /// </summary>
+    public class FormsUnitTests
     {
         private IFormService _formService;
         public ApplicationDbContext Context { get; set; }
@@ -27,6 +30,11 @@ namespace HarrisPharmacy.UnitTests
             EnsureContextDeleted();
         }
 
+        /// <summary>
+        /// Make sure Insert Form is working
+        /// </summary>
+        /// <returns></returns>
+
         [Fact]
         public async Task CheckInsertFormAsync()
         {
@@ -43,6 +51,59 @@ namespace HarrisPharmacy.UnitTests
             };
             var success = await _formService.InsertFormAsync(form);
             Assert.True(_formService.FormExists(success.FormId));
+            // Cleanup
+            EnsureContextDeleted();
+        }
+
+        /// <summary>
+        /// Make sure Delete Form is working
+        /// </summary>
+        /// <returns></returns>
+
+        [Fact]
+        public async Task CheckDeleteFormAsync()
+        {
+            MakeInMemoryContext();
+
+            Form form = new Form()
+            {
+                FormId = "1",
+                Description = "Test Form",
+                CreatorId = "1",
+                Name = "Test",
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now
+            };
+            var success = await _formService.InsertFormAsync(form);
+            await _formService.DeleteFormAsync(success.FormId);
+            Assert.False(_formService.FormExists(success.FormId));
+            // Cleanup
+            EnsureContextDeleted();
+        }
+
+        /// <summary>
+        /// Make sure update form is workings
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task CheckUpdateFormAsync()
+        {
+            MakeInMemoryContext();
+
+            Form form = new Form()
+            {
+                FormId = "1",
+                Description = "Test Form",
+                CreatorId = "1",
+                Name = "Test",
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now
+            };
+            var success = await _formService.InsertFormAsync(form);
+            form.Name = "New Name";
+
+            var updatedForm = await _formService.UpdateFormAsync(form);
+            Assert.Equal("New Name", updatedForm.Name);
             // Cleanup
             EnsureContextDeleted();
         }
