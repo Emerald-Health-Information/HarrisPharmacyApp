@@ -1,0 +1,100 @@
+﻿@using System.Net
+@using HarrisPharmacy.App.Data
+@using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Interfaces
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Data.SqlClient
+@using Microsoft.AspNetCore.Components.Web;
+@inject IAppointmentService AppointmentService
+@inject ApplicationDbContext Context
+@inject NavigationManager navigationManager
+
+@if (totalPatients > 0)
+{
+    @for (var i = 0; i < totalPatients; i++)
+    {
+        @if (i == 0)
+        {
+            <div class="active-patient-item">
+                @{ AssignPatient(i); }
+                @if (patient != null)
+                {
+                    <p>Patient Name: @patient.FirstName @patient.LastName</p>
+                    <p>Location: @patientList.ElementAt(i).Location</p>
+                    <p>Time: @patientList.ElementAt(i).StartTime - @patientList.ElementAt(i).EndTime</p>
+                    <p>Description: @patientList.ElementAt(i).Description</p>
+                    <button @onclick="@(e => GoToPatient(patientList.ElementAt(0).PatientListId))">Access Appointment</button>
+                    <button @onclick="@(e => SkipAppointment(patientList.ElementAt(0).PatientListId))">Skip Appointment</button>
+                }
+            </div>
+            <br />
+        }
+        else
+        {
+            <div class="inactive-patient-item">
+                @{ AssignPatient(i); }
+                @if (patient != null)
+                {
+                    <p>Patient Name: @patient.FirstName @patient.LastName</p>
+                    <p>Location: @patientList.ElementAt(i).Location</p>
+                    <p>Time: @patientList.ElementAt(i).StartTime - @patientList.ElementAt(i).EndTime</p>
+                    <p>Description: @patientList.ElementAt(i).Description</p>
+                    <button disabled>Access Appointment</button>
+                    <button disabled>Skip Appointment</button>
+                }
+            </div>
+            <br />
+        }
+    }
+}
+else
+{
+    <p><i>There are no appointments for @UserId.</i></p>
+}
+
+@code {
+    [Parameter] public string UserId { get; set; }
+    public static List<PatientList> patientList { get; set; }
+    public int totalPatients = 0;
+    public Patient patient;
+}
+
+@functions {
+    protected override async Task OnInitializedAsync()
+    {
+        patientList = await AppointmentService.GetPatientListUserAsync(UserId);
+        patientList.OrderBy(x => Convert.ToDateTime(x.StartTime));
+        if (patientList != null)
+        {
+            totalPatients = patientList.Count();
+        }
+    }
+    /// <summary>
+    /// Assigns current patient
+    /// </summary>
+    /// <param name="index"></param>
+    protected void AssignPatient(int index)
+    {
+        patient = Context.Patients.Where(p => p.PatientId == patientList.ElementAt(index).PatientId).FirstOrDefault();
+    }
+    /// <summary>
+    /// Goes to info page for the patient appointment
+    /// </summary>
+    /// <param name="pid"></param>
+    protected void GoToPatient(string pid)
+    {
+        navigationManager.NavigateTo("patientinfo/" + pid);
+        StateHasChanged();
+    }
+    /// <summary>
+    /// Deletes an appointment without having to access the info page
+    /// </summary>
+    /// <param name="pid"></param>
+    protected async void SkipAppointment(string pid)
+    {
+        await AppointmentService.DeleteAsync(pid);
+        navigationManager.NavigateTo("/redirect/patients");
+        StateHasChanged();
+    }
+}
