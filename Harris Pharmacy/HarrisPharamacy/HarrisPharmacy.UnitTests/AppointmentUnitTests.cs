@@ -6,13 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace HarrisPharmacy.UnitTests
 {
     public class AppointmentUnitTests
     {
-        private readonly IAppointmentService _appointmentService;
+        private IAppointmentService _appointmentService;
+        public ApplicationDbContext Context { get; set; }
         public AppointmentUnitTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -30,5 +32,46 @@ namespace HarrisPharmacy.UnitTests
         {
             Assert.NotNull(await _appointmentService.GetPatientListAsync());
         }
+
+        /// <summary>
+        /// Creates a new appointment and checks that it exists in the database.
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task CheckInsertAppointmentAsync()
+        {
+            MakeInMemoryContext();
+            PatientList pl = new PatientList() 
+            {
+                PatientListId = Guid.NewGuid().ToString(),
+                UserId = "001",
+                StartTime = "10:00",
+                EndTime = "12:00",
+                PatientId = "000001",
+                Location = "Kelowna",
+                Description = "Unit test",
+            };
+            var success = await _appointmentService.InsertAsync(pl);
+            Assert.NotNull(_appointmentService.GetAppointmentAsync(pl.PatientListId));
+            // Cleanup
+            EnsureContextDeleted();
+        }
+
+        /// <summary>
+        /// Make temperary context for testing
+        /// </summary>
+        private void MakeInMemoryContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "temp")
+                .Options;
+            Context = new ApplicationDbContext(options);
+            _appointmentService = new AppointmentService(Context);
+        }
+        
+        /// <summary>
+        /// Delete context after testing.
+        /// </summary>
+        private void EnsureContextDeleted() => Context.Database.EnsureDeleted();
     }
 }
