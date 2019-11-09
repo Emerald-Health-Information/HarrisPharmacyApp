@@ -40,15 +40,7 @@ namespace HarrisPharmacy.UnitTests
         {
             MakeInMemoryContext();
 
-            Form form = new Form()
-            {
-                FormId = "1",
-                Description = "Test Form",
-                CreatorId = "1",
-                Name = "Test",
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now
-            };
+            Form form = CreateNewTestingForm();
             var success = await _formService.InsertFormAsync(form);
             Assert.True(_formService.FormExists(success.FormId));
             // Cleanup
@@ -65,15 +57,7 @@ namespace HarrisPharmacy.UnitTests
         {
             MakeInMemoryContext();
 
-            Form form = new Form()
-            {
-                FormId = "1",
-                Description = "Test Form",
-                CreatorId = "1",
-                Name = "Test",
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now
-            };
+            Form form = CreateNewTestingForm();
             var success = await _formService.InsertFormAsync(form);
             await _formService.DeleteFormAsync(success.FormId);
             Assert.False(_formService.FormExists(success.FormId));
@@ -90,7 +74,23 @@ namespace HarrisPharmacy.UnitTests
         {
             MakeInMemoryContext();
 
-            Form form = new Form()
+            Form form = CreateNewTestingForm();
+            var success = await _formService.InsertFormAsync(form);
+            form.Name = "New Name";
+
+            var updatedForm = await _formService.UpdateFormAsync(form);
+            Assert.Equal("New Name", updatedForm.Name);
+            // Cleanup
+            EnsureContextDeleted();
+        }
+
+        /// <summary>
+        /// Create a form for testing purposes
+        /// </summary>
+        /// <returns>the created form</returns>
+        private static Form CreateNewTestingForm()
+        {
+            return new Form()
             {
                 FormId = "1",
                 Description = "Test Form",
@@ -99,13 +99,6 @@ namespace HarrisPharmacy.UnitTests
                 DateCreated = DateTime.Now,
                 DateUpdated = DateTime.Now
             };
-            var success = await _formService.InsertFormAsync(form);
-            form.Name = "New Name";
-
-            var updatedForm = await _formService.UpdateFormAsync(form);
-            Assert.Equal("New Name", updatedForm.Name);
-            // Cleanup
-            EnsureContextDeleted();
         }
 
         /// <summary>
