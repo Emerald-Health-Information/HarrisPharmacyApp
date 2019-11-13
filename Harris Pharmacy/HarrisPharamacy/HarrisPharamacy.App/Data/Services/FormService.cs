@@ -76,6 +76,22 @@ namespace HarrisPharmacy.App.Data.Services
         }
 
         /// <summary>
+        /// Inserts the new form field to the database
+        /// </summary>
+        /// <param name="formField">The form field to be inserted</param>
+        /// <returns></returns>
+        public async Task<FormField> InsertFormFieldAsync(FormField formField)
+        {
+            formField.FormFieldId = Guid.NewGuid().ToString();
+            formField.DateCreated = DateTime.Now;
+            formField.DateUpdated = DateTime.Now;
+            var result = await _applicationDbContext.FormFields.AddAsync(formField);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return formField;
+        }
+
+        /// <summary>
         /// Inserts the new Form into the database
         /// </summary>
         /// <param name="form"> The form to be inserted </param>
