@@ -80,5 +80,12 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         bool FormExists(string id);
+
+        /// <summary>
+        /// Inserts the new form field to the database
+        /// </summary>
+        /// <param name="formField">The form field to be inserted</param>
+        /// <returns></returns>
+        Task<FormField> InsertFormFieldAsync(FormField formField);
     }
 }
