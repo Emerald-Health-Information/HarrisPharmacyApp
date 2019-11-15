@@ -33,7 +33,9 @@ else
                     <td>@field.FormInputType</td>
                     <td>@field.Description</td>
                     <td>@field.DateCreated</td>
-                    <td> <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt"></i></td>
+                    <td>
+                        <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
+                    </td>
                 </tr>
             }
         </tbody>

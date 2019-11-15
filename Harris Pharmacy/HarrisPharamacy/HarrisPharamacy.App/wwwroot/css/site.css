@@ -166,3 +166,7 @@ body {
 #cover-caption {
     width: 100%;
 }
+
+.hover {
+    cursor: pointer;
+}
