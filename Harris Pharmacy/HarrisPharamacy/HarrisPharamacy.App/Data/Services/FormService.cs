@@ -141,6 +141,26 @@ namespace HarrisPharmacy.App.Data.Services
         }
 
         /// <summary>
+        /// Deletes a form field with the supplied id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FormField> DeleteFormFieldAsync(string id)
+        {
+            // TODO: Delete the form if it's the only field?
+            var formField = await _applicationDbContext.FormFields.FindAsync(id);
+
+            if (formField == null)
+                return null;
+
+            _applicationDbContext.FormFields.Remove(formField);
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return formField;
+        }
+
+        /// <summary>
         /// Returns all of the form fields as a list of select list items
         /// </summary>
         /// <returns></returns>

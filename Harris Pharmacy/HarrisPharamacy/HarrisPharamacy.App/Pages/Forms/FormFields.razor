@@ -22,16 +22,18 @@ else
                 <th>Input Type</th>
                 <th>Description</th>
                 <th>Date Created</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in FormFieldsList)
+            @foreach (var field in FormFieldsList)
             {
                 <tr>
-                    <td>@item.FieldName</td>
-                    <td>@item.FormInputType</td>
-                    <td>@item.Description</td>
-                    <td>@item.DateCreated</td>
+                    <td>@field.FieldName</td>
+                    <td>@field.FormInputType</td>
+                    <td>@field.Description</td>
+                    <td>@field.DateCreated</td>
+                    <td> <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt"></i></td>
                 </tr>
             }
         </tbody>
@@ -124,6 +126,15 @@ else
         await FormService.InsertFormFieldAsync(FormField);
         FormFieldsList.Add(FormField);
         ToggleModal();
+        this.StateHasChanged();
+    }
+
+    protected async void RemoveFormField(string id)
+    {
+
+        if (id == null) return;
+        await FormService.DeleteFormFieldAsync(id);
+        FormFieldsList.Remove(FormFieldsList.Find(formField => formField.FormFieldId == id));
         this.StateHasChanged();
     }
     /// <summary>
