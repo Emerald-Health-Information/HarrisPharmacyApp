@@ -66,7 +66,7 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="formFieldId"> the formFieldId of the formField you are trying to retrieve </param>
         /// <returns></returns>
-        public async Task<FormField> GetFormField(string formFieldId)
+        public async Task<FormField> GetFormFieldAsync(string formFieldId)
         {
             var formField = await _applicationDbContext.FormFields
                 .Include(f => f.FormWithFields)
@@ -105,17 +105,39 @@ namespace HarrisPharmacy.App.Data.Services
         }
 
         /// <summary>
-        /// Updates the form
+        /// Updates the form, use this if your updating the fields and not just the name/description
+        /// </summary>
+        /// <param name="f"> the form to be updated </param>
+        /// <param name="selectedFormFields" > </param>
+        /// <returns></returns>
+        public async Task<Form> UpdateFormAsync(Form f, List<FormField> selectedFormFields)
+        {
+            var form = await _applicationDbContext.Forms.FindAsync(f.FormId);
+            if (form == null)
+                return null;
+
+            _applicationDbContext.FormWithFields.RemoveRange(form.FormWithFields);
+
+            List<FormWithFields> formWithFields = CreateFormWithFields(f.Description, selectedFormFields, form);
+
+            form.FormWithFields = formWithFields;
+            form.DateUpdated = DateTime.Now;
+            _applicationDbContext.Forms.Update(form);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return form;
+        }
+
+        // <summary>
+        /// Updates the form, use this if your just updating the name/description
         /// </summary>
         /// <param name="f"> the form to be updated </param>
         /// <returns></returns>
         public async Task<Form> UpdateFormAsync(Form f)
         {
             var form = await _applicationDbContext.Forms.FindAsync(f.FormId);
-
             if (form == null)
                 return null;
-
             _applicationDbContext.Forms.Update(form);
             await _applicationDbContext.SaveChangesAsync();
 
@@ -148,10 +170,18 @@ namespace HarrisPharmacy.App.Data.Services
         public async Task<FormField> DeleteFormFieldAsync(string id)
         {
             // TODO: Delete the form if it's the only field?
-            var formField = await _applicationDbContext.FormFields.FindAsync(id);
+            var formField = await _applicationDbContext.FormFields
+                .Include(f => f.FormWithFields)
+                .FirstOrDefaultAsync(f => f.FormFieldId == id);
 
             if (formField == null)
                 return null;
+
+            // Delete any FormWithFields entries related to this field, not sure why this isn't automatic like it is when we delete a form
+            foreach (var formWithFields in formField.FormWithFields)
+            {
+                _applicationDbContext.FormWithFields.Remove(formWithFields);
+            }
 
             _applicationDbContext.FormFields.Remove(formField);
 
@@ -183,9 +213,6 @@ namespace HarrisPharmacy.App.Data.Services
         /// <returns></returns>
         public async Task<Form> CreateFormAsync(string name, string description, List<FormField> selectedFormFields)
         {
-            // The list of all the formsWithFields
-            List<FormWithFields> formsWithFields = new List<FormWithFields>();
-
             // Create a new form
             var form = new Form()
             {
@@ -196,6 +223,18 @@ namespace HarrisPharmacy.App.Data.Services
                 DateUpdated = DateTime.Now,
             };
 
+            List<FormWithFields> formWithFields = CreateFormWithFields(description, selectedFormFields, form);
+
+            // TODO: Save all to db
+            _applicationDbContext.FormWithFields.AddRange(formWithFields);
+
+            return await InsertFormAsync(form);
+        }
+
+        private static List<FormWithFields> CreateFormWithFields(string description, List<FormField> selectedFormFields, Form form)
+        {
+            // The list of all the formsWithFields
+            List<FormWithFields> formsWithFields = new List<FormWithFields>();
             // Create all the new FormWithFields
             foreach (var formField in selectedFormFields)
             {
@@ -213,10 +252,7 @@ namespace HarrisPharmacy.App.Data.Services
                 formsWithFields.Add(formWithFields);
             }
 
-            // TODO: Save all to db
-            _applicationDbContext.FormWithFields.AddRange(formsWithFields);
-
-            return await InsertFormAsync(form);
+            return formsWithFields;
         }
 
         /// <summary>
