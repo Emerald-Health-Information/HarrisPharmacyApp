@@ -102,5 +102,11 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Task<FormField> DeleteFormFieldAsync(string id);
+
+        /// <summary>
+        /// Updates a form field
+        /// </summary>
+        /// <param name="formField"></param>
+        void UpdateFormField(FormField formField);
     }
 }

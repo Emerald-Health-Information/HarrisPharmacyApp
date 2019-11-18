@@ -190,6 +190,13 @@ namespace HarrisPharmacy.App.Data.Services
             return formField;
         }
 
+        public async void UpdateFormField(FormField formField)
+        {
+
+            _applicationDbContext.FormFields.Update(formField);
+            await _applicationDbContext.SaveChangesAsync();
+        }
+
         /// <summary>
         /// Returns all of the form fields as a list of select list items
         /// </summary>
