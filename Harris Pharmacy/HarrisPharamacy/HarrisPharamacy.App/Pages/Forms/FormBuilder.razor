@@ -1,0 +1,210 @@
+﻿@page "/formBuilder"
+
+@using System.Net
+@using HarrisPharmacy.App.Data
+@using HarrisPharmacy.App.Data.Entities.Forms
+@using HarrisPharmacy.App.Data.Interfaces
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.Data.SqlClient
+@inject IFormService FormService
+@inject ApplicationDbContext Context
+
+<h3>Forms</h3>
+
+@if (FormsList == null) // TODO: Turn this whole page into a reusable CRUD component
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th>Form Name</th>
+                <th>Description</th>
+                <th>Date Created</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var form in FormsList)
+            {
+                <tr>
+                    <td>@form.Name</td>
+                    <td>@form.Description</td>
+                    <td>@form.DateCreated</td>
+                    <td>
+                        <i @onclick="@(e => RemoveForm(form.FormId))" class="fas fa-trash-alt hover"></i>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button @onclick="@OpenCreateForm" class="btn btn-warning">Create Form</button>
+
+    @if (_showModal)
+    {
+        @if (Items != null) // CreateForm form
+        {
+            <!--The modal TODO: Move to modal component, make it actually submit the form-->
+            <div class="modal" tabindex="-1" style="display: block" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Success</h3>
+                            <button type="button" class="close" @onclick="@ToggleModal">
+                                <span aria-hidden="true">X</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="col-form-label">Form Name: </label>
+                                <input class="form-control" @bind="@Name" type="text" />
+                                <br />
+                                <label class="col-form-label">Brief Description of the form: </label>
+                                <input class="form-control" type="text" @bind="@Description" />
+                                <br />
+                                @if (SelectedFormFields.Count != 0)
+                                {
+                                    <label class="col-form-label">Additional Fields: </label>
+                                    <ul class="list-group-flush">
+                                        @foreach (var field in SelectedFormFields)
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                @field.FieldName
+                                                <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt"></i>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                }
+                                <h5>Add Additional fields</h5>
+                                <select class="custom-select" @onchange="UpdateItem">
+                                    @foreach (var var in Items)
+                                    {
+                                        <option value=@var.Value>@var.Text</option>
+                                    }
+                                </select>
+
+                                <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
+                            </div>
+                            <div class="modal-footer">
+                                <button @onclick="@CreateForm" class="btn btn-warning">Create Form</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+@code {
+    public List<FormField> FormFields;
+    public List<FormField> SelectedFormFields = new List<FormField>();
+    public List<SelectListItem> Items { get; set; } = null!;
+    public SelectListItem Item { get; set; } = null!;
+    public Form Form = null!;
+    /// <summary>
+    /// List of the forms
+    /// </summary>
+    public List<Form> FormsList;
+
+    /// <summary>
+    /// the private backing field for showing the modal
+    /// </summary>
+    private bool _showModal = false;
+
+    private string Name { get; set; }
+    private string Description { get; set; }
+
+    /// <summary>
+    /// Initializes the variables
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+
+        Items = FormService.GetFormFieldsMultiSelectListAsync();
+        FormFields = await FormService.GetFormFieldsAsync();
+        FormsList = await FormService.GetFormsAsync();
+        Item = Items[0];
+    }
+
+    /// <summary>
+    /// Updates the Item variable to be the selected item from the select input
+    /// </summary>
+    /// <param name="e"></param>
+    protected void UpdateItem(ChangeEventArgs e)
+    {
+        Item = Items.FirstOrDefault(j => j.Value == e.Value.ToString());
+    }
+    /// <summary>
+    /// Removes the selected item from the list
+    /// </summary>
+    /// <param name="e"></param>
+    protected void RemoveField(string id)
+    {
+        if (id == null) return;
+        SelectedFormFields.Remove(FormFields.Find(f => f.FormFieldId == id));
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Adds a field to the page
+    /// </summary>
+    protected void AddField()
+    {
+        var i = Items.FirstOrDefault(j => j.Value == Item.Value);
+        if (i == null) return;
+        SelectedFormFields.Add(FormFields.Find(f => f.FormFieldId == i.Value));
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Inserts a new form into the db using form service
+    /// </summary>
+    /// <returns></returns>
+    protected async Task CreateForm()
+    {
+        await FormService.CreateFormAsync(Name, Description, SelectedFormFields);
+        await OnInitializedAsync();
+        ToggleModal();
+        ClearFields();
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Clears the fields
+    /// </summary>
+    protected void ClearFields()
+    {
+        Name = string.Empty;
+        Description = string.Empty;
+        SelectedFormFields = new List<FormField>();
+    }
+
+    /// <summary>
+    /// Creates a new form field and opens the modal
+    /// </summary>
+    protected void OpenCreateForm()
+    {
+        Form = new Form();
+        ToggleModal();
+    }
+
+    protected async void RemoveForm(string id)
+    {
+        if (id == null) return;
+        FormsList.Remove(FormsList.Find(form => form.FormId == id));
+        await FormService.DeleteFormAsync(id);
+        this.StateHasChanged();
+    }
+    /// <summary>
+    /// Toggles the modal on/off
+    /// </summary>
+    protected void ToggleModal()
+    {
+        _showModal = !_showModal;
+    }
+}

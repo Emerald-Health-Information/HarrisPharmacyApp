@@ -1,0 +1,154 @@
+﻿@page "/FormFields"
+@using HarrisPharmacy.App.Data.Entities.Forms
+@using HarrisPharmacy.App.Data.Enums
+@using HarrisPharmacy.App.Data.Interfaces
+@using HarrisPharmacy.App.Data.Services
+@using Microsoft.AspNetCore.Components
+
+@inject IFormService FormService
+
+<h1>Form Fields</h1>
+
+@if (FormFieldsList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class='table table-hover'>
+        <thead>
+            <tr>
+                <th>Field Name</th>
+                <th>Input Type</th>
+                <th>Description</th>
+                <th>Date Created</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var field in FormFieldsList)
+            {
+                <tr>
+                    <td>@field.FieldName</td>
+                    <td>@field.FormInputType</td>
+                    <td>@field.Description</td>
+                    <td>@field.DateCreated</td>
+                    <td>
+                        <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button @onclick="@OpenCreateField" class="btn btn-warning">Create New Field</button>
+    @if (_showModal)
+    {
+        <!--The modal TODO: Move to modal component, make it actually submit the form-->
+        <div class="modal" tabindex="-1" style="display:block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Success</h3>
+                        <button type="button" class="close" @onclick="@ToggleModal">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-form-label">Field Name: </label>
+                            <input class="form-control" @bind="@FormField.FieldName" type="text" />
+                            <br />
+                            <label class="col-form-label">Input Type: </label>
+
+                            <select @onchange="@FormInputTypeClicked" class="form-control">
+                                <option value="">-- Select Form --</option>
+                                @foreach (var type in (FormInputType[])Enum.GetValues(typeof(FormInputType)))
+                                {
+                                    <option value="@type">@type</option>
+                                }
+                            </select>
+                            <br />
+                            <label class="col-form-label">Brief Description of the field: </label>
+                            <input class="form-control" type="text" @bind="@FormField.Description" />
+                            <br />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-block btn-info" @onclick="@InsertField">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@functions {
+    /// <summary>
+    /// The list of form fields
+    /// </summary>
+    public List<FormField> FormFieldsList;
+    public FormField FormField = null;
+    public FormInputType FormInputType = FormInputType.Text;
+    /// <summary>
+    /// the private backing field for showing the modal
+    /// </summary>
+    private bool _showModal = false;
+
+    /// <summary>
+    /// Method invoked when the component is ready to start, having received its initial parameters from its parent in the render tree.
+    /// Gets the forms from the form services and assigns them to FormsList
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
+    {
+        FormFieldsList = await FormService.GetFormFieldsAsync();
+    }
+    /// <summary>
+    /// Toggles the modal on/off
+    /// </summary>
+    protected void ToggleModal()
+    {
+        _showModal = !_showModal;
+    }
+
+    /// <summary>
+    /// Creates a new form field and opens the modal
+    /// </summary>
+    protected void OpenCreateField()
+    {
+        FormField = new FormField();
+        ToggleModal();
+    }
+    /// <summary>
+    /// Inserts the created form field into the database
+    /// </summary>
+    protected async void InsertField()
+    {
+        FormField.FormInputType = FormInputType;
+        await FormService.InsertFormFieldAsync(FormField);
+        FormFieldsList.Add(FormField);
+        ToggleModal();
+        this.StateHasChanged();
+    }
+
+    protected async void RemoveFormField(string id)
+    {
+
+        if (id == null) return;
+        await FormService.DeleteFormFieldAsync(id);
+        FormFieldsList.Remove(FormFieldsList.Find(formField => formField.FormFieldId == id));
+        this.StateHasChanged();
+    }
+    /// <summary>
+    /// Updates the state when the selected form changes
+    /// and assigns the form to FormSelected
+    /// </summary>
+    /// <param name="e"></param>
+    protected void FormInputTypeClicked(ChangeEventArgs e)
+    {
+
+        FormInputType = Enum.Parse<FormInputType>(e.Value.ToString());
+        this.StateHasChanged();
+    }
+
+}

@@ -76,13 +76,29 @@ namespace HarrisPharmacy.App.Data.Services
         }
 
         /// <summary>
+        /// Inserts the new form field to the database
+        /// </summary>
+        /// <param name="formField">The form field to be inserted</param>
+        /// <returns></returns>
+        public async Task<FormField> InsertFormFieldAsync(FormField formField)
+        {
+            formField.FormFieldId = Guid.NewGuid().ToString();
+            formField.DateCreated = DateTime.Now;
+            formField.DateUpdated = DateTime.Now;
+            var result = await _applicationDbContext.FormFields.AddAsync(formField);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return formField;
+        }
+
+        /// <summary>
         /// Inserts the new Form into the database
         /// </summary>
         /// <param name="form"> The form to be inserted </param>
         /// <returns> The form entity </returns>
         public async Task<Form> InsertFormAsync(Form form)
         {
-            await _applicationDbContext.Forms.AddAsync(form);
+            var result = await _applicationDbContext.Forms.AddAsync(form);
             await _applicationDbContext.SaveChangesAsync();
 
             return form;
@@ -99,11 +115,6 @@ namespace HarrisPharmacy.App.Data.Services
 
             if (form == null)
                 return null;
-
-            form.Name = f.Name;
-
-            form.DateUpdated = DateTime.Now;
-            form.Description = f.Description;
 
             _applicationDbContext.Forms.Update(form);
             await _applicationDbContext.SaveChangesAsync();
@@ -127,6 +138,26 @@ namespace HarrisPharmacy.App.Data.Services
             await _applicationDbContext.SaveChangesAsync();
 
             return form;
+        }
+
+        /// <summary>
+        /// Deletes a form field with the supplied id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<FormField> DeleteFormFieldAsync(string id)
+        {
+            // TODO: Delete the form if it's the only field?
+            var formField = await _applicationDbContext.FormFields.FindAsync(id);
+
+            if (formField == null)
+                return null;
+
+            _applicationDbContext.FormFields.Remove(formField);
+
+            await _applicationDbContext.SaveChangesAsync();
+
+            return formField;
         }
 
         /// <summary>
@@ -188,7 +219,12 @@ namespace HarrisPharmacy.App.Data.Services
             return await InsertFormAsync(form);
         }
 
-        private bool FormExists(string id)
+        /// <summary>
+        /// See if the form exists given the Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public bool FormExists(string id)
         {
             return _applicationDbContext.Forms.Any(e => e.FormId == id);
         }

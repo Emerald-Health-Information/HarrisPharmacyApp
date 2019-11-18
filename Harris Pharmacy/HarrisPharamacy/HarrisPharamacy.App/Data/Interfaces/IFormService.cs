@@ -73,5 +73,26 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <param name="selectedFormFields"></param>
         /// <returns></returns>
         Task<Form> CreateFormAsync(string name, string description, List<FormField> selectedFormFields);
+
+        /// <summary>
+        /// See if the form exists given the Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool FormExists(string id);
+
+        /// <summary>
+        /// Inserts the new form field to the database
+        /// </summary>
+        /// <param name="formField">The form field to be inserted</param>
+        /// <returns></returns>
+        Task<FormField> InsertFormFieldAsync(FormField formField);
+
+        /// <summary>
+        /// Deletes a form field with the supplied id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<FormField> DeleteFormFieldAsync(string id);
     }
 }

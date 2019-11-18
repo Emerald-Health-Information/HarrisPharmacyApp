@@ -1,0 +1,16 @@
+﻿@page "/redirect/{page}"
+
+@inject NavigationManager navigationManager
+
+<p>Redirecting...</p>
+@{ Direct();}
+
+@code {
+    [Parameter]
+    public string page { get; set; }
+
+    protected void Direct()
+    {
+        navigationManager.NavigateTo("/" + page);
+    }
+}

@@ -11,26 +11,87 @@
 @inject ApplicationDbContext Context
 
 <h3>Appointments</h3>
-<h5>Patient Id</h5>
-<input @bind="@PatientId" type="text" placeholder="Patient Id" />
+<h5>Please select a Patient</h5>
+@if (PatientsList == null)
+{
+<p><em>Loading...</em></p>
+}
+else if (PatientsList.Count == 0)
+{
+<p>No patients to display</p>
+}
+else
+{
+<div class="row" style="padding-top:10px">
+    <div class="col-md-4">
+        <select @bind="@PatientId" class="form-control">
+            <option value="">-- Choose Patient --</option>
+            @foreach (var patient in PatientsList)
+                {
+            <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
+                }
+        </select>
+    </div>
+</div>
+
+}
 <h5>User Id</h5>
-<input @bind="@UserId" type="text" placeholder="User Id" />
+<input class="form-control" @bind="@UserId" type="text" placeholder="User Id" />
 <h5>Start Time</h5>
-<input @bind="@StartTime" type="text" placeholder="Start Time" />
+<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+    <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    </div>
+</div>
+
 <h5>End Time</h5>
-<input @bind="@EndTime" type="text" placeholder="End Time" />
+<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+    <input @bind="@EndTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    </div>
+</div>
+
 <h5>Location</h5>
-<input @bind="@Location" type="text" placeholder="Location" />
+<input class="form-control" @bind="@Location" type="text" placeholder="Location" />
 <h5>Description</h5>
-<input @bind="@Description" type="text" placeholder="Location" />
+<input class="form-control" @bind="@Description" type="text" placeholder="Description" />
 <br />
 <button @onclick="@CreateAppointment" class="btn btn-warning">Add Appointment</button>
 <h5>Delete Appointment</h5>
-<input @bind="@Delete" type="text" placeholder="Appt id" />
+@if (AppointmentList == null)
+{
+<p><em>Loading...</em></p>
+}
+else if (AppointmentList.Count == 0)
+{
+<p>No Appointments to display</p>
+}
+else
+{
+<div class="row" style="padding-top:10px">
+    <div class="col-md-4">
+        <select @bind="@Delete" class="form-control">
+            <option value="">-- Choose Appointment --</option>
+            @foreach (var appt in AppointmentList)
+                {
+            <option value="@appt.PatientListId">@appt.PatientId @appt.Description</option>
+                }
+        </select>
+    </div>
+</div>
+
+}
+
+<br />
 <button @onclick="@DeleteAppointment" class="btn btn-warning">Delete Appointment</button>
 
 @code {
+    public List<Patient> PatientsList;
+    public Patient PatientSelected;
     public SelectListItem Item { get; set; } = null!;
+    public List<PatientList> AppointmentList;
 
     private string PatientId { get; set; }
     private string UserId { get; set; }
@@ -39,6 +100,13 @@
     private string Location { get; set; }
     private string Description { get; set; }
     private string Delete { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        PatientsList = await AppointmentService.GetPatientsAsync();
+        AppointmentList = await AppointmentService.GetPatientListAsync();
+    }
+
     /// <summary>
     /// Inserts a new Appointment into the db using appointment service
     /// </summary>
@@ -69,12 +137,16 @@
         ClearFields();
         await OnInitializedAsync();
     }
+    protected async void PatientChosen(ChangeEventArgs e)
+    {
+        PatientSelected = await AppointmentService.GetPatientAsync(e.Value.ToString());
+        this.StateHasChanged();
+    }
     /// <summary>
     /// Clear fields on the page
     /// </summary>
     protected void ClearFields()
     {
-        PatientId = string.Empty;
         UserId = string.Empty;
         StartTime = string.Empty;
         EndTime = string.Empty;
