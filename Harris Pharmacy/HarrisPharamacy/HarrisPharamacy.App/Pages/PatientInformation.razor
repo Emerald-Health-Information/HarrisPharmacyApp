@@ -13,10 +13,10 @@
 
 <h1>Patient Information</h1>
 
-<p><b>Patient Name: </b> @fName @lName</p>
+<p><b>Patient Name: </b> @FirstName @LastName</p>
 <p><b>Health Care Number: </b></p>
-<p><b>Sex: </b> @sex</p>
-<p><b>Age: </b> @age</p>
+<p><b>Sex: </b> @Sex</p>
+<p><b>Age: </b> @Age</p>
 <p><b>City:</b></p>
 <p><b>Province:</b></p>
 <p><b>Address:</b></p>
@@ -24,17 +24,17 @@
 <p><b>Patient Notes:</b></p>
 <textarea name="textarea" rows="10">Write something here</textarea>
 <div align="right">
-    <button type="button" @onclick="@finish">Finish</button>
+    <button type="button" @onclick="@FinishAppointment">Finish</button>
 </div>
 
 @code {
     [Parameter]
     public string patientListID { get; set; }
-    private string fName;
-    private string lName;
+    private string FirstName;
+    private string LastName;
     private string healthNumber;
-    private string age;
-    private string sex;
+    private string Age;
+    private string Sex;
     PatientList appt;
 
     protected override async Task OnInitializedAsync()
@@ -45,14 +45,14 @@
         var patient = Context.Patients
             .Where(p => p.PatientId == appt.PatientId).FirstOrDefault();
 
-        fName = patient.FirstName;
-        lName = patient.LastName;
-        age = patient.Age;
-        sex = patient.Sex;
+        FirstName = patient.FirstName;
+        LastName = patient.LastName;
+        Age = patient.Age;
+        Sex = patient.Sex;
 
     }
 
-    public async void finish()
+    public async void FinishAppointment()
     {
         await s.DeleteAsync(appt.PatientListId);
         nm.NavigateTo("patients");
