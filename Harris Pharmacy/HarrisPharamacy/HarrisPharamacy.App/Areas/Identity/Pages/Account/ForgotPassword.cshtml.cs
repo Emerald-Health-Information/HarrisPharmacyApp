@@ -1,4 +1,27 @@
-﻿using System;
+﻿#region copyright
+
+/*
+
+Harrison1 COSC 470 2019
+
+File =
+
+Author =
+
+Date = 2019-11-19
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0		Taylor Adam		2019-11-19			Added Headers
+
+*/
+
+#endregion copyright
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
@@ -46,7 +69,7 @@ namespace HarrisPharmacy.App.Areas.Identity.Pages.Account
                     return RedirectToPage("./ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please 
+                // For more information on how to enable account confirmation and password reset please
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

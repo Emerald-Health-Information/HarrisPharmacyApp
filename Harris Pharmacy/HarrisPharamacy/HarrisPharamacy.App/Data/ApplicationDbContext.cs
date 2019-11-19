@@ -1,4 +1,27 @@
-﻿using HarrisPharmacy.App.Data.Entities.Forms;
+﻿#region copyright
+
+/*
+
+Harrison1 COSC 470 2019
+
+File = ApplicationDbContext.cs
+
+Author = Taylor Adam
+
+Date = 2019-11-19
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0		Taylor Adam		2019-11-19			Added Headers
+
+*/
+
+#endregion copyright
+
+using HarrisPharmacy.App.Data.Entities.Forms;
 using HarrisPharmacy.App.Data.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
 

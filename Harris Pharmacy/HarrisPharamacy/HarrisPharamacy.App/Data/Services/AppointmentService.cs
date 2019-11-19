@@ -1,4 +1,27 @@
-﻿using System;
+﻿#region copyright
+
+/*
+
+Harrison1 COSC 470 2019
+
+File =
+
+Author =
+
+Date = 2019-11-19
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0		Taylor Adam		2019-11-19			Added Headers
+
+*/
+
+#endregion copyright
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +47,7 @@ namespace HarrisPharmacy.App.Data.Services
             return await _applicationDbContext.Patients
                 .SingleOrDefaultAsync(f => f.PatientId == patientId);
         }
+
         /// <summary>
         /// Get a list of all the patients in the database
         /// </summary>
@@ -33,7 +57,9 @@ namespace HarrisPharmacy.App.Data.Services
             return await _applicationDbContext.Patients
                 .ToListAsync();
         }
+
         private readonly ApplicationDbContext _applicationDbContext;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -42,6 +68,7 @@ namespace HarrisPharmacy.App.Data.Services
         {
             _applicationDbContext = applicationDbContext;
         }
+
         /// <summary>
         /// Deletes appointment with the supplied id
         /// </summary>
@@ -59,8 +86,9 @@ namespace HarrisPharmacy.App.Data.Services
 
             return appointment;
         }
+
         /// <summary>
-        /// Gets the appointment with the corresponding appointment id 
+        /// Gets the appointment with the corresponding appointment id
         /// </summary>
         /// <param name="patientListId"></param>
         /// <returns></returns>
@@ -70,6 +98,7 @@ namespace HarrisPharmacy.App.Data.Services
                 .SingleOrDefaultAsync(a => a.PatientListId == patientListId);
             return appointment;
         }
+
         /// <summary>
         /// Gets a list of all the appointments in the database
         /// </summary>
@@ -79,6 +108,7 @@ namespace HarrisPharmacy.App.Data.Services
             return await _applicationDbContext.PatientLists
                 .ToListAsync();
         }
+
         /// <summary>
         /// Gets a list of all the appointments in the database that are assigned to a specific user
         /// </summary>
@@ -89,6 +119,7 @@ namespace HarrisPharmacy.App.Data.Services
             List<PatientList> patientList = await _applicationDbContext.PatientLists.ToListAsync();
             return patientList.FindAll(pl => userId.Contains(pl.UserId));
         }
+
         /// <summary>
         /// Inserts a new appointment into the database
         /// </summary>
@@ -101,6 +132,7 @@ namespace HarrisPharmacy.App.Data.Services
 
             return appointment;
         }
+
         /// <summary>
         /// Updates an appointment in the database
         /// </summary>
@@ -122,6 +154,5 @@ namespace HarrisPharmacy.App.Data.Services
 
             return appointment;
         }
-
     }
 }
