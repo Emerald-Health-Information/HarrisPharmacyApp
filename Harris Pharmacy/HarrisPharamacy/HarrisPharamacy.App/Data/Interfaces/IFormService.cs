@@ -36,6 +36,14 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// Updates the form
         /// </summary>
         /// <param name="f"> the form to be updated </param>
+        /// <param name="selectedFormFields"> the new fields on the form </param>
+        /// <returns></returns>
+        Task<Form> UpdateFormAsync(Form f, List<FormField> selectedFormFields);
+
+        // <summary>
+        /// Updates the form, use this if your just updating the namedescription
+        /// </summary>
+        /// <param name="f"> the form to be updated </param>
         /// <returns></returns>
         Task<Form> UpdateFormAsync(Form f);
 
@@ -63,7 +71,7 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// </summary>
         /// <param name="formFieldId"> the formFieldId of the formField you are trying to retrieve </param>
         /// <returns></returns>
-        Task<FormField> GetFormField(string formFieldId);
+        Task<FormField> GetFormFieldAsync(string formFieldId);
 
         /// <summary>
         /// Creates a form with the selected formFields
@@ -94,5 +102,11 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// <param name="id"></param>
         /// <returns></returns>
         Task<FormField> DeleteFormFieldAsync(string id);
+
+        /// <summary>
+        /// Updates a form field
+        /// </summary>
+        /// <param name="formField"></param>
+        void UpdateFormFieldAsync(FormField formField);
     }
 }

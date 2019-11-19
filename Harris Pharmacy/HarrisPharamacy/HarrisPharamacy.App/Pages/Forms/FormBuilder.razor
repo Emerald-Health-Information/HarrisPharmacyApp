@@ -24,7 +24,7 @@ else
                 <th>Form Name</th>
                 <th>Description</th>
                 <th>Date Created</th>
-                <th>Delete</th>
+                <th>Modify</th>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +35,8 @@ else
                     <td>@form.Description</td>
                     <td>@form.DateCreated</td>
                     <td>
-                        <i @onclick="@(e => RemoveForm(form.FormId))" class="fas fa-trash-alt hover"></i>
+                        <i @onclick="@(e => RemoveForm(form.FormId))" class="fas fa-trash-alt hover"></i> |
+                        <i @onclick="@(e => OpenUpdateForm(form.FormId))" class="fas fa-edit hover"></i>
                     </td>
                 </tr>
             }
@@ -43,7 +44,7 @@ else
     </table>
     <button @onclick="@OpenCreateForm" class="btn btn-warning">Create Form</button>
 
-    @if (_showModal)
+    @if (_createModal)
     {
         @if (Items != null) // CreateForm form
         {
@@ -53,7 +54,7 @@ else
                     <div class="modal-content">
                         <div class="modal-header">
                             <h3 class="modal-title">Success</h3>
-                            <button type="button" class="close" @onclick="@ToggleModal">
+                            <button type="button" class="close" @onclick="@ToggleCreateModal">
                                 <span aria-hidden="true">X</span>
                             </button>
                         </div>
@@ -98,7 +99,61 @@ else
             </div>
         }
     }
+
+    @if (_updateModal)
+    {
+        <!--The modal TODO: Move to modal component, make it actually submit the form-->
+        <div class="modal" tabindex="-1" style="display: block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Update Form</h3>
+                        <button type="button" class="close" @onclick="@ToggleUpdateModal">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-form-label">Form Name: </label>
+                            <input class="form-control" @bind="@Form.Name" type="text" />
+                            <br />
+                            <label class="col-form-label">Brief Description of the form: </label>
+                            <input class="form-control" type="text" @bind="@Form.Description" />
+                            <br />
+                            @if (SelectedFormFields.Count != 0)
+                            {
+                                <label class="col-form-label">Additional Fields: </label>
+                                <ul class="list-group-flush">
+                                    @foreach (var field in SelectedFormFields)
+                                    {
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            @field.FieldName
+                                            <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt"></i>
+                                        </li>
+
+                                    }
+                                </ul>
+                            }
+                            <h5>Add Additional fields</h5>
+                            <select class="custom-select" @onchange="UpdateItem">
+                                @foreach (var var in Items)
+                                {
+                                    <option value=@var.Value>@var.Text</option>
+                                }
+                            </select>
+
+                            <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button @onclick="@UpdateForm" class="btn btn-warning">Update Form</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }
+
 @code {
     public List<FormField> FormFields;
     public List<FormField> SelectedFormFields = new List<FormField>();
@@ -113,7 +168,11 @@ else
     /// <summary>
     /// the private backing field for showing the modal
     /// </summary>
-    private bool _showModal = false;
+    private bool _createModal = false;
+    /// <summary>
+    /// the private backing field for showing either the update or delete modal
+    /// </summary>
+    private bool _updateModal = false;
 
     private string Name { get; set; }
     private string Description { get; set; }
@@ -169,7 +228,7 @@ else
     {
         await FormService.CreateFormAsync(Name, Description, SelectedFormFields);
         await OnInitializedAsync();
-        ToggleModal();
+        ToggleCreateModal();
         ClearFields();
         this.StateHasChanged();
     }
@@ -190,7 +249,7 @@ else
     protected void OpenCreateForm()
     {
         Form = new Form();
-        ToggleModal();
+        ToggleCreateModal();
     }
 
     protected async void RemoveForm(string id)
@@ -200,11 +259,37 @@ else
         await FormService.DeleteFormAsync(id);
         this.StateHasChanged();
     }
+    protected async void UpdateForm()
+    {
+        ToggleUpdateModal();
+        await FormService.UpdateFormAsync(Form, SelectedFormFields);
+
+        ClearFields();
+    }
+
+    protected void OpenUpdateForm(string id)
+    {
+        if (id == null) return;
+        Form = FormsList.Find(form => form.FormId == id);
+        foreach (var formWithFields in Form.FormWithFields.ToList())
+        {
+            SelectedFormFields.Add(formWithFields.FormField);
+        }
+        ToggleUpdateModal();
+        this.StateHasChanged();
+    }
     /// <summary>
     /// Toggles the modal on/off
     /// </summary>
-    protected void ToggleModal()
+    protected void ToggleCreateModal()
     {
-        _showModal = !_showModal;
+        _createModal = !_createModal;
+
+    } /// <summary>
+      /// Toggles the modal on/off
+      /// </summary>
+    protected void ToggleUpdateModal()
+    {
+        _updateModal = !_updateModal;
     }
 }

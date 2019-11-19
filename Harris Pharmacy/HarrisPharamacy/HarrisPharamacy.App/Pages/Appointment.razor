@@ -14,25 +14,25 @@
 <h5>Please select a Patient</h5>
 @if (PatientsList == null)
 {
-<p><em>Loading...</em></p>
+    <p><em>Loading...</em></p>
 }
 else if (PatientsList.Count == 0)
 {
-<p>No patients to display</p>
+    <p>No patients to display</p>
 }
 else
 {
-<div class="row" style="padding-top:10px">
-    <div class="col-md-4">
-        <select @bind="@PatientId" class="form-control">
-            <option value="">-- Choose Patient --</option>
-            @foreach (var patient in PatientsList)
+    <div class="row" style="padding-top:10px">
+        <div class="col-md-4">
+            <select @bind="@PatientId" class="form-control">
+                <option value="">-- Choose Patient --</option>
+                @foreach (var patient in PatientsList)
                 {
-            <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
+                    <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
                 }
-        </select>
+            </select>
+        </div>
     </div>
-</div>
 
 }
 <h5>User Id</h5>
@@ -62,25 +62,25 @@ else
 <h5>Delete Appointment</h5>
 @if (AppointmentList == null)
 {
-<p><em>Loading...</em></p>
+    <p><em>Loading...</em></p>
 }
 else if (AppointmentList.Count == 0)
 {
-<p>No Appointments to display</p>
+    <p>No Appointments to display</p>
 }
 else
 {
-<div class="row" style="padding-top:10px">
-    <div class="col-md-4">
-        <select @bind="@Delete" class="form-control">
-            <option value="">-- Choose Appointment --</option>
-            @foreach (var appt in AppointmentList)
+    <div class="row" style="padding-top:10px">
+        <div class="col-md-4">
+            <select @bind="@Delete" class="form-control">
+                <option value="">-- Choose Appointment --</option>
+                @foreach (var appt in AppointmentList)
                 {
-            <option value="@appt.PatientListId">@appt.PatientId @appt.Description</option>
+                    <option value="@appt.PatientListId">@appt.PatientId @appt.Description</option>
                 }
-        </select>
+            </select>
+        </div>
     </div>
-</div>
 
 }
 

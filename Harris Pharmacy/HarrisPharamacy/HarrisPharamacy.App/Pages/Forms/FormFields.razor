@@ -22,7 +22,7 @@ else
                 <th>Input Type</th>
                 <th>Description</th>
                 <th>Date Created</th>
-                <th>Delete</th>
+                <th>Modify</th>
             </tr>
         </thead>
         <tbody>
@@ -34,14 +34,15 @@ else
                     <td>@field.Description</td>
                     <td>@field.DateCreated</td>
                     <td>
-                        <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
+                        <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i> |
+                        <i @onclick="@(e => OpenUpdateFormField(field.FormFieldId))" class="fas fa-edit hover"></i>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
     <button @onclick="@OpenCreateField" class="btn btn-warning">Create New Field</button>
-    @if (_showModal)
+    @if (_createModal)
     {
         <!--The modal TODO: Move to modal component, make it actually submit the form-->
         <div class="modal" tabindex="-1" style="display:block" role="dialog">
@@ -49,7 +50,7 @@ else
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title">Success</h3>
-                        <button type="button" class="close" @onclick="@ToggleModal">
+                        <button type="button" class="close" @onclick="@ToggleCreateModal">
                             <span aria-hidden="true">X</span>
                         </button>
                     </div>
@@ -80,6 +81,45 @@ else
             </div>
         </div>
     }
+    @if (_updateModal)
+    {
+
+        <div class="modal" tabindex="-1" style="display:block" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Success</h3>
+                        <button type="button" class="close" @onclick="@ToggleUpdateModal">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-form-label">Field Name: </label>
+                            <input class="form-control" @bind="@FormField.FieldName" type="text" />
+                            <br />
+                            <label class="col-form-label">Input Type: </label>
+
+                            <select @onchange="@FormInputTypeClicked" class="form-control">
+                                <option value="@FormInputType">@FormInputType</option>
+                                @foreach (var type in (FormInputType[])Enum.GetValues(typeof(FormInputType)))
+                                {
+                                    <option value="@type">@type</option>
+                                }
+                            </select>
+                            <br />
+                            <label class="col-form-label">Brief Description of the field: </label>
+                            <input class="form-control" type="text" @bind="@FormField.Description" />
+                            <br />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-block btn-info" @onclick="@UpdateFormField">Update Form Field</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }
 
 @functions {
@@ -90,9 +130,13 @@ else
     public FormField FormField = null;
     public FormInputType FormInputType = FormInputType.Text;
     /// <summary>
-    /// the private backing field for showing the modal
+    /// the private backing field for showing the modal to create a form field
     /// </summary>
-    private bool _showModal = false;
+    private bool _createModal = false;
+    /// <summary>
+    /// the private backing field for showing the modal to update a form field
+    /// </summary>
+    private bool _updateModal = false;
 
     /// <summary>
     /// Method invoked when the component is ready to start, having received its initial parameters from its parent in the render tree.
@@ -106,9 +150,16 @@ else
     /// <summary>
     /// Toggles the modal on/off
     /// </summary>
-    protected void ToggleModal()
+    protected void ToggleCreateModal()
     {
-        _showModal = !_showModal;
+        _createModal = !_createModal;
+
+    }/// <summary>
+     /// Toggles the modal on/off
+     /// </summary>
+    protected void ToggleUpdateModal()
+    {
+        _updateModal = !_updateModal;
     }
 
     /// <summary>
@@ -117,8 +168,26 @@ else
     protected void OpenCreateField()
     {
         FormField = new FormField();
-        ToggleModal();
+        ToggleCreateModal();
+
     }
+    /// <summary>
+    /// Opens the modal to update the form field
+    /// </summary>
+    protected async void OpenUpdateFormField(string id)
+    {
+        FormField = await FormService.GetFormFieldAsync(id);
+        ToggleUpdateModal();
+        this.StateHasChanged();
+    }
+
+    protected void UpdateFormField()
+    {
+        ToggleUpdateModal();
+        FormField.FormInputType = FormInputType;
+        FormService.UpdateFormFieldAsync(FormField);
+    }
+
     /// <summary>
     /// Inserts the created form field into the database
     /// </summary>
@@ -127,7 +196,7 @@ else
         FormField.FormInputType = FormInputType;
         await FormService.InsertFormFieldAsync(FormField);
         FormFieldsList.Add(FormField);
-        ToggleModal();
+        ToggleCreateModal();
         this.StateHasChanged();
     }
 
