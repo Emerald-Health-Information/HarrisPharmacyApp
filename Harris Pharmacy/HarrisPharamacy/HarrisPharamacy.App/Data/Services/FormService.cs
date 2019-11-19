@@ -190,8 +190,9 @@ namespace HarrisPharmacy.App.Data.Services
             return formField;
         }
 
-        public async void UpdateFormField(FormField formField)
+        public async void UpdateFormFieldAsync(FormField formField)
         {
+            formField.DateUpdated = DateTime.Now;
 
             _applicationDbContext.FormFields.Update(formField);
             await _applicationDbContext.SaveChangesAsync();

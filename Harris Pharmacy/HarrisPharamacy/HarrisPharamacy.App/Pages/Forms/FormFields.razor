@@ -22,7 +22,7 @@ else
                 <th>Input Type</th>
                 <th>Description</th>
                 <th>Date Created</th>
-                <th>Delete</th>
+                <th>Modify</th>
             </tr>
         </thead>
         <tbody>
@@ -185,7 +185,7 @@ else
     {
         ToggleUpdateModal();
         FormField.FormInputType = FormInputType;
-        FormService.UpdateFormField(FormField);
+        FormService.UpdateFormFieldAsync(FormField);
     }
 
     /// <summary>
