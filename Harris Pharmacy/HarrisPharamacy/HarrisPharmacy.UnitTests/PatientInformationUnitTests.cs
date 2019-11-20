@@ -27,7 +27,6 @@ namespace HarrisPharmacy.UnitTests
                           .Options;
             var dbContext = new ApplicationDbContext(options);
             _appointmentService = new AppointmentService(dbContext);
-
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace HarrisPharmacy.UnitTests
             };
             var success = await _appointmentService.InsertAsync(pl);
         }
-        
+
         /// <summary>
         /// Delete context after testing.
         /// </summary>

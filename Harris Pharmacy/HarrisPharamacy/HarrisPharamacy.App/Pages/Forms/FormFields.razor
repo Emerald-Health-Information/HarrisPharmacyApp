@@ -38,8 +38,8 @@ else
             <tr>
                 <th>Field Name</th>
                 <th>Input Type</th>
-                <th>Description</th>
-                <th>Date Created</th>
+                @*<th>Description</th>
+                    <th>Date Created</th>*@
                 <th>Modify</th>
             </tr>
         </thead>
@@ -49,8 +49,8 @@ else
                 <tr>
                     <td>@field.FieldName</td>
                     <td>@field.FormInputType</td>
-                    <td>@field.Description</td>
-                    <td>@field.DateCreated</td>
+                    @*<td>@field.Description</td>
+                        <td>@field.DateCreated</td>*@
                     <td>
                         <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i> |
                         <i @onclick="@(e => OpenUpdateFormField(field.FormFieldId))" class="fas fa-edit hover"></i>
@@ -67,7 +67,7 @@ else
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Success</h3>
+                        <h3 class="modal-title">Create Form Field</h3>
                         <button type="button" class="close" @onclick="@ToggleCreateModal">
                             <span aria-hidden="true">X</span>
                         </button>
@@ -93,7 +93,7 @@ else
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-block btn-info" @onclick="@InsertField">Ok</button>
+                        <button class="btn btn-block btn-info" @onclick="@InsertField">Create Form Field</button>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@ else
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Success</h3>
+                        <h3 class="modal-title">Update Form Field </h3>
                         <button type="button" class="close" @onclick="@ToggleUpdateModal">
                             <span aria-hidden="true">X</span>
                         </button>
