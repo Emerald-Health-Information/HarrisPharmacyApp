@@ -40,7 +40,7 @@ else
             <tr>
                 <th>Form Name</th>
                 <th>Description</th>
-                <th>Date Created</th>
+                @*<th>Date Created</th>*@
                 <th>Modify</th>
             </tr>
         </thead>
@@ -50,7 +50,7 @@ else
                 <tr>
                     <td>@form.Name</td>
                     <td>@form.Description</td>
-                    <td>@form.DateCreated</td>
+                    @*<td>@form.DateCreated</td>*@
                     <td>
                         <i @onclick="@(e => RemoveForm(form.FormId))" class="fas fa-trash-alt hover"></i> |
                         <i @onclick="@(e => OpenUpdateForm(form.FormId))" class="fas fa-edit hover"></i>

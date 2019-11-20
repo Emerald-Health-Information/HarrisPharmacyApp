@@ -285,6 +285,12 @@ body {
         font-size: 36px;
         margin-left: 50px;
     }
+    /* Position and style the close button (top right corner) */
+    .sidenav .logo {
+        position: absolute;
+        top: 0;
+        font-size: 36px;
+    }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
@@ -301,4 +307,9 @@ body {
         .sidenav a {
             font-size: 18px;
         }
+}
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
 }

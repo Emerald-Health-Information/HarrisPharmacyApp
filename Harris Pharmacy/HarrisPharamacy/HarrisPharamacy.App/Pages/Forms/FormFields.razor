@@ -38,8 +38,8 @@ else
             <tr>
                 <th>Field Name</th>
                 <th>Input Type</th>
-                <th>Description</th>
-                <th>Date Created</th>
+                @*<th>Description</th>
+                    <th>Date Created</th>*@
                 <th>Modify</th>
             </tr>
         </thead>
@@ -49,8 +49,8 @@ else
                 <tr>
                     <td>@field.FieldName</td>
                     <td>@field.FormInputType</td>
-                    <td>@field.Description</td>
-                    <td>@field.DateCreated</td>
+                    @*<td>@field.Description</td>
+                        <td>@field.DateCreated</td>*@
                     <td>
                         <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i> |
                         <i @onclick="@(e => OpenUpdateFormField(field.FormFieldId))" class="fas fa-edit hover"></i>
