@@ -70,7 +70,7 @@ else
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3 class="modal-title">Success</h3>
+                            <h3 class="modal-title">Create Form</h3>
                             <button type="button" class="close" @onclick="@ToggleCreateModal">
                                 <span aria-hidden="true">X</span>
                             </button>
@@ -91,7 +91,7 @@ else
                                         {
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 @field.FieldName
-                                                <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt"></i>
+                                                <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
                                             </li>
 
                                         }
@@ -104,11 +104,11 @@ else
                                         <option value=@var.Value>@var.Text</option>
                                     }
                                 </select>
-
-                                <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
+                                <br />
                             </div>
+                            <button @onclick="@AddField" class="btn align-self-center btn-warning">Add Field</button>
                             <div class="modal-footer">
-                                <button @onclick="@CreateForm" class="btn btn-warning">Create Form</button>
+                                <button @onclick="@CreateForm" class="btn btn-block btn-info">Create Form</button>
                             </div>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ else
                                     {
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             @field.FieldName
-                                            <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt"></i>
+                                            <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
                                         </li>
 
                                     }
@@ -158,11 +158,10 @@ else
                                     <option value=@var.Value>@var.Text</option>
                                 }
                             </select>
-
-                            <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
                         </div>
+                        <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
                         <div class="modal-footer">
-                            <button @onclick="@UpdateForm" class="btn btn-warning">Update Form</button>
+                            <button @onclick="@UpdateForm" class="btn btn-block btn-info">Update Form</button>
                         </div>
                     </div>
                 </div>
