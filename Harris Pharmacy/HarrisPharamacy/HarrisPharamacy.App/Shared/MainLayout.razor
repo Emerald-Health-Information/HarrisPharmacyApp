@@ -1,15 +1,29 @@
 ﻿@inherits Microsoft.AspNetCore.Components.LayoutComponentBase
 <AuthorizeView>
     <Authorized>
-        <div class="sidebar">
-            <NavMenu />
-        </div>
 
-        <div class="main">
+        <!-- Uncomment this annd comment everything from <SlidingNav /> tok </nav> for old side bar -->
+        @*<div class="sidebar">
+                <NavMenu />
+            </div>
+
+            <div class="main">
             <div class="top-row px-4">
                 <LoginDisplay />
                 <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
-            </div>
+            </div>*@
+
+        <SlidingNav />
+        <div id="main" class="main">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <span onclick="openNav()"><i class="fas fa-bars navbar-brand"></i></span>
+
+                <a class="navbar-brand" href="#">
+                    <img src="/img/harris-small.png" width="30" height="30" alt="">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
+                <a class="my-2 my-lg-0" href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+            </nav>
 
             <div class="content px-4">
                 @Body
@@ -27,7 +41,6 @@
                     </div>
                 </div>
             </div>
-            
         </div>
     </NotAuthorized>
 </AuthorizeView>
