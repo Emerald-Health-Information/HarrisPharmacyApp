@@ -1,4 +1,20 @@
-﻿@page "/patientinfo"
+﻿@*
+    Harrison1 COSC 470 2019
+
+    File = FormsComponent.razor
+
+    Author = Jackson Bates
+
+    Date = 2019-11-19
+
+    License = MIT
+
+    Modification History
+
+    Version        Author            Date                    Desc
+    v 1.0        Jackson Bates        2019-11-19            Added Headers
+    -->
+*@
 @page "/patientinfo/{patientListID}"
 @using System.Net
 @using HarrisPharmacy.App.Data
@@ -10,6 +26,7 @@
 @inject ApplicationDbContext Context
 @inject NavigationManager nm
 @inject IAppointmentService s
+@inject IPatientInfoService _patientInfoService
 
 <h1>Patient Information</h1>
 
@@ -39,22 +56,17 @@
 
     protected override async Task OnInitializedAsync()
     {
-
         appt = await s.GetAppointmentAsync(patientListID);
-
-        var patient = Context.Patients
-            .Where(p => p.PatientId == appt.PatientId).FirstOrDefault();
-
+        var patient = await _patientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
         Sex = patient.Sex;
-
     }
 
     public async void FinishAppointment()
     {
-        await s.DeleteAsync(appt.PatientListId);
-        nm.NavigateTo("patients");
+        await s.DeleteAsync(patientListID);
+        nm.NavigateTo("/");
     }
 }

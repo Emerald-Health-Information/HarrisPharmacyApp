@@ -67,6 +67,7 @@ namespace HarrisPharmacy.App
 
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddTransient<IPatientInfoService, PatientInfoService>();
             services.AddSingleton<WeatherForecastService>();
         }
 
