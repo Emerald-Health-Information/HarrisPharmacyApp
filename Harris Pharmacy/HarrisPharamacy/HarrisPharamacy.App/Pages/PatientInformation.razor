@@ -22,6 +22,7 @@
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
+@using HarrisPharmacy.App.Shared.Components
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
 @inject NavigationManager nm
@@ -40,6 +41,7 @@
 
 <p><b>Patient Notes:</b></p>
 <textarea name="textarea" rows="10">Write something here</textarea>
+<FormPickerComponent />
 <div align="right">
     <button type="button" @onclick="@FinishAppointment">Finish</button>
 </div>
