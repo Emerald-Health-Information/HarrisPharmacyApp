@@ -1,4 +1,5 @@
 ﻿using HarrisPharmacy.App.Data;
+using HarrisPharmacy.App.Data.Entities.Appointments;
 using HarrisPharmacy.App.Data.Entities.Patients;
 using HarrisPharmacy.App.Data.Interfaces;
 using HarrisPharmacy.App.Data.Services;
@@ -41,9 +42,9 @@ namespace HarrisPharmacy.UnitTests
         public async Task CheckInsertAppointmentAsync()
         {
             MakeInMemoryContext();
-            PatientList pl = new PatientList() 
+            Appointment pl = new Appointment() 
             {
-                PatientListId = Guid.NewGuid().ToString(),
+                AppointmentId = Guid.NewGuid().ToString(),
                 UserId = "001",
                 StartTime = "10:00",
                 EndTime = "12:00",
@@ -52,7 +53,7 @@ namespace HarrisPharmacy.UnitTests
                 Description = "Unit test",
             };
             var success = await _appointmentService.InsertAsync(pl);
-            Assert.NotNull(_appointmentService.GetAppointmentAsync(pl.PatientListId));
+            Assert.NotNull(_appointmentService.GetAppointmentAsync(pl.AppointmentId));
             // Cleanup
             EnsureContextDeleted();
         }

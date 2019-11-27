@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HarrisPharmacy.App.Data.Entities.Appointments;
 using HarrisPharmacy.App.Data.Entities.Patients;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -52,41 +53,41 @@ namespace HarrisPharmacy.App.Data.Interfaces
         /// Gets a list of all the appointments in the database
         /// </summary>
         /// <returns></returns>
-        Task<List<PatientList>> GetPatientListAsync();
+        Task<List<Appointment>> GetPatientListAsync();
 
         /// <summary>
         /// Gets the Appointment with the corresponding patient id
         /// </summary>
         /// <param name="patientId"> the patient id of the appointment you are trying to retrieve </param>
         /// <returns></returns>
-        Task<PatientList> GetAppointmentAsync(string patientId);
+        Task<Appointment> GetAppointmentAsync(string patientId);
 
         /// <summary>
         /// Inserts the new Appointment into the database
         /// </summary>
         /// <param name="appointment"> The form to be inserted </param>
         /// <returns> The form entity </returns>
-        Task<PatientList> InsertAsync(PatientList appointment);
+        Task<Appointment> InsertAsync(Appointment appointment);
 
         /// <summary>
         /// Updates the appointment
         /// </summary>
         /// <param name="a"> the form to be updated </param>
         /// <returns></returns>
-        Task<PatientList> UpdateAppointmentAsync(PatientList a);
+        Task<Appointment> UpdateAppointmentAsync(Appointment a);
 
         /// <summary>
         /// Deletes a appointment with the supplied id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<PatientList> DeleteAsync(string id);
+        Task<Appointment> DeleteAsync(string id);
 
         /// <summary>
         /// Gets a list of all the appointments in the databse that ar assigned to a specific user
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<List<PatientList>> GetPatientListUserAsync(string userId);
+        Task<List<Appointment>> GetPatientListUserAsync(string userId);
     }
 }

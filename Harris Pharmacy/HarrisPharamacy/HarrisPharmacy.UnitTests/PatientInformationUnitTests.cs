@@ -1,5 +1,6 @@
 ﻿using HarrisPharmacy.App.Data;
 using HarrisPharmacy.App.Data.Entities.Patients;
+using HarrisPharmacy.App.Data.Entities.Appointments;
 using HarrisPharmacy.App.Data.Interfaces;
 using HarrisPharmacy.App.Data.Services;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace HarrisPharmacy.UnitTests
         private IAppointmentService _appointmentService;
         private PatientInformation _patientInformation;
         public ApplicationDbContext Context { get; set; }
-        private PatientList pl;
+        private Appointment pl;
 
         public PatientInformationUnitTests()
         {
@@ -37,10 +38,10 @@ namespace HarrisPharmacy.UnitTests
         public async Task FinishAppointment()
         {
             MakeInMemoryContext();
-            var success = await _appointmentService.DeleteAsync(pl.PatientListId);
-            var delete = await _appointmentService.GetAppointmentAsync(success.PatientListId);
+            var success = await _appointmentService.DeleteAsync(pl.AppointmentId);
+            var delete = await _appointmentService.GetAppointmentAsync(success.AppointmentId);
             //Assert.Null(delete);
-            Assert.Null(await _appointmentService.GetAppointmentAsync(success.PatientListId));
+            Assert.Null(await _appointmentService.GetAppointmentAsync(success.AppointmentId));
             // Cleanup
             EnsureContextDeleted();
         }
@@ -56,9 +57,9 @@ namespace HarrisPharmacy.UnitTests
             Context = new ApplicationDbContext(options);
             _appointmentService = new AppointmentService(Context);
 
-            pl = new PatientList()
+            pl = new Appointment()
             {
-                PatientListId = Guid.NewGuid().ToString(),
+                AppointmentId = Guid.NewGuid().ToString(),
                 UserId = "001",
                 StartTime = "10:00",
                 EndTime = "12:00",
