@@ -1,8 +1,26 @@
-﻿@page "/appointment"
+﻿@*
+    Harrison1 COSC 470 2019
+
+    File = Appointment.razor
+
+    Author = Christian Slater
+
+    Date = 2019-11-19
+
+    License = MIT
+
+    Modification History
+
+    Version        Author                   Date                    Desc
+    v 1.0        Christian Slater        2019-11-19            Refactored Appointments with table
+    -->
+*@
+@page "/appointment"
 
 @using System.Net
 @using HarrisPharmacy.App.Data
 @using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Entities.Appointments
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
@@ -76,7 +94,7 @@ else
                 <option value="">-- Choose Appointment --</option>
                 @foreach (var appt in AppointmentList)
                 {
-                    <option value="@appt.PatientListId">@appt.PatientId @appt.Description</option>
+                    <option value="@appt.AppointmentId">@appt.PatientId @appt.Description</option>
                 }
             </select>
         </div>
@@ -91,7 +109,7 @@ else
     public List<Patient> PatientsList;
     public Patient PatientSelected;
     public SelectListItem Item { get; set; } = null!;
-    public List<PatientList> AppointmentList;
+    public List<Appointment> AppointmentList;
 
     private string PatientId { get; set; }
     private string UserId { get; set; }
@@ -113,9 +131,9 @@ else
     /// <returns></returns>
     protected async Task CreateAppointment()
     {
-        PatientList appointment = new PatientList()
+        Appointment appointment = new Appointment()
         {
-            PatientListId = Guid.NewGuid().ToString(),
+            AppointmentId = Guid.NewGuid().ToString(),
             UserId = UserId,
             StartTime = StartTime,
             EndTime = EndTime,

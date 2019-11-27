@@ -19,6 +19,7 @@
 @using System.Net
 @using HarrisPharmacy.App.Data
 @using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Entities.Appointments
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
@@ -52,7 +53,7 @@
     private string healthNumber;
     private string Age;
     private string Sex;
-    PatientList appt;
+    Appointment appt;
 
     protected override async Task OnInitializedAsync()
     {
