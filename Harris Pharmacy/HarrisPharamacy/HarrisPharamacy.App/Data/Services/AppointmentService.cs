@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HarrisPharmacy.App.Data.Entities.Appointments;
 using HarrisPharmacy.App.Data.Entities.Patients;
 using HarrisPharmacy.App.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -74,14 +75,14 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<PatientList> DeleteAsync(string id)
+        public async Task<Appointment> DeleteAsync(string id)
         {
-            var appointment = await _applicationDbContext.PatientLists.FindAsync(id);
+            var appointment = await _applicationDbContext.Appointments.FindAsync(id);
 
             if (appointment == null)
                 return null;
 
-            _applicationDbContext.PatientLists.Remove(appointment);
+            _applicationDbContext.Appointments.Remove(appointment);
             await _applicationDbContext.SaveChangesAsync();
 
             return appointment;
@@ -92,10 +93,10 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="patientListId"></param>
         /// <returns></returns>
-        public async Task<PatientList> GetAppointmentAsync(string patientListId)
+        public async Task<Appointment> GetAppointmentAsync(string appointmentId)
         {
-            var appointment = await _applicationDbContext.PatientLists
-                .SingleOrDefaultAsync(a => a.PatientListId == patientListId);
+            var appointment = await _applicationDbContext.Appointments
+                .SingleOrDefaultAsync(a => a.AppointmentId == appointmentId);
             return appointment;
         }
 
@@ -103,9 +104,9 @@ namespace HarrisPharmacy.App.Data.Services
         /// Gets a list of all the appointments in the database
         /// </summary>
         /// <returns></returns>
-        public async Task<List<PatientList>> GetPatientListAsync()
+        public async Task<List<Appointment>> GetPatientListAsync()
         {
-            return await _applicationDbContext.PatientLists
+            return await _applicationDbContext.Appointments
                 .ToListAsync();
         }
 
@@ -114,9 +115,9 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<List<PatientList>> GetPatientListUserAsync(string userId)
+        public async Task<List<Appointment>> GetPatientListUserAsync(string userId)
         {
-            List<PatientList> patientList = await _applicationDbContext.PatientLists.ToListAsync();
+            List<Appointment> patientList = await _applicationDbContext.Appointments.ToListAsync();
             return patientList.FindAll(pl => userId.Contains(pl.UserId));
         }
 
@@ -125,9 +126,9 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="appointment"></param>
         /// <returns></returns>
-        public async Task<PatientList> InsertAsync(PatientList appointment)
+        public async Task<Appointment> InsertAsync(Appointment appointment)
         {
-            await _applicationDbContext.PatientLists.AddAsync(appointment);
+            await _applicationDbContext.Appointments.AddAsync(appointment);
             await _applicationDbContext.SaveChangesAsync();
 
             return appointment;
@@ -138,9 +139,9 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public async Task<PatientList> UpdateAppointmentAsync(PatientList a)
+        public async Task<Appointment> UpdateAppointmentAsync(Appointment a)
         {
-            var appointment = await _applicationDbContext.PatientLists.FindAsync(a.PatientListId);
+            var appointment = await _applicationDbContext.Appointments.FindAsync(a.AppointmentId);
             if (appointment == null)
                 return null;
 
@@ -149,7 +150,7 @@ namespace HarrisPharmacy.App.Data.Services
             appointment.DateUpdated = DateTime.Now;
             appointment.Description = a.Description;
 
-            _applicationDbContext.PatientLists.Update(appointment);
+            _applicationDbContext.Appointments.Update(appointment);
             await _applicationDbContext.SaveChangesAsync();
 
             return appointment;

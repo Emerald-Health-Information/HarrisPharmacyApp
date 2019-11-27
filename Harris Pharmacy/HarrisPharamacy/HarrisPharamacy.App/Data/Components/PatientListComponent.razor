@@ -1,6 +1,7 @@
 ﻿@using System.Net
 @using HarrisPharmacy.App.Data
 @using HarrisPharmacy.App.Data.Entities.Patients
+@using HarrisPharmacy.App.Data.Entities.Appointments
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
@@ -24,8 +25,8 @@
                     <p>Location: @patientList.ElementAt(i).Location</p>
                     <p>Time: @patientList.ElementAt(i).StartTime - @patientList.ElementAt(i).EndTime</p>
                     <p>Description: @patientList.ElementAt(i).Description</p>
-                    <button @onclick="@(e => GoToPatient(patientList.ElementAt(0).PatientListId))">Access Appointment</button>
-                    <button @onclick="@(e => SkipAppointment(patientList.ElementAt(0).PatientListId))">Skip Appointment</button>
+                    <button @onclick="@(e => GoToPatient(patientList.ElementAt(0).AppointmentId))">Access Appointment</button>
+                    <button @onclick="@(e => SkipAppointment(patientList.ElementAt(0).AppointmentId))">Skip Appointment</button>
                 }
             </div>
             <br />
@@ -55,7 +56,7 @@ else
 
 @code {
     [Parameter] public string UserId { get; set; }
-    public static List<PatientList> patientList { get; set; }
+    public static List<Appointment> patientList { get; set; }
     public int totalPatients = 0;
     public Patient patient;
 }

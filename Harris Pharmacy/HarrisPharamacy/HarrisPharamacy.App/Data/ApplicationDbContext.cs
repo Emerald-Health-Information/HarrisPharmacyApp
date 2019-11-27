@@ -21,6 +21,7 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 #endregion copyright
 
+using HarrisPharmacy.App.Data.Entities.Appointments;
 using HarrisPharmacy.App.Data.Entities.Forms;
 using HarrisPharmacy.App.Data.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
@@ -40,5 +41,7 @@ namespace HarrisPharmacy.App.Data
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<PatientList> PatientLists { get; set; }
+
+        public DbSet<Appointment> Appointments { get; set; }
     }
 }
