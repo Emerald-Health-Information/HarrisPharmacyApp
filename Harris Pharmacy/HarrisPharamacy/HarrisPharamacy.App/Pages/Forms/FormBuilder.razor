@@ -273,6 +273,7 @@ else
         if (id == null) return;
         FormsList.Remove(FormsList.Find(form => form.FormId == id));
         await FormService.DeleteFormAsync(id);
+        ClearFields();
         this.StateHasChanged();
     }
     protected async void UpdateForm()
@@ -287,10 +288,17 @@ else
     {
         if (id == null) return;
         Form = FormsList.Find(form => form.FormId == id);
+        SelectedFormFields = new List<FormField>();
         foreach (var formWithFields in Form.FormWithFields.ToList())
         {
             SelectedFormFields.Add(formWithFields.FormField);
         }
+        ToggleUpdateModal();
+        this.StateHasChanged();
+    }
+    protected void CloseUpdateForm(string id)
+    {
+        ClearFields();
         ToggleUpdateModal();
         this.StateHasChanged();
     }

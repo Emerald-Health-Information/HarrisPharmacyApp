@@ -253,7 +253,10 @@ else
     protected void UpdateFormField()
     {
         if (_showValuesBox)
+        {
             FormField.UseValues = true;
+            ToggleValuesBox();
+        }
         else
         {
             FormField.UseValues = false;
@@ -261,7 +264,7 @@ else
         }
 
         ToggleUpdateModal();
-        ToggleValuesBox();
+
         FormField.FormInputType = FormInputType;
         FormService.UpdateFormFieldAsync(FormField);
     }
@@ -274,11 +277,14 @@ else
         if (FormField.Values != null)
             FormField.UseValues = true;
 
+        if (_showValuesBox)
+            ToggleValuesBox();
+
         FormField.FormInputType = FormInputType;
         await FormService.InsertFormFieldAsync(FormField);
         FormFieldsList.Add(FormField);
         ToggleCreateModal();
-        ToggleValuesBox();
+
         this.StateHasChanged();
     }
 

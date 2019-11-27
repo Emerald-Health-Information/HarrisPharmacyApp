@@ -50,6 +50,7 @@ namespace HarrisPharmacy.App.Data.Enums
         Text,// 17
         Time,// 18
         Url,// 19
-        Week // 20
+        Week, // 20
+        Hour // 21
     }
 }
