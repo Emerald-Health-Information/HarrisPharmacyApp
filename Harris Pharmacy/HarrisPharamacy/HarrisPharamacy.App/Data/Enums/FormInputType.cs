@@ -16,6 +16,7 @@ License = MIT
 
 Version		Author			Date				Desc
 v 1.0		Taylor Adam		2019-11-19			Added Headers
+v 1.1		Taylor Adam		2019-11-27			Added Hours Type
 
 */
 
