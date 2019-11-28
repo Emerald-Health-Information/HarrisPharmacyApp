@@ -1,4 +1,23 @@
-﻿@inherits Microsoft.AspNetCore.Components.LayoutComponentBase
+﻿@*
+    Harrison1 COSC 470 2019
+
+    File = FormsComponent.razor
+
+    Author = TaylorAdam
+
+    Date = 2019-11-19
+
+    License = MIT
+
+    Modification History
+
+    Version		Author			Date				Desc
+    v 1.0		Taylor Adam		2019-11-19			Added Headers
+    v 1.1		Taylor Adam		2019-11-19			Changed the nav bar to a sliding nav bar
+    -->
+*@
+
+@inherits Microsoft.AspNetCore.Components.LayoutComponentBase
 <AuthorizeView>
     <Authorized>
 
@@ -15,14 +34,11 @@
 
         <SlidingNav />
         <div id="main" class="main">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <span onclick="openNav()"><i class="fas fa-bars navbar-brand"></i></span>
-
-                <a class="navbar-brand" href="#">
-                    <img src="/img/harris-small.png" width="30" height="30" alt="">
-                </a>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent"></div>
-                <a class="my-2 my-lg-0" href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <div class="w-100 order-1 order-md-0 dual-collapse2">
+                    <span onclick="openNav()"><i class="fas fa-bars navbar-brand"></i></span>
+                    <a class="navbar-brand pl-0" href=""><img src="img/harris-small.png" width="30" height="30" alt="" class="small">Harris Healthcare</a>
+                </div>
             </nav>
 
             <div class="content px-4">

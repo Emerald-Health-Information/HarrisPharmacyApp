@@ -13,6 +13,7 @@
 
     Version		Author			Date				Desc
     v 1.0		Taylor Adam		2019-11-19			Added Headers
+    v 1.1		Taylor Adam		2019-11-27          Fixed a bug that was causing the form fields to get added multiple times
     -->
 *@
 @page "/formBuilder"
@@ -273,6 +274,7 @@ else
         if (id == null) return;
         FormsList.Remove(FormsList.Find(form => form.FormId == id));
         await FormService.DeleteFormAsync(id);
+        ClearFields();
         this.StateHasChanged();
     }
     protected async void UpdateForm()
@@ -287,10 +289,17 @@ else
     {
         if (id == null) return;
         Form = FormsList.Find(form => form.FormId == id);
+        SelectedFormFields = new List<FormField>();
         foreach (var formWithFields in Form.FormWithFields.ToList())
         {
             SelectedFormFields.Add(formWithFields.FormField);
         }
+        ToggleUpdateModal();
+        this.StateHasChanged();
+    }
+    protected void CloseUpdateForm(string id)
+    {
+        ClearFields();
         ToggleUpdateModal();
         this.StateHasChanged();
     }

@@ -13,6 +13,7 @@
 
     Version        Author            Date                    Desc
     v 1.0        Jackson Bates        2019-11-19            Added Headers
+    v 1.1        Taylor Adam          2019-11-27            Added the form component to this page
     -->
 *@
 @page "/patientinfo/{patientListID}"
@@ -23,6 +24,7 @@
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
+@using HarrisPharmacy.App.Shared.Components
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
 @inject NavigationManager nm
@@ -41,6 +43,7 @@
 
 <p><b>Patient Notes:</b></p>
 <textarea name="textarea" rows="10">Write something here</textarea>
+<FormPickerComponent />
 <div align="right">
     <button type="button" @onclick="@FinishAppointment">Finish</button>
 </div>

@@ -1,7 +1,23 @@
-﻿<div id="mySidenav" class="sidenav">
-    <div class=" logo top-row navbar navbar-dark">
-        <a class="navbar-brand" href=""><img src="img/harris-small.png" width="30" height="30" alt="" class="small">Harris Healthcare</a>
-    </div>
+﻿@*
+    Harrison1 COSC 470 2019
+
+    File = FormsComponent.razor
+
+    Author = TaylorAdam
+
+    Date = 2019-11-19
+
+    License = MIT
+
+    Modification History
+
+    Version		Author			Date				Desc
+    v 1.0		Taylor Adam		2019-11-19			Added Headers
+    -->
+*@
+
+<div id="mySidenav" class="sidenav">
+
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
     <NavLink onclick="closeNav()" href="/" Match="NavLinkMatch.All">
@@ -16,7 +32,7 @@
         <span class="oi oi-list-rich" aria-hidden="true"></span> Create Appointments
     </NavLink>
 
-    <span class="nav-item px-4 text-white">
+    <span class=" heading nav-item px-4 text-white">
         Admin
     </span>
 

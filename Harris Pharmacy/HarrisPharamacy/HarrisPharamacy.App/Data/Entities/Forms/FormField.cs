@@ -56,6 +56,16 @@ namespace HarrisPharmacy.App.Data.Entities.Forms
         /// </summary>
         public string Values { get; set; }
 
+        ///// <summary>
+        ///// IThe inputs default value, if use default value is true
+        ///// </summary>
+        //public string DefaultValue { get; set; }
+
+        ///// <summary>
+        ///// Specifies if the input needs a default value
+        ///// </summary>
+        //public bool UseDefaultValue { get; set; }
+
         /// <summary>
         /// A list to the formWithFields that it belongs too
         /// </summary>
