@@ -15,6 +15,7 @@ License = MIT
 Version		Author			Date				Desc
 v 1.0		Taylor Adam		2019-11-19			Added Headers
 v 1.1		Taylor Adam		2019-11-19			Added Js for sliding nav menu
+v 1.2       Nelson Murray   2019-11-30          Added toggle nav function
 
 */
 
@@ -28,4 +29,15 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
+}
+
+function toggleNav() {
+    var widthItem = document.getElementById("mySidenav");
+    var marginItem = document.getElementById("main");
+
+    if (widthItem.style.width === "350px" ) {
+        closeNav();
+    } else {
+        openNav();
+    }
 }
