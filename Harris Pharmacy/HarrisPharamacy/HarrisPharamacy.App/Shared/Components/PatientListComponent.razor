@@ -1,4 +1,22 @@
-﻿@using System.Net
+﻿@*
+    Harrison1 COSC 470 2019
+
+    File = PatientInformation.razor
+
+    Author = Grayson King
+
+    Date = 2019-11-28
+
+    License = MIT
+
+    Modification History
+
+    Version        Author            Date                    Desc
+    v 1.0        Grayson King        2019-11-28            Added Headers
+    v 1.1        Grayson King        2019-11-30            Refactor
+    -->
+*@
+@using System.Net
 @using HarrisPharmacy.App.Data
 @using HarrisPharmacy.App.Data.Entities.Patients
 @using HarrisPharmacy.App.Data.Entities.Appointments
@@ -11,9 +29,9 @@
 @inject ApplicationDbContext Context
 @inject NavigationManager navigationManager
 
-@if (totalPatients > 0)
+@if (totalAppointments > 0)
 {
-    @for (var i = 0; i < totalPatients; i++)
+    @for (var i = 0; i < totalAppointments; i++)
     {
         @if (i == 0)
         {
@@ -22,11 +40,11 @@
                 @if (patient != null)
                 {
                     <p>Patient Name: @patient.FirstName @patient.LastName</p>
-                    <p>Location: @patientList.ElementAt(i).Location</p>
-                    <p>Time: @patientList.ElementAt(i).StartTime - @patientList.ElementAt(i).EndTime</p>
-                    <p>Description: @patientList.ElementAt(i).Description</p>
-                    <button @onclick="@(e => GoToPatient(patientList.ElementAt(0).AppointmentId))">Access Appointment</button>
-                    <button @onclick="@(e => SkipAppointment(patientList.ElementAt(0).AppointmentId))">Skip Appointment</button>
+                    <p>Location: @appointments.ElementAt(i).Location</p>
+                    <p>Time: @appointments.ElementAt(i).StartTime - @appointments.ElementAt(i).EndTime</p>
+                    <p>Description: @appointments.ElementAt(i).Description</p>
+                    <button @onclick="@(e => GoToPatient(appointments.ElementAt(0).AppointmentId))">Access Appointment</button>
+                    <button @onclick="@(e => SkipAppointment(appointments.ElementAt(0).AppointmentId))">Skip Appointment</button>
                 }
             </div>
             <br />
@@ -38,9 +56,9 @@
                 @if (patient != null)
                 {
                     <p>Patient Name: @patient.FirstName @patient.LastName</p>
-                    <p>Location: @patientList.ElementAt(i).Location</p>
-                    <p>Time: @patientList.ElementAt(i).StartTime - @patientList.ElementAt(i).EndTime</p>
-                    <p>Description: @patientList.ElementAt(i).Description</p>
+                    <p>Location: @appointments.ElementAt(i).Location</p>
+                    <p>Time: @appointments.ElementAt(i).StartTime - @appointments.ElementAt(i).EndTime</p>
+                    <p>Description: @appointments.ElementAt(i).Description</p>
                     <button disabled>Access Appointment</button>
                     <button disabled>Skip Appointment</button>
                 }
@@ -56,19 +74,19 @@ else
 
 @code {
     [Parameter] public string UserId { get; set; }
-    public static List<Appointment> patientList { get; set; }
-    public int totalPatients = 0;
+    public static List<Appointment> appointments { get; set; }
+    public int totalAppointments = 0;
     public Patient patient;
 }
 
 @functions {
     protected override async Task OnInitializedAsync()
     {
-        patientList = await AppointmentService.GetPatientListUserAsync(UserId);
-        patientList.OrderBy(x => Convert.ToDateTime(x.StartTime));
-        if (patientList != null)
+        appointments = await AppointmentService.GetPatientListUserAsync(UserId);
+        appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
+        if (appointments != null)
         {
-            totalPatients = patientList.Count();
+            totalAppointments = appointments.Count();
         }
     }
     /// <summary>
@@ -77,7 +95,7 @@ else
     /// <param name="index"></param>
     protected void AssignPatient(int index)
     {
-        patient = Context.Patients.Where(p => p.PatientId == patientList.ElementAt(index).PatientId).FirstOrDefault();
+        patient = Context.Patients.Where(p => p.PatientId == appointments.ElementAt(index).PatientId).FirstOrDefault();
     }
     /// <summary>
     /// Goes to info page for the patient appointment
