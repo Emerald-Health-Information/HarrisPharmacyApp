@@ -1,7 +1,7 @@
 ﻿@*
     Harrison1 COSC 470 2019
 
-    File = FormsComponent.razor
+    File = PatientInformation.razor
 
     Author = Jackson Bates
 
@@ -13,6 +13,7 @@
 
     Version        Author            Date                    Desc
     v 1.0        Jackson Bates        2019-11-19            Added Headers
+    v 1.1        Grayson King         2019-11-28            Added 'Back' button
     -->
 *@
 @page "/patientinfo/{patientListID}"
@@ -41,6 +42,9 @@
 
 <p><b>Patient Notes:</b></p>
 <textarea name="textarea" rows="10">Write something here</textarea>
+<div align="left">
+    <button type="button" @onclick="@Back">Back</button>
+</div>
 <div align="right">
     <button type="button" @onclick="@FinishAppointment">Finish</button>
 </div>
@@ -68,6 +72,11 @@
     public async void FinishAppointment()
     {
         await s.DeleteAsync(patientListID);
+        nm.NavigateTo("/");
+    }
+
+    public async void Back()
+    {
         nm.NavigateTo("/");
     }
 }
