@@ -13,6 +13,7 @@
 
     Version		Author			Date				Desc
     v 1.0		Taylor Adam		2019-11-19			Added Headers
+    v 1.1		Taylor Adam		2019-11-27			Fixed bugs with the toggleing of the modals. Added the ability to use custom values but it's still a WIP
     -->
 *@
 
@@ -20,7 +21,6 @@
 @using HarrisPharmacy.App.Data.Entities.Forms
 @using HarrisPharmacy.App.Data.Enums
 @using HarrisPharmacy.App.Data.Interfaces
-@using HarrisPharmacy.App.Data.Services
 @using Microsoft.AspNetCore.Components
 
 @inject IFormService FormService
@@ -87,6 +87,15 @@ else
                                 }
                             </select>
                             <br />
+
+                            <label class="form-check-label">Does this field require only set values </label>
+                            <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBox" />
+
+                            @if (_showValuesBox)
+                            {
+                                <label class="col-form-label">Comma separated list of possible values: </label>
+                                <input class="form-control" type="text" @bind="@FormField.Values" />
+                            }
                             <label class="col-form-label">Brief Description of the field: </label>
                             <input class="form-control" type="text" @bind="@FormField.Description" />
                             <br />
@@ -126,6 +135,21 @@ else
                                 }
                             </select>
                             <br />
+                            <label class="form-check-label">Does this field require only set values </label>
+                            @if (FormField.UseValues)
+                            {
+                                <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" checked />
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" />
+                            }
+
+                            @if (_showValuesBox)
+                            {
+                                <label class="col-form-label">Comma separated list of possible values: </label>
+                                <input class="form-control" type="text" @bind="@FormField.Values" />
+                            }
                             <label class="col-form-label">Brief Description of the field: </label>
                             <input class="form-control" type="text" @bind="@FormField.Description" />
                             <br />
@@ -155,6 +179,11 @@ else
     /// the private backing field for showing the modal to update a form field
     /// </summary>
     private bool _updateModal = false;
+
+    /// <summary>
+    /// the backing field for showing values box
+    /// </summary>
+    private bool _showValuesBox = false;
 
     /// <summary>
     /// Method invoked when the component is ready to start, having received its initial parameters from its parent in the render tree.
@@ -189,19 +218,54 @@ else
         ToggleCreateModal();
 
     }
+
+    protected void ToggleValuesBoxClearValues()
+    {
+        if (!_showValuesBox && FormField.UseValues)
+        {
+            FormField.UseValues = false;
+            FormField.Values = null;
+        }
+        else
+        {
+            _showValuesBox = !_showValuesBox;
+        }
+    }
+
+    protected void ToggleValuesBox()
+    {
+        _showValuesBox = !_showValuesBox;
+    }
     /// <summary>
     /// Opens the modal to update the form field
     /// </summary>
     protected async void OpenUpdateFormField(string id)
     {
         FormField = await FormService.GetFormFieldAsync(id);
+        if (FormField.UseValues)
+            _showValuesBox = true;
+        else
+            _showValuesBox = false;
+
         ToggleUpdateModal();
         this.StateHasChanged();
     }
 
     protected void UpdateFormField()
     {
+        if (_showValuesBox)
+        {
+            FormField.UseValues = true;
+            ToggleValuesBox();
+        }
+        else
+        {
+            FormField.UseValues = false;
+            FormField.Values = null;
+        }
+
         ToggleUpdateModal();
+
         FormField.FormInputType = FormInputType;
         FormService.UpdateFormFieldAsync(FormField);
     }
@@ -211,10 +275,17 @@ else
     /// </summary>
     protected async void InsertField()
     {
+        if (FormField.Values != null)
+            FormField.UseValues = true;
+
+        if (_showValuesBox)
+            ToggleValuesBox();
+
         FormField.FormInputType = FormInputType;
         await FormService.InsertFormFieldAsync(FormField);
         FormFieldsList.Add(FormField);
         ToggleCreateModal();
+
         this.StateHasChanged();
     }
 

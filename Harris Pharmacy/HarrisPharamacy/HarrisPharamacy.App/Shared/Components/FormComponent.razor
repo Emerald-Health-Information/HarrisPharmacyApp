@@ -13,11 +13,12 @@
 
     Version		Author			Date				Desc
     v 1.0		Taylor Adam		2019-11-19			Added Headers
+    v 1.1		Taylor Adam		2019-11-27			Added different formatting depending on if the input is of type hour
     -->
 *@
 @using HarrisPharmacy.App.Data.Entities.Forms
+@using HarrisPharmacy.App.Data.Enums
 @using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Razor.TagHelpers
 
 <h3 class="h3">@Form.Name</h3>
 <form>
@@ -25,10 +26,22 @@
     {
         var field = formWithField.FormField;
         @if (field != null)
-        {<div class="form-group" style="padding-top:10px">
-                <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
-                <input class="form-control" type="@field.FormInputType" />
-            </div>
+        {
+            @*Checking if it's the hour type, there is probably a better way *@
+            @if (Enum.Parse<FormInputType>(field.FormInputType.ToString()) == Enum.Parse<FormInputType>("Hour"))
+            {
+                <div class="form-group">
+                    <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                    <input type="number" class="form-control mb-4" min="0" step="0.25" value="1.00" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group" style="padding-top: 10px">
+                    <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                    <input class="form-control" type="@field.FormInputType" />
+                </div>
+            }
         }
     }
 
