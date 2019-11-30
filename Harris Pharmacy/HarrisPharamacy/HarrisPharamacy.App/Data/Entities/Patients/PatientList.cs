@@ -4,9 +4,9 @@
 
 Harrison1 COSC 470 2019
 
-File =
+File = PatientList.cs
 
-Author =
+Author = Grayson King
 
 Date = 2019-11-19
 
@@ -16,6 +16,7 @@ License = MIT
 
 Version		Author			Date				Desc
 v 1.0		Taylor Adam		2019-11-19			Added Headers
+v 1.1       Grayson King    2019-11-28          Header Update
 
 */
 
