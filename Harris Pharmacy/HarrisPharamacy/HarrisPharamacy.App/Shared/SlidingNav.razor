@@ -1,7 +1,7 @@
 ﻿@*
     Harrison1 COSC 470 2019
 
-    File = FormsComponent.razor
+    File = SlidingNav.razor
 
     Author = TaylorAdam
 
@@ -14,6 +14,7 @@
     Version		Author			Date				Desc
     v 1.0		Taylor Adam		2019-11-19			Added Headers
     v 1.1       Nelson Murray   2019-11-30          Adjusted nav
+    v 1.2       Taylor          2019-11-30          Added Logout Button, Removed Forms
     -->
 *@
 
@@ -21,10 +22,6 @@
 
     <NavLink onclick="closeNav()" href="/" Match="NavLinkMatch.All">
         <span class="oi oi-home" aria-hidden="true"></span> Appointments
-    </NavLink>
-
-    <NavLink onclick="closeNav()" href="forms">
-        <span class="oi oi-list-rich" aria-hidden="true"></span> Forms
     </NavLink>
 
     <NavLink onclick="closeNav()" href="appointment">
@@ -42,6 +39,10 @@
     <NavLink onclick="closeNav()" href="formfields">
         <span class="oi oi-list-rich" aria-hidden="true"></span> Form Fields
     </NavLink>
+
+    <form method="post" action="Identity/Account/LogOut">
+        <button type="submit" class="nav-link btn btn-link">Log out</button>
+    </form>
 </div>
 
 @code {
