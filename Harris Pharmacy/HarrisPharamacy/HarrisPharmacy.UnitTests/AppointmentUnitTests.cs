@@ -16,6 +16,7 @@ namespace HarrisPharmacy.UnitTests
     {
         private IAppointmentService _appointmentService;
         public ApplicationDbContext Context { get; set; }
+
         public AppointmentUnitTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -24,7 +25,7 @@ namespace HarrisPharmacy.UnitTests
             var dbContext = new ApplicationDbContext(options);
             _appointmentService = new AppointmentService(dbContext);
         }
-        
+
         /// <summary>
         /// Queries database to check that there are appointments in the database.
         /// </summary>
@@ -42,12 +43,12 @@ namespace HarrisPharmacy.UnitTests
         public async Task CheckInsertAppointmentAsync()
         {
             MakeInMemoryContext();
-            Appointment pl = new Appointment() 
+            Appointment pl = new Appointment()
             {
                 AppointmentId = Guid.NewGuid().ToString(),
                 UserId = "001",
-                StartTime = "10:00",
-                EndTime = "12:00",
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now,
                 PatientId = "000001",
                 Location = "Kelowna",
                 Description = "Unit test",
@@ -69,7 +70,7 @@ namespace HarrisPharmacy.UnitTests
             Context = new ApplicationDbContext(options);
             _appointmentService = new AppointmentService(Context);
         }
-        
+
         /// <summary>
         /// Delete context after testing.
         /// </summary>

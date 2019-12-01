@@ -135,8 +135,8 @@ else
         {
             AppointmentId = Guid.NewGuid().ToString(),
             UserId = UserId,
-            StartTime = StartTime,
-            EndTime = EndTime,
+            StartTime = DateTime.Now,
+            EndTime = DateTime.Now,
             PatientId = PatientId,
             Location = Location,
             Description = Description,
