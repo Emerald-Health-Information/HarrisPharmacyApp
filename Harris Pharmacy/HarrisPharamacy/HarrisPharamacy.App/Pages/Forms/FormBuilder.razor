@@ -28,8 +28,6 @@
 @inject IFormService FormService
 @inject ApplicationDbContext Context
 
-<h1>Forms</h1>
-
 @if (FormsList == null) // TODO: Turn this whole page into a reusable CRUD component
 {
     <p><em>Loading...</em></p>
@@ -39,9 +37,7 @@ else
     <table class='table table-hover'>
         <thead>
             <tr>
-                <th>Form Name</th>
-                <th>Description</th>
-                @*<th>Date Created</th>*@
+                <th>Name</th>
                 <th>Modify</th>
             </tr>
         </thead>
@@ -50,8 +46,6 @@ else
             {
                 <tr>
                     <td>@form.Name</td>
-                    <td>@form.Description</td>
-                    @*<td>@form.DateCreated</td>*@
                     <td>
                         <i @onclick="@(e => RemoveForm(form.FormId))" class="fas fa-trash-alt hover"></i> |
                         <i @onclick="@(e => OpenUpdateForm(form.FormId))" class="fas fa-edit hover"></i>
@@ -60,7 +54,7 @@ else
             }
         </tbody>
     </table>
-    <button @onclick="@OpenCreateForm" class="btn btn-warning">Create Form</button>
+    <button @onclick="@OpenCreateForm" class="btn btn-info" style="float: right;">Create Form</button>
 
     @if (_createModal)
     {
@@ -78,12 +72,8 @@ else
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label class="col-form-label">Form Name: </label>
-                                <input class="form-control" @bind="@Name" type="text" />
-                                <br />
-                                <label class="col-form-label">Brief Description of the form: </label>
-                                <input class="form-control" type="text" @bind="@Description" />
-                                <br />
+                                <input class="form-control" @bind="@Name" type="text" placeholder="Form Name" />
+                                <input class="form-control" type="text" @bind="@Description" placeholder="Description" />
                                 @if (SelectedFormFields.Count != 0)
                                 {
                                     <label class="col-form-label">Additional Fields: </label>
@@ -98,16 +88,22 @@ else
                                         }
                                     </ul>
                                 }
-                                <h5>Add Additional fields</h5>
-                                <select class="custom-select" @onchange="UpdateItem">
-                                    @foreach (var var in Items)
-                                    {
-                                        <option value=@var.Value>@var.Text</option>
-                                    }
-                                </select>
-                                <br />
+                                <div class="row">
+                                    <div class="col">
+                                        <select class="custom-select" @onchange="UpdateItem">
+                                            <option value="null"> -- Add additional fields --</option>
+                                            @foreach (var var in Items)
+                                            {
+                                                <option value=@var.Value>@var.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <button @onclick="@AddField" class="btn btn-info" style="float: right;"><span class="oi oi-plus p-0"></span></button>
+                                    </div>
+                                </div>
                             </div>
-                            <button @onclick="@AddField" class="btn align-self-center btn-warning">Add Field</button>
+                            
                             <div class="modal-footer">
                                 <button @onclick="@CreateForm" class="btn btn-block btn-info">Create Form</button>
                             </div>
@@ -121,53 +117,57 @@ else
     @if (_updateModal)
     {
         <!--The modal TODO: Move to modal component, make it actually submit the form-->
-        <div class="modal" tabindex="-1" style="display: block" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Update Form</h3>
-                        <button type="button" class="close" @onclick="@ToggleUpdateModal">
-                            <span aria-hidden="true">X</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="col-form-label">Form Name: </label>
-                            <input class="form-control" @bind="@Form.Name" type="text" />
-                            <br />
-                            <label class="col-form-label">Brief Description of the form: </label>
-                            <input class="form-control" type="text" @bind="@Form.Description" />
-                            <br />
-                            @if (SelectedFormFields.Count != 0)
+<div class="modal" tabindex="-1" style="display: block" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Update Form</h3>
+                <button type="button" class="close" @onclick="@ToggleUpdateModal">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-form-label">Form Name: </label>
+                    <input class="form-control" @bind="@Form.Name" type="text" />
+                    <label class="col-form-label">Brief Description of the form: </label>
+                    <input class="form-control" type="text" @bind="@Form.Description" />
+                    @if (SelectedFormFields.Count != 0)
+                    {
+                        <label class="col-form-label">Additional Fields: </label>
+                        <ul class="list-group-flush">
+                            @foreach (var field in SelectedFormFields)
                             {
-                                <label class="col-form-label">Additional Fields: </label>
-                                <ul class="list-group-flush">
-                                    @foreach (var field in SelectedFormFields)
-                                    {
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            @field.FieldName
-                                            <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
-                                        </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    @field.FieldName
+                                    <i @onclick="@(e => RemoveField(field.FormFieldId))" class="fas fa-trash-alt hover"></i>
+                                </li>
 
-                                    }
-                                </ul>
                             }
-                            <h5>Add Additional fields</h5>
+                        </ul>
+                    }
+                    <div class="row">
+                        <div class="col">
                             <select class="custom-select" @onchange="UpdateItem">
+                                <option value="null"> -- Add additional fields --</option>
                                 @foreach (var var in Items)
                                 {
                                     <option value=@var.Value>@var.Text</option>
                                 }
                             </select>
                         </div>
-                        <button @onclick="@AddField" class="btn btn-warning">Add Field</button>
-                        <div class="modal-footer">
-                            <button @onclick="@UpdateForm" class="btn btn-block btn-info">Update Form</button>
-                        </div>
+
+                        <div class="col-2"><button @onclick="@AddField" class="btn btn-info" style="float: right;"><span class="oi oi-plus p-0"></span></button></div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button @onclick="@UpdateForm" class="btn btn-block btn-info"  style="float: right;">Update Form</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
     }
 }
 

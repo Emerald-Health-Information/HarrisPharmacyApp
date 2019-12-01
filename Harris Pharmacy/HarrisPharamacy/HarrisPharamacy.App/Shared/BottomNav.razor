@@ -1,0 +1,39 @@
+﻿@*
+    Harrison1 COSC 470 2019
+
+    File = BottomNav.razor
+
+    Author = Nelson Murray
+
+    Date = 2019-11-30
+
+    License = MIT
+
+    Modification History
+
+    Version		Author			Date				Desc
+    v 1.0		Nelson Murray   2019-11-30          Created page
+    -->
+*@
+
+<div id="myBottomnav" class="bottomnav d-flex justify-content-center" >
+    <NavLink class="nav-link"  href="/" Match="NavLinkMatch.All">
+        <span class="oi oi-home" aria-hidden="true"></span>
+    </NavLink>
+
+    <NavLink class="nav-link"  href="appointment">
+        <span class="oi oi-plus" aria-hidden="true"></span>
+    </NavLink>
+
+    <NavLink class="nav-link" href="formbuilder">
+        <span class="oi oi-spreadsheet" aria-hidden="true"></span>
+    </NavLink>
+
+    <NavLink class="nav-link"  href="formfields">
+        <span class="oi oi-list" aria-hidden="true"></span>
+    </NavLink>
+</div>
+
+@code {
+
+}
