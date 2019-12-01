@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using HarrisPharmacy.App.Pages;
 using Microsoft.AspNetCore.Components;
 using Xunit;
 
@@ -17,7 +16,6 @@ namespace HarrisPharmacy.UnitTests
     public class PatientInformationUnitTests
     {
         private IAppointmentService _appointmentService;
-        private PatientInformation _patientInformation;
         public ApplicationDbContext Context { get; set; }
         private Appointment pl;
 
@@ -61,8 +59,8 @@ namespace HarrisPharmacy.UnitTests
             {
                 AppointmentId = Guid.NewGuid().ToString(),
                 UserId = "001",
-                StartTime = "10:00",
-                EndTime = "12:00",
+                StartTime = DateTime.Now,
+                EndTime = DateTime.Now,
                 PatientId = "000001",
                 Location = "Kelowna",
                 Description = "Unit test",
