@@ -25,8 +25,6 @@
 
 @inject IFormService FormService
 
-<h1>Form Fields</h1>
-
 @if (FormFieldsList == null)
 {
     <p><em>Loading...</em></p>
@@ -36,10 +34,8 @@ else
     <table class='table table-hover'>
         <thead>
             <tr>
-                <th>Field Name</th>
-                <th>Input Type</th>
-                @*<th>Description</th>
-                    <th>Date Created</th>*@
+                <th>Name</th>
+                <th>Input</th>
                 <th>Modify</th>
             </tr>
         </thead>
@@ -49,8 +45,6 @@ else
                 <tr>
                     <td>@field.FieldName</td>
                     <td>@field.FormInputType</td>
-                    @*<td>@field.Description</td>
-                        <td>@field.DateCreated</td>*@
                     <td>
                         <i @onclick="@(e => RemoveFormField(field.FormFieldId))" class="fas fa-trash-alt hover"></i> |
                         <i @onclick="@(e => OpenUpdateFormField(field.FormFieldId))" class="fas fa-edit hover"></i>
@@ -59,7 +53,7 @@ else
             }
         </tbody>
     </table>
-    <button @onclick="@OpenCreateField" class="btn btn-warning">Create New Field</button>
+    <button @onclick="@OpenCreateField" class="btn btn-info" style="float: right;">Create Field</button>
     @if (_createModal)
     {
         <!--The modal TODO: Move to modal component, make it actually submit the form-->
@@ -74,31 +68,25 @@ else
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="col-form-label">Field Name: </label>
-                            <input class="form-control" @bind="@FormField.FieldName" type="text" />
-                            <br />
-                            <label class="col-form-label">Input Type: </label>
+                            <input class="form-control" @bind="@FormField.FieldName" type="text" placeholder="Field Name"/>
 
                             <select @onchange="@FormInputTypeClicked" class="form-control">
-                                <option value="">-- Select Form --</option>
+                                <option value="">-- Input Type --</option>
                                 @foreach (var type in (FormInputType[])Enum.GetValues(typeof(FormInputType)))
                                 {
                                     <option value="@type">@type</option>
                                 }
                             </select>
-                            <br />
 
-                            <label class="form-check-label">Does this field require only set values </label>
+                            @*<label class="form-check-label">Does this field require only set values </label>
                             <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBox" />
 
                             @if (_showValuesBox)
                             {
                                 <label class="col-form-label">Comma separated list of possible values: </label>
                                 <input class="form-control" type="text" @bind="@FormField.Values" />
-                            }
-                            <label class="col-form-label">Brief Description of the field: </label>
-                            <input class="form-control" type="text" @bind="@FormField.Description" />
-                            <br />
+                            }*@
+                            <input class="form-control" type="text" @bind="@FormField.Description" placeholder="Description"/>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -122,11 +110,7 @@ else
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="col-form-label">Field Name: </label>
-                            <input class="form-control" @bind="@FormField.FieldName" type="text" />
-                            <br />
-                            <label class="col-form-label">Input Type: </label>
-
+                            <input class="form-control" @bind="@FormField.FieldName" type="text" placeholder="Field Name"/>
                             <select @onchange="@FormInputTypeClicked" class="form-control">
                                 <option value="@FormInputType">@FormInputType</option>
                                 @foreach (var type in (FormInputType[])Enum.GetValues(typeof(FormInputType)))
@@ -134,8 +118,7 @@ else
                                     <option value="@type">@type</option>
                                 }
                             </select>
-                            <br />
-                            <label class="form-check-label">Does this field require only set values </label>
+                            @*<label class="form-check-label">Does this field require only set values </label>
                             @if (FormField.UseValues)
                             {
                                 <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" checked />
@@ -143,16 +126,14 @@ else
                             else
                             {
                                 <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" />
-                            }
+                            }*@
 
                             @if (_showValuesBox)
                             {
                                 <label class="col-form-label">Comma separated list of possible values: </label>
                                 <input class="form-control" type="text" @bind="@FormField.Values" />
                             }
-                            <label class="col-form-label">Brief Description of the field: </label>
                             <input class="form-control" type="text" @bind="@FormField.Description" />
-                            <br />
                         </div>
                     </div>
                     <div class="modal-footer">

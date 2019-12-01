@@ -12,7 +12,7 @@
     Modification History
 
     Version        Author                   Date                    Desc
-    v 1.0        Christian Slater        2019-11-19            Refactored Appointments with table
+    v 1.0          Christian Slater         2019-11-19              Refactored Appointments with table
     -->
 *@
 @page "/appointment"
@@ -27,9 +27,8 @@
 @using Microsoft.Data.SqlClient
 @inject IAppointmentService AppointmentService
 @inject ApplicationDbContext Context
+@inject NavigationManager navigationManager
 
-<h3>Appointments</h3>
-<h5>Please select a Patient</h5>
 @if (PatientsList == null)
 {
     <p><em>Loading...</em></p>
@@ -53,57 +52,26 @@ else
     </div>
 
 }
-<h5>User Id</h5>
 <input class="form-control" @bind="@UserId" type="text" placeholder="User Id" />
-<h5>Start Time</h5>
 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-    <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
-    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+    <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time"/>
+    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
 </div>
 
-<h5>End Time</h5>
 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-    <input @bind="@EndTime" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
-    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+    <input @bind="@EndTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker2" placeholder="End Time"/>
+    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker" style="margin-bottom: 1em;">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
 </div>
 
-<h5>Location</h5>
 <input class="form-control" @bind="@Location" type="text" placeholder="Location" />
-<h5>Description</h5>
+
 <input class="form-control" @bind="@Description" type="text" placeholder="Description" />
-<br />
-<button @onclick="@CreateAppointment" class="btn btn-warning">Add Appointment</button>
-<h5>Delete Appointment</h5>
-@if (AppointmentList == null)
-{
-    <p><em>Loading...</em></p>
-}
-else if (AppointmentList.Count == 0)
-{
-    <p>No Appointments to display</p>
-}
-else
-{
-    <div class="row" style="padding-top:10px">
-        <div class="col-md-4">
-            <select @bind="@Delete" class="form-control">
-                <option value="">-- Choose Appointment --</option>
-                @foreach (var appt in AppointmentList)
-                {
-                    <option value="@appt.AppointmentId">@appt.PatientId @appt.Description</option>
-                }
-            </select>
-        </div>
-    </div>
 
-}
-
-<br />
-<button @onclick="@DeleteAppointment" class="btn btn-warning">Delete Appointment</button>
+<button @onclick="@CreateAppointment" class="btn btn-info" style="float: right;">Create Appointment</button>
 
 @code {
     public List<Patient> PatientsList;
@@ -143,7 +111,7 @@ else
         };
         await AppointmentService.InsertAsync(appointment);
         ClearFields();
-        await OnInitializedAsync();
+        navigationManager.NavigateTo("/");
     }
     /// <summary>
     /// Delete an Appointment from the db

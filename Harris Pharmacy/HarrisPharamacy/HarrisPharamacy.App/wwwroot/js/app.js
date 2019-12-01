@@ -33,7 +33,6 @@ function closeNav() {
 
 function toggleNav() {
     var widthItem = document.getElementById("mySidenav");
-    var marginItem = document.getElementById("main");
 
     if (widthItem.style.width === "350px" ) {
         closeNav();

@@ -18,31 +18,30 @@
     -->
 *@
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
 <div id="mySidenav" class="sidenav">
 
     <NavLink onclick="closeNav()" href="/" Match="NavLinkMatch.All">
-        <span class="oi oi-home" aria-hidden="true"></span> Appointments
+        <span class="oi oi-home pr-2" aria-hidden="true"></span> Appointments
     </NavLink>
 
     <NavLink onclick="closeNav()" href="appointment">
-        <span class="oi oi-list-rich" aria-hidden="true"></span> Create Appointments
+        <span class="oi oi-plus pr-2" aria-hidden="true"></span> Create Appointment
     </NavLink>
 
-    <span class=" heading nav-item px-4 text-white">
-        Admin
-    </span>
-
     <NavLink onclick="closeNav()" href="formbuilder">
-        <span class="oi oi-list-rich" aria-hidden="true"></span> Form Builder
+        <span class="oi oi-spreadsheet pr-2" aria-hidden="true"></span> Form Builder
     </NavLink>
 
     <NavLink onclick="closeNav()" href="formfields">
-        <span class="oi oi-list-rich" aria-hidden="true"></span> Form Fields
+        <span class="oi oi-list pr-2" aria-hidden="true"></span> Form Fields
     </NavLink>
 
-    <form method="post" action="Identity/Account/LogOut">
-        <button type="submit" class="nav-link btn btn-link">Log out</button>
-    </form>
+    <NavLink oncliick="closeNav()" href="/Identity/Account/Logout">
+        <span class="oi oi-account-logout pr-2" aria-hidden="true"></span> Log out
+    </NavLink>
 </div>
 
 @code {
