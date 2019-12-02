@@ -35,21 +35,23 @@
     {
 
     <div class="row pr-4 pb-2">
-        <div class="col pr-2 pl-2">
+        <div class="col-1 align-self-center text-center wider-mbl">
+            <span>@appointment.StartTime.ToString("HH:mm")</span>
+        </div>
+        <div class="col pr-2 pl-2">          
             <button class="btn btn-info btn-block" @onclick="@(e => GoToPatient(appointment.AppointmentId))" style="height:60px;">
                 @{ AssignPatient(appointment.PatientId); }
                 @if (patient != null)
                 {
-                    <span>
-                        @patient.FirstName @patient.LastName -
-                        @appointment.Location -
-                        @appointment.StartTime.ToShortTimeString()
-                    </span>
+                <span>
+                    @appointment.Location - 
+                    @patient.FirstName @patient.LastName
+                </span>
 
                 }
             </button>
         </div>
-        <div class="col col-1 pl-0" style="height:60px;">
+        <div class="col-1 pl-0" style="height:60px;">
             <button @onclick="@(e => SkipAppointment(appointment.AppointmentId))"  class="btn btn-danger" style="height:60px;">
                 <span  class="oi oi-trash hover"></span>
             </button>
