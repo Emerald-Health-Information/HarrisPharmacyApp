@@ -18,50 +18,64 @@
 @page "/appointment"
 
 @using System.Net
+@using System.Security.Claims
 @using HarrisPharmacy.App.Data
 @using HarrisPharmacy.App.Data.Entities.Patients
 @using HarrisPharmacy.App.Data.Entities.Appointments
 @using HarrisPharmacy.App.Data.Interfaces
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.Data.SqlClient
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
 @inject IAppointmentService AppointmentService
 @inject ApplicationDbContext Context
-@inject NavigationManager navigationManager
+@inject NavigationManager NavigationManager
+@inject UserManager<IdentityUser> UserManager;
+@inject IHttpContextAccessor HttpContextAccessor;
 
 @if (PatientsList == null)
 {
     <p><em>Loading...</em></p>
 }
-else if (PatientsList.Count == 0)
+else if (PatientsList.Count == 0 || Users.Count == 0 || AppointmentList.Count == 0)
 {
     <p>No patients to display</p>
 }
 else
 {
-    <div class="row" style="padding-top:10px">
-        <div class="col-md-4">
-            <select @bind="@PatientId" class="form-control">
-                <option value="">-- Choose Patient --</option>
-                @foreach (var patient in PatientsList)
-                {
-                    <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
-                }
-            </select>
-        </div>
+    <div class="input-group pt-1" data-target-input="nearest">
+        <select @bind="@PatientId" class="form-control">
+            <option value="">-- Choose Patient --</option>
+            @foreach (var patient in PatientsList)
+            {
+                <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
+            }
+        </select>
     </div>
 
 }
-<input class="form-control" @bind="@UserId" type="text" placeholder="User Id" />
+
+<div class="input-group pb-3 pt-3" data-target-input="nearest">
+    <select @bind="@UserId" class="form-control">
+        <option value="">-- Choose Front Line Staff --</option>
+        @foreach (var user in Users)
+        {
+            <option value="@user.Id">@user.UserName</option>
+        }
+    </select>
+</div>
+
 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-    <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time"/>
+    <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time" />
     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
 </div>
 
 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-    <input @bind="@EndTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker2" placeholder="End Time"/>
+    <input @bind="@EndTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker2" placeholder="End Time" />
     <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker" style="margin-bottom: 1em;">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
@@ -78,6 +92,7 @@ else
     public Patient PatientSelected;
     public SelectListItem Item { get; set; } = null!;
     public List<Appointment> AppointmentList;
+    public List<IdentityUser> Users;
 
     private string PatientId { get; set; }
     private string UserId { get; set; }
@@ -89,8 +104,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        Users = UserManager.Users.AsEnumerable().ToList();
         PatientsList = await AppointmentService.GetPatientsAsync();
         AppointmentList = await AppointmentService.GetPatientListAsync();
+
     }
 
     /// <summary>
@@ -111,7 +128,7 @@ else
         };
         await AppointmentService.InsertAsync(appointment);
         ClearFields();
-        navigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
     /// <summary>
     /// Delete an Appointment from the db
