@@ -89,6 +89,17 @@ namespace HarrisPharmacy.App.Data.Services
         }
 
         /// <summary>
+        /// Set The state of the appointment to ""
+        /// </summary>
+        public async Task<Appointment> SetAppointmentStateFinishedAsync(string id)
+        {
+            var appointment = await _applicationDbContext.Appointments.FindAsync(id);
+            appointment.AppointmentState = "finished";
+            await _applicationDbContext.SaveChangesAsync();
+            return appointment;
+        }
+
+        /// <summary>
         /// Gets the appointment with the corresponding appointment id
         /// </summary>
         /// <param name="patientListId"></param>
@@ -121,6 +132,14 @@ namespace HarrisPharmacy.App.Data.Services
             return patientList.FindAll(pl => userId.Contains(pl.UserId));
         }
 
+        public async Task<List<Appointment>> GetOpenPatientListUserAsync(string userId)
+        {
+            List<Appointment> openPatientList = await _applicationDbContext.Appointments
+                .Where(pl => pl.AppointmentState == "open").ToListAsync();
+            return openPatientList.FindAll(pl => userId.Contains(pl.UserId));
+
+        }
+
         /// <summary>
         /// Inserts a new appointment into the database
         /// </summary>
@@ -129,6 +148,7 @@ namespace HarrisPharmacy.App.Data.Services
         public async Task<Appointment> InsertAsync(Appointment appointment)
         {
             await _applicationDbContext.Appointments.AddAsync(appointment);
+            appointment.AppointmentState = "open";
             await _applicationDbContext.SaveChangesAsync();
 
             return appointment;
