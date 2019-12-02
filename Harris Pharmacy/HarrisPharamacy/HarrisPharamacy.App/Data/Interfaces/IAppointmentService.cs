@@ -84,10 +84,18 @@ namespace HarrisPharmacy.App.Data.Interfaces
         Task<Appointment> DeleteAsync(string id);
 
         /// <summary>
+        /// Set The state of the appointment to ""
+        /// </summary>
+        Task<Appointment> SetAppointmentStateFinishedAsync(string id);
+  
+
+        /// <summary>
         /// Gets a list of all the appointments in the databse that ar assigned to a specific user
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<List<Appointment>> GetPatientListUserAsync(string userId);
+
+        Task<List<Appointment>> GetOpenPatientListUserAsync(string userId);
     }
 }
