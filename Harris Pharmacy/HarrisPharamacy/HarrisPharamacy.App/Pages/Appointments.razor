@@ -45,30 +45,28 @@ else if (PatientsList.Count == 0 || Users.Count == 0 || AppointmentList.Count ==
 }
 else
 {
-    <div class="row" style="padding-top:10px">
-        <div class="col-md-4">
-            <select @bind="@PatientId" class="form-control">
-                <option value="">-- Choose Patient --</option>
-                @foreach (var patient in PatientsList)
-                {
-                    <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
-                }
-            </select>
-        </div>
+    <div class="input-group pt-1" data-target-input="nearest">
+        <select @bind="@PatientId" class="form-control">
+            <option value="">-- Choose Patient --</option>
+            @foreach (var patient in PatientsList)
+            {
+                <option value="@patient.PatientId">@patient.FirstName @patient.LastName</option>
+            }
+        </select>
     </div>
 
 }
-<div class="row" style="padding-top:10px">
-<div class="col-md-4">
+
+<div class="input-group pb-3 pt-3" data-target-input="nearest">
     <select @bind="@UserId" class="form-control">
-        <option value="">-- Choose Patient --</option>
+        <option value="">-- Choose Front Line Staff --</option>
         @foreach (var user in Users)
         {
             <option value="@user.Id">@user.UserName</option>
         }
     </select>
 </div>
-    </div>
+
 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
     <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time" />
     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
