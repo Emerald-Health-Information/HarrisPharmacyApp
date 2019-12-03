@@ -289,8 +289,8 @@ body {
         display: none;
     }
 
-    .nav-bar page {
-        padding-top: 5px;
+    .navbar-page {
+        padding-top: 10px;
     }
 
     .navbar-brand {
@@ -303,7 +303,7 @@ body {
     }
 
     img.small {
-        padding-top: 5px;
+        //padding-bottom: 5px;
     }
 }
 
@@ -329,8 +329,8 @@ body {
         top: 0;
     }
 
-    .content {
-        width: 60%;
+    .btn-danger {
+        width: 100%;
     }
 
     .main .top-row {
