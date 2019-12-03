@@ -15,6 +15,7 @@
     v 1.0        Jackson Bates        2019-11-19            Added Headers
     v 1.1        Taylor Adam          2019-11-27            Added the form component to this page
     v 1.2        Grayson King         2019-11-28            Added 'Back' button
+    v 1.3        Jackson Bates        2019-12-2             Made finish appointment set flag rather than delete the appointment
     -->
 *@
 @page "/patientinfo/{patientListID}"
@@ -28,28 +29,33 @@
 @using HarrisPharmacy.App.Shared.Components
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
-@inject NavigationManager nm
-@inject IAppointmentService s
-@inject IPatientInfoService _patientInfoService
+@inject NavigationManager NavigationManager
+@inject IAppointmentService AppointmentService
+@inject IPatientInfoService PatientInfoService
 
-<h1>Patient Information</h1>
-
-<p><b>Patient Name: </b> @FirstName @LastName</p>
-<p><b>Health Care Number: </b></p>
-<p><b>Sex: </b> @Sex</p>
-<p><b>Age: </b> @Age</p>
-<p><b>City:</b></p>
-<p><b>Province:</b></p>
-<p><b>Address:</b></p>
-
-<p><b>Patient Notes:</b></p>
-<textarea name="textarea" rows="10">Write something here</textarea>
-<FormPickerComponent />
-<div align="left">
-    <button type="button" @onclick="@Back">Back</button>
+<div class="row">
+    <div class="col">
+        <p><b>Patient Name: </b> @FirstName @LastName</p>
+        <p><b>Health Care Number: </b></p>
+        <p><b>Sex: </b> @Sex</p>
+        <p><b>Age: </b> @Age</p>
+    </div>
 </div>
-<div align="right">
-    <button type="button" @onclick="@FinishAppointment">Finish</button>
+<FormPickerComponent />
+<div class="row">
+    <div class="col">
+        <p><b>Appointment Notes</b></p>
+        <textarea class="form-control" name="textarea" rows="5">Write notes here...</textarea>
+    </div>
+</div>
+
+<div class="row pt-2">
+    <div class="col">     
+    </div>
+    <div class="col pl-4 pr-3">
+        <button class="btn btn-info mr-2" type="button" @onclick="@Back">Back</button>
+        <button class="btn btn-info" type="button" @onclick="@FinishAppointment">Finish</button>
+    </div>
 </div>
 
 @code {
@@ -60,26 +66,31 @@
     private string healthNumber;
     private string Age;
     private string Sex;
+    private DateTime appointmentStartTime;
     Appointment appt;
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await s.GetAppointmentAsync(patientListID);
-        var patient = await _patientInfoService.GetPatientInformationAsync(appt.PatientId);
+        appt = await AppointmentService.GetAppointmentAsync(patientListID);
+        var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
         Sex = patient.Sex;
+        appointmentStartTime = DateTime.Now;
     }
 
     public async void FinishAppointment()
     {
-        await s.DeleteAsync(patientListID);
-        nm.NavigateTo("/");
+        await AppointmentService.SetAppointmentStateFinishedAsync(patientListID);
+        appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
+        Context.Appointments.Update(appt);
+        await Context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/");
     }
 
     public async void Back()
     {
-        nm.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 }
