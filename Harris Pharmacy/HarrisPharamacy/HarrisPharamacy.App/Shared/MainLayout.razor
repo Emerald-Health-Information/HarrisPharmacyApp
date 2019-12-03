@@ -43,18 +43,20 @@
             <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
                 <ul class="navbar-nav mr-auto">
                     <li>
-                        <row>
-                            <span onclick="toggleNav()" class="navbar-hide"><i class="fas fa-bars navbar-brand hover"></i></span>
-                            <a class="navbar-brand pl-1" href="">
-                                <img src="img/harris-white.png" class="small">
-                                <span class="navbar-hide">
-                                    Harris Healthcare
-                                </span>
-                            </a>
-                            <div class="navbar-brand navbar-page small">
-                                @PageHeaderHelper.GetPageHeader(NavigationManager.Uri)
+                        <div class="row">
+                            <div class="col align-self-center">
+                                <span onclick="toggleNav()" class="navbar-hide"><i class="fas fa-bars navbar-brand hover"></i></span>
+                                <a class="navbar-brand pl-1 m-0" href="">
+                                    <img src="img/harris-white.png" class="small">
+                                    <span class="navbar-hide">
+                                        Harris Healthcare
+                                    </span>
+                                </a>
+                                <div class="navbar-brand navbar-page">
+                                    @PageHeaderHelper.GetPageHeader(NavigationManager.Uri)
+                                </div>
                             </div>
-                        </row>
+                        </div>
                     </li>
                 </ul>
                 <a href="/Identity/Account/LogOut" class="hover">
