@@ -12,15 +12,15 @@ namespace HarrisPharmacy.UnitTests
         /// Testing the Page header helper class
         /// </summary>
         [Fact]
-        public void PageHedaerReturnsProperHeaders()
+        public void PageHeaderReturnsProperHeaders()
         {
             List<string> urisToTestList = new List<string>
             {
                 "https://localhost:44356/",
-                "https://localhost:44356/patientinfo/62c0adf9-9099-4b7a-9982-da2228f44ed7",
-                "https://localhost:44356/formbuilder",
-                "https://localhost:44356/formfields",
-                "https://localhost:44356/appointment",
+                "https://localhost:44356/AppointmentInformation/62c0adf9-9099-4b7a-9982-da2228f44ed7",
+                "https://localhost:44356/ManageForms",
+                "https://localhost:44356/ManageFormFields",
+                "https://localhost:44356/CreateAppointment",
             };
 
             List<string> expectedResultsList = new List<string>
