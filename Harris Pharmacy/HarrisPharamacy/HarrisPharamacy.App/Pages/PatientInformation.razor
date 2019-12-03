@@ -78,7 +78,7 @@
     public async void FinishAppointment()
     {
         await s.SetAppointmentStateFinishedAsync(patientListID);
-        appt.DurationInSeconds = (int)((appointmentStartTime - DateTime.Now).TotalSeconds);
+        appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
         Context.Appointments.Update(appt);
         await Context.SaveChangesAsync();
         nm.NavigateTo("/");
