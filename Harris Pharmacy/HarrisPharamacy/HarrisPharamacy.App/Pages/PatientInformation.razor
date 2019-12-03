@@ -74,7 +74,7 @@
 
     public async void FinishAppointment()
     {
-        await s.SetAppointmentStateFinishedAsync(patientListID);
+        await s.DeleteAsync(patientListID);
         nm.NavigateTo("/");
     }
 
