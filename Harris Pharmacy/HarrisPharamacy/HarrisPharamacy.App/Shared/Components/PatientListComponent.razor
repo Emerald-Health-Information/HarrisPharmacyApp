@@ -110,6 +110,7 @@ else
         var appointment =await  AppointmentService.GetAppointmentAsync(pid);
         //await AppointmentService.DeleteAsync(pid);
         appointment.AppointmentState = "skipped";
+        await AppointmentService.UpdateAppointmentAsync(appointment);
         appointments.Remove(appointment);
         this.StateHasChanged();
     }
