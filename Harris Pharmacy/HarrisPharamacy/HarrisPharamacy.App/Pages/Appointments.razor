@@ -27,17 +27,14 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
 
-<div>
+<AuthorizeView>
+    <Authorized>
+        <div>
 
-    <PatientListComponent UserId=@GetId() />
-</div>
-
+            <PatientListComponent UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier) />
+        </div>
+    </Authorized>
+</AuthorizeView>
 @code {
 
-    private string GetId()
-    {
-
-        return HttpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-    }
 }
