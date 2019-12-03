@@ -17,7 +17,7 @@
     -->
 *@
 
-@page "/FormFields"
+@page "/Formfields"
 @using HarrisPharmacy.App.Data.Entities.Forms
 @using HarrisPharmacy.App.Data.Enums
 @using HarrisPharmacy.App.Data.Interfaces
@@ -68,7 +68,7 @@ else
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control" @bind="@FormField.FieldName" type="text" placeholder="Field Name"/>
+                            <input class="form-control" @bind="@FormField.FieldName" type="text" placeholder="Field Name" />
 
                             <select @onchange="@FormInputTypeClicked" class="form-control">
                                 <option value="">-- Input Type --</option>
@@ -79,14 +79,14 @@ else
                             </select>
 
                             @*<label class="form-check-label">Does this field require only set values </label>
-                            <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBox" />
+                                <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBox" />
 
-                            @if (_showValuesBox)
-                            {
-                                <label class="col-form-label">Comma separated list of possible values: </label>
-                                <input class="form-control" type="text" @bind="@FormField.Values" />
-                            }*@
-                            <input class="form-control" type="text" @bind="@FormField.Description" placeholder="Description"/>
+                                @if (_showValuesBox)
+                                {
+                                    <label class="col-form-label">Comma separated list of possible values: </label>
+                                    <input class="form-control" type="text" @bind="@FormField.Values" />
+                                }*@
+                            <input class="form-control" type="text" @bind="@FormField.Description" placeholder="Description" />
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -110,7 +110,7 @@ else
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control" @bind="@FormField.FieldName" type="text" placeholder="Field Name"/>
+                            <input class="form-control" @bind="@FormField.FieldName" type="text" placeholder="Field Name" />
                             <select @onchange="@FormInputTypeClicked" class="form-control">
                                 <option value="@FormInputType">@FormInputType</option>
                                 @foreach (var type in (FormInputType[])Enum.GetValues(typeof(FormInputType)))
@@ -119,14 +119,14 @@ else
                                 }
                             </select>
                             @*<label class="form-check-label">Does this field require only set values </label>
-                            @if (FormField.UseValues)
-                            {
-                                <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" checked />
-                            }
-                            else
-                            {
-                                <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" />
-                            }*@
+                                @if (FormField.UseValues)
+                                {
+                                    <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" checked />
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" @onclick="@ToggleValuesBoxClearValues" />
+                                }*@
 
                             @if (_showValuesBox)
                             {
