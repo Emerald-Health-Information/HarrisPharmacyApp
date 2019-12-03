@@ -132,6 +132,11 @@ namespace HarrisPharmacy.App.Data.Services
             return patientList.FindAll(pl => userId.Contains(pl.UserId));
         }
 
+        /// <summary>
+        /// Gets a list of all of the open appointments in the DB that are assigned to a specific user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<List<Appointment>> GetOpenPatientListUserAsync(string userId)
         {
             List<Appointment> openPatientList = await _applicationDbContext.Appointments
