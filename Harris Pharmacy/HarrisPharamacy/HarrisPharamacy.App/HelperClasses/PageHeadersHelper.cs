@@ -24,7 +24,7 @@ namespace HarrisPharmacy.App.HelperClasses
                 case "/formbuilder":
                     return "Manage Forms";
 
-                case "/Formfields":
+                case "/formfields":
                     return "Manage Form Fields";
 
                 case "/patientinfo":
