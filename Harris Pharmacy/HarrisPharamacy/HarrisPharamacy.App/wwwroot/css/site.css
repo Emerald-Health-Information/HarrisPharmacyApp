@@ -235,7 +235,7 @@ body {
     display: inline;
 }
 
-/* The navigation menu links */
+    /* The navigation menu links */
     .bottomnav a {
         width: 22%;
         text-decoration: none;
@@ -245,22 +245,22 @@ body {
         align-content: center;
     }
 
-    /* When you mouse over the navigation links, change their color */
-    .bottomnav a.active {
-        color: #ffff;
-    }
+        /* When you mouse over the navigation links, change their color */
+        .bottomnav a.active {
+            color: #ffff;
+        }
 
     .bottomnav span {
         align-content: center;
-        padding-left:15px;
+        padding-left: 15px;
     }
 
 /* Position and style the close button (top right corner) */
-    .sidenav .logo {
-        position: absolute;
-        top: 0;
-        font-size: 36px;
-    }
+.sidenav .logo {
+    position: absolute;
+    top: 0;
+    font-size: 36px;
+}
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
@@ -273,9 +273,9 @@ body {
         padding-top: 57px;
     }
 
-    .main .top-row {
-        display: none;
-    }
+        .main .top-row {
+            display: none;
+        }
 
     a.button {
         margin: 0 0.5em 1em 0.5em;
@@ -286,7 +286,15 @@ body {
     }
 
     .navbar-hide {
-       display: none;
+        display: none;
+    }
+
+    .nav-bar page {
+        padding-top: 5px;
+    }
+
+    .navbar-brand {
+        margin-right: 5px;
     }
 
     .navbar {
@@ -297,16 +305,21 @@ body {
     img.small {
         padding-top: 5px;
     }
+}
 
-    .wider-mbl {
-        min-width: 47px;
-        font-size: 90%;
-        padding-left: 0.45em;
-    }
+.wider-mbl {
+    min-width: 47px;
+    font-size: 90%;
+    padding-left: 0.45em;
+}
 
 @media (min-width: 768px) {
     app {
         flex-direction: row;
+    }
+
+    .navbar-page {
+        display: none;
     }
 
     .sidebar {
