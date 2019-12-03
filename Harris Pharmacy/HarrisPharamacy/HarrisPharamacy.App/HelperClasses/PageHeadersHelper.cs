@@ -8,7 +8,7 @@ namespace HarrisPharmacy.App.HelperClasses
     {
         public static string GetPageHeader(string value)
         {
-            value = value.Remove(0, value.IndexOf("//", StringComparison.Ordinal)+2);
+            value = value.Remove(0, value.IndexOf("//", StringComparison.Ordinal) + 2);
             value = value.Remove(0, value.IndexOf("/", StringComparison.Ordinal));
 
             if (value.Remove(value.LastIndexOf("/", StringComparison.Ordinal)).Contains("/"))
@@ -21,17 +21,17 @@ namespace HarrisPharmacy.App.HelperClasses
                 case "/appointment":
                     return "Create Appointment";
 
-                case "/formBuilder":
-                    return "Edit Form Builder";
+                case "/formbuilder":
+                    return "Manage Forms";
 
-                case "/FormFields":
-                    return "Edit Form Fields";
+                case "/Formfields":
+                    return "Manage Form Fields";
 
                 case "/patientinfo":
                     return "Appointment Information";
 
                 default:
-                    return "Home";
+                    return "";
             }
         }
     }
