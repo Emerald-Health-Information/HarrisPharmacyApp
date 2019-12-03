@@ -29,9 +29,9 @@
 @using HarrisPharmacy.App.Shared.Components
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
-@inject NavigationManager nm
-@inject IAppointmentService s
-@inject IPatientInfoService _patientInfoService
+@inject NavigationManager NavigationManager
+@inject IAppointmentService AppointmentService
+@inject IPatientInfoService PatientInfoService
 
 <div class="row">
     <div class="col">
@@ -71,8 +71,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await s.GetAppointmentAsync(patientListID);
-        var patient = await _patientInfoService.GetPatientInformationAsync(appt.PatientId);
+        appt = await AppointmentService.GetAppointmentAsync(patientListID);
+        var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
@@ -82,15 +82,15 @@
 
     public async void FinishAppointment()
     {
-        await s.SetAppointmentStateFinishedAsync(patientListID);
+        await AppointmentService.SetAppointmentStateFinishedAsync(patientListID);
         appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
         Context.Appointments.Update(appt);
         await Context.SaveChangesAsync();
-        nm.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 
     public async void Back()
     {
-        nm.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 }
