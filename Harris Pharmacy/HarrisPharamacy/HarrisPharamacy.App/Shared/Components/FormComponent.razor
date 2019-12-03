@@ -20,7 +20,6 @@
 @using HarrisPharmacy.App.Data.Enums
 @using Microsoft.AspNetCore.Components
 
-<h3 class="h3">@Form.Name</h3>
 <form>
     @foreach (var formWithField in Form.FormWithFields)
     {
@@ -45,7 +44,7 @@
         }
     }
 
-    <button type="button" @onclick="@ToggleModal" class="btn btn-primary">Submit</button>
+    @*<button type="button" @onclick="@ToggleModal" class="btn btn-primary">Submit</button>*@
 </form>
 @if (_showModal)
 {

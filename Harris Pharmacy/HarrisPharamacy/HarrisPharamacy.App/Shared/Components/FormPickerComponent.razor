@@ -59,8 +59,7 @@ else
     /// <summary>
     /// List of the forms
     //</summary>
-    public List<Form>
-    FormsList;
+    public List<Form> FormsList;
     /// <summary>
     /// Currently selected form
     ///</summary>
@@ -74,6 +73,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         FormsList = await FormService.GetFormsAsync();
+
     }
     /// <summary>
     /// Updates the state when the selected form changes
