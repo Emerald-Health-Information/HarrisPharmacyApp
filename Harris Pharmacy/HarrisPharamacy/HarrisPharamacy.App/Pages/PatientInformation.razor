@@ -15,6 +15,7 @@
     v 1.0        Jackson Bates        2019-11-19            Added Headers
     v 1.1        Taylor Adam          2019-11-27            Added the form component to this page
     v 1.2        Grayson King         2019-11-28            Added 'Back' button
+    v 1.3        Jackson Bates        2019-12-2             Made finish appointment set flag rather than delete the appointment
     -->
 *@
 @page "/patientinfo/{patientListID}"
@@ -60,6 +61,7 @@
     private string healthNumber;
     private string Age;
     private string Sex;
+    private DateTime appointmentStartTime;
     Appointment appt;
 
     protected override async Task OnInitializedAsync()
@@ -70,11 +72,15 @@
         LastName = patient.LastName;
         Age = patient.Age;
         Sex = patient.Sex;
+        appointmentStartTime = DateTime.Now;
     }
 
     public async void FinishAppointment()
     {
         await s.SetAppointmentStateFinishedAsync(patientListID);
+        appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
+        Context.Appointments.Update(appt);
+        await Context.SaveChangesAsync();
         nm.NavigateTo("/");
     }
 
