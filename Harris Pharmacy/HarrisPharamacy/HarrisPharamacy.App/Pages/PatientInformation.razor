@@ -29,12 +29,11 @@
 @using HarrisPharmacy.App.Shared.Components
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
-@inject NavigationManager nm
-@inject IAppointmentService s
-@inject IPatientInfoService _patientInfoService
+@inject NavigationManager NavigationManager
+@inject IAppointmentService AppointmentService
+@inject IPatientInfoService PatientInfoService
 
 <h1>Patient Information</h1>
-
 <p><b>Patient Name: </b> @FirstName @LastName</p>
 <p><b>Health Care Number: </b></p>
 <p><b>Sex: </b> @Sex</p>
@@ -42,8 +41,8 @@
 <p><b>City:</b></p>
 <p><b>Province:</b></p>
 <p><b>Address:</b></p>
-
 <p><b>Patient Notes:</b></p>
+
 <textarea name="textarea" rows="10">Write something here</textarea>
 <FormPickerComponent />
 <div align="left">
@@ -66,8 +65,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await s.GetAppointmentAsync(patientListID);
-        var patient = await _patientInfoService.GetPatientInformationAsync(appt.PatientId);
+        appt = await AppointmentService.GetAppointmentAsync(patientListID);
+        var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
@@ -77,15 +76,15 @@
 
     public async void FinishAppointment()
     {
-        await s.SetAppointmentStateFinishedAsync(patientListID);
+        await AppointmentService.SetAppointmentStateFinishedAsync(patientListID);
         appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
         Context.Appointments.Update(appt);
         await Context.SaveChangesAsync();
-        nm.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 
     public async void Back()
     {
-        nm.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 }
