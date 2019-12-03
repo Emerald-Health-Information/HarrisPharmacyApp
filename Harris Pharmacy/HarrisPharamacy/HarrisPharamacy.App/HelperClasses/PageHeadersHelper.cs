@@ -18,16 +18,16 @@ namespace HarrisPharmacy.App.HelperClasses
                 case "/":
                     return "Appointments";
 
-                case "/appointment":
+                case "/CreateAppointment":
                     return "Create Appointment";
 
-                case "/formbuilder":
+                case "/ManageForms":
                     return "Manage Forms";
 
-                case "/formfields":
+                case "/ManageFormFields":
                     return "Manage Form Fields";
 
-                case "/patientinfo":
+                case "/AppointmentInformation":
                     return "Appointment Information";
 
                 default:
