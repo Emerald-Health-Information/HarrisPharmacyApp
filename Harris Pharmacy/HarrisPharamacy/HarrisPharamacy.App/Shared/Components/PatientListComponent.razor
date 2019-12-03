@@ -106,7 +106,7 @@ else
     {
       
         var appointment =await  AppointmentService.GetAppointmentAsync(pid);
-         await AppointmentService.DeleteAsync(pid);
+        await AppointmentService.DeleteAsync(pid);
         appointments.Remove(appointment);
         this.StateHasChanged();
     }
