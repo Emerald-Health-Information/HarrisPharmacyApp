@@ -32,30 +32,30 @@
 
 @if (totalAppointments > 0)
 {
-    @foreach(var appointment in appointments)
+    @foreach (var appointment in appointments)
     {
 
-    <div class="row pr-4 pb-2">
-        <div class="col pr-2 pl-2">
-            <button class="btn btn-info btn-block" @onclick="@(e => GoToPatient(appointment.AppointmentId))" style="height:60px;">
-                @{ AssignPatient(appointment.PatientId); }
-                @if (patient != null)
-                {
-                    <span>
-                        @patient.FirstName @patient.LastName -
-                        @appointment.Location -
-                        @appointment.StartTime.ToShortTimeString()
-                    </span>
+        <div class="row pr-4 pb-2">
+            <div class="col pr-2 pl-2">
+                <button class="btn btn-info btn-block" @onclick="@(e => GoToPatient(appointment.AppointmentId))" style="height:60px;">
+                    @{ AssignPatient(appointment.PatientId); }
+                    @if (patient != null)
+                    {
+                        <span>
+                            @patient.FirstName @patient.LastName -
+                            @appointment.Location -
+                            @appointment.StartTime.ToShortTimeString()
+                        </span>
 
-                }
-            </button>
+                    }
+                </button>
+            </div>
+            <div class="col col-1 pl-0" style="height:60px;">
+                <button @onclick="@(e => SkipAppointment(appointment.AppointmentId))" class="btn btn-danger" style="height:60px;">
+                    <span class="oi oi-trash hover"></span>
+                </button>
+            </div>
         </div>
-        <div class="col col-1 pl-0" style="height:60px;">
-            <button @onclick="@(e => SkipAppointment(appointment.AppointmentId))"  class="btn btn-danger" style="height:60px;">
-                <span  class="oi oi-trash hover"></span>
-            </button>
-        </div>     
-    </div>
     }
 }
 else
@@ -104,9 +104,9 @@ else
     /// <param name="pid"></param>
     protected async void SkipAppointment(string pid)
     {
-      
-        var appointment =await  AppointmentService.GetAppointmentAsync(pid);
-         await AppointmentService.DeleteAsync(pid);
+
+        var appointment = await AppointmentService.GetAppointmentAsync(pid);
+        await AppointmentService.DeleteAsync(pid);
         appointments.Remove(appointment);
         this.StateHasChanged();
     }
