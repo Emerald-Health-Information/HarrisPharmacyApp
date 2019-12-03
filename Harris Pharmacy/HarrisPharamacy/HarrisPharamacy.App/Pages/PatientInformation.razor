@@ -32,24 +32,29 @@
 @inject IAppointmentService s
 @inject IPatientInfoService _patientInfoService
 
-<h1>Patient Information</h1>
-
-<p><b>Patient Name: </b> @FirstName @LastName</p>
-<p><b>Health Care Number: </b></p>
-<p><b>Sex: </b> @Sex</p>
-<p><b>Age: </b> @Age</p>
-<p><b>City:</b></p>
-<p><b>Province:</b></p>
-<p><b>Address:</b></p>
-
-<p><b>Patient Notes:</b></p>
-<textarea name="textarea" rows="10">Write something here</textarea>
-<FormPickerComponent />
-<div align="left">
-    <button type="button" @onclick="@Back">Back</button>
+<div class="row">
+    <div class="col">
+        <p><b>Patient Name: </b> @FirstName @LastName</p>
+        <p><b>Health Care Number: </b></p>
+        <p><b>Sex: </b> @Sex</p>
+        <p><b>Age: </b> @Age</p>
+    </div>
 </div>
-<div align="right">
-    <button type="button" @onclick="@FinishAppointment">Finish</button>
+<FormPickerComponent />
+<div class="row">
+    <div class="col">
+        <p><b>Appointment Notes</b></p>
+        <textarea class="form-control" name="textarea" rows="5">Write notes here...</textarea>
+    </div>
+</div>
+
+<div class="row pt-2">
+    <div class="col">     
+    </div>
+    <div class="col pl-4 pr-3">
+        <button class="btn btn-info mr-2" type="button" @onclick="@Back">Back</button>
+        <button class="btn btn-info" type="button" @onclick="@FinishAppointment">Finish</button>
+    </div>
 </div>
 
 @code {

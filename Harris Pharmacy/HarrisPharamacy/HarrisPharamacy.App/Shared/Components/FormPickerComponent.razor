@@ -23,7 +23,7 @@
 
 @inject IFormService FormService
 
-<p>Please select a form from the list below</p>
+<p><b>Select Form</b></p>
 
 @if (FormsList == null)
 {
@@ -35,7 +35,7 @@ else if (FormsList.Count == 0)
 }
 else
 {
-    <div class="row" style="padding-top:10px">
+    <div class="row">
         <div class="col-md-4">
             <select @onchange="@FormClicked" class="form-control">
                 <option value="">-- Select Form --</option>
@@ -46,7 +46,6 @@ else
             </select>
         </div>
     </div>
-    <br />
     @if (FormSelected != null)
     {
         <FormComponent Form="FormSelected" />

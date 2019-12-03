@@ -106,9 +106,10 @@ else
     /// <param name="pid"></param>
     protected async void SkipAppointment(string pid)
     {
-      
+
         var appointment =await  AppointmentService.GetAppointmentAsync(pid);
-         await AppointmentService.DeleteAsync(pid);
+        //await AppointmentService.DeleteAsync(pid);
+        appointment.AppointmentState = "skipped";
         appointments.Remove(appointment);
         this.StateHasChanged();
     }
