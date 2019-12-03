@@ -269,7 +269,7 @@ body {
 
 @media (max-width: 767.98px) {
     .main {
-        padding-bottom: 60px;
+        padding-bottom: 68px;
         padding-top: 57px;
     }
 
@@ -296,6 +296,12 @@ body {
 
     img.small {
         padding-top: 5px;
+    }
+
+    .wider-mbl {
+        min-width: 47px;
+        font-size: 90%;
+        padding-left: 0.45em;
     }
 
 @media (min-width: 768px) {
