@@ -8,7 +8,11 @@ namespace HarrisPharmacy.App.HelperClasses
     {
         public static string GetPageHeader(string value)
         {
-            value = value.Remove(0, value.LastIndexOf("/", StringComparison.Ordinal));
+            value = value.Remove(0, value.IndexOf("//", StringComparison.Ordinal)+2);
+            value = value.Remove(0, value.IndexOf("/", StringComparison.Ordinal));
+
+            if (value.Remove(value.LastIndexOf("/", StringComparison.Ordinal)).Contains("/"))
+                value = value.Remove(value.LastIndexOf("/", StringComparison.Ordinal));
             switch (value)
             {
                 case "/":
@@ -22,6 +26,9 @@ namespace HarrisPharmacy.App.HelperClasses
 
                 case "/FormFields":
                     return "Edit Form Fields";
+
+                case "/patientinfo":
+                    return "Appointment Information";
 
                 default:
                     return "Home";

@@ -293,6 +293,10 @@ body {
         padding-top: 5px;
     }
 
+    .navbar-brand {
+        margin-right: 5px;
+    }
+
     .navbar {
         height: 52px;
         padding-top: 0;
@@ -303,11 +307,11 @@ body {
     }
 }
 
-    .wider-mbl {
-        min-width: 47px;
-        font-size: 90%;
-        padding-left: 0.45em;
-    }
+.wider-mbl {
+    min-width: 47px;
+    font-size: 90%;
+    padding-left: 0.45em;
+}
 
 @media (min-width: 768px) {
     app {
