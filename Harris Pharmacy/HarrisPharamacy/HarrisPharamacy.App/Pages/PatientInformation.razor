@@ -1,7 +1,7 @@
 ﻿@*
     Harrison1 COSC 470 2019
 
-    File = AppointmentInformation.razor
+    File = PatientInformation.razor
 
     Author = Jackson Bates
 
@@ -16,10 +16,9 @@
     v 1.1        Taylor Adam          2019-11-27            Added the form component to this page
     v 1.2        Grayson King         2019-11-28            Added 'Back' button
     v 1.3        Jackson Bates        2019-12-2             Made finish appointment set flag rather than delete the appointment
-    v 1.4        Taylor Adam          2019-12-2             Renamed
     -->
 *@
-@page "/AppointmentInformation/{patientListID}"
+@page "/patientinfo/{patientListID}"
 @using System.Net
 @using HarrisPharmacy.App.Data
 @using HarrisPharmacy.App.Data.Entities.Patients
@@ -51,7 +50,7 @@
 </div>
 
 <div class="d-flex flex-row pt-2">
-    <div class="col">
+    <div class="col">     
     </div>
     <div class="col pl-4 pr-0 d-flex justify-content-end">
         <button class="btn btn-info mr-2" type="button" @onclick="@Back">Back</button>
