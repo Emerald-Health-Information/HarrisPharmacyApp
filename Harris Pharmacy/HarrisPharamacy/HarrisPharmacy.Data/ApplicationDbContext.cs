@@ -21,12 +21,12 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 #endregion copyright
 
-using HarrisPharmacy.App.Data.Entities.Appointments;
-using HarrisPharmacy.App.Data.Entities.Forms;
-using HarrisPharmacy.App.Data.Entities.Patients;
+using HarrisPharmacy.Data.Entities.Appointments;
+using HarrisPharmacy.Data.Entities.Forms;
+using HarrisPharmacy.Data.Entities.Patients;
 using Microsoft.EntityFrameworkCore;
 
-namespace HarrisPharmacy.App.Data
+namespace HarrisPharmacy.Data
 {
     public class ApplicationDbContext : DbContext
     {

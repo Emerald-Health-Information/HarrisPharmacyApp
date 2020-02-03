@@ -1,10 +1,14 @@
 ﻿using System;
-using HarrisPharmacy.App.Data;
-using HarrisPharmacy.App.Data.Interfaces;
-using HarrisPharmacy.App.Data.Services;
+
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using HarrisPharmacy.App.Data.Entities.Forms;
+
+using HarrisPharmacy.Data;
+
+using HarrisPharmacy.Data.Entities.Forms;
+
+using HarrisPharmacy.Data.Interfaces;
+using HarrisPharmacy.Data.Services;
 using Xunit;
 
 namespace HarrisPharmacy.UnitTests

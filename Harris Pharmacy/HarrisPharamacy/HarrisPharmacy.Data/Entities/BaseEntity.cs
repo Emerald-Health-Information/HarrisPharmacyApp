@@ -22,11 +22,8 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 #endregion copyright
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace HarrisPharmacy.App.Data.Entities
+namespace HarrisPharmacy.Data.Entities
 {
     /// <summary>
     /// A base entity that can be extended to include all of the fields we would like in all our entity's

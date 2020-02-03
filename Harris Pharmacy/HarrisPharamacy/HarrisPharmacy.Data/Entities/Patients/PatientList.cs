@@ -22,12 +22,7 @@ v 1.1       Grayson King    2019-11-28          Header Update
 
 #endregion copyright
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HarrisPharmacy.App.Data.Entities.Patients
+namespace HarrisPharmacy.Data.Entities.Patients
 {
     /// <summary>
     /// Represents a single appointment in a list of patients

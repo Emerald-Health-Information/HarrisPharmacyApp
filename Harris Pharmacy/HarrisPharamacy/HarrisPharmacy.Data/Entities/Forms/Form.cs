@@ -21,13 +21,9 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 #endregion copyright
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HarrisPharmacy.App.Data.Enums;
 
-namespace HarrisPharmacy.App.Data.Entities.Forms
+namespace HarrisPharmacy.Data.Entities.Forms
 {
     /// <summary>
     /// Represents a form
