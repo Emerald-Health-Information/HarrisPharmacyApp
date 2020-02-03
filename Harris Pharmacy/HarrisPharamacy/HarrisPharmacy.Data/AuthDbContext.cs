@@ -24,7 +24,7 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace HarrisPharmacy.App.Data
+namespace HarrisPharmacy.Data
 {
     public class AuthDbContext : IdentityDbContext
     {

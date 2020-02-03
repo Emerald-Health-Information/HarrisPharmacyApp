@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
-namespace HarrisPharmacy.App.Data.Entities.Appointments
+namespace HarrisPharmacy.Data.Entities.Appointments
 {
     public class Appointment : BaseEntity
     {

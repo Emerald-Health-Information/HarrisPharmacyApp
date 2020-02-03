@@ -21,13 +21,13 @@
 *@
 @page "/AppointmentInformation/{patientListID}"
 @using System.Net
-@using HarrisPharmacy.App.Data
-@using HarrisPharmacy.App.Data.Entities.Patients
-@using HarrisPharmacy.App.Data.Entities.Appointments
-@using HarrisPharmacy.App.Data.Interfaces
+
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using HarrisPharmacy.App.Shared.Components
+@using HarrisPharmacy.Data
+@using HarrisPharmacy.Data.Entities.Appointments
+@using HarrisPharmacy.Data.Interfaces
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
 @inject NavigationManager NavigationManager

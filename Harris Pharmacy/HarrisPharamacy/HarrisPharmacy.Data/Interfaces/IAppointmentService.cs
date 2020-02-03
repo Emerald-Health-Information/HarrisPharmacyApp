@@ -21,16 +21,12 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 #endregion copyright
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using HarrisPharmacy.App.Data.Entities.Appointments;
-using HarrisPharmacy.App.Data.Entities.Patients;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using HarrisPharmacy.Data.Entities.Appointments;
+using HarrisPharmacy.Data.Entities.Patients;
 
-namespace HarrisPharmacy.App.Data.Interfaces
+namespace HarrisPharmacy.Data.Interfaces
 {
     /// <summary>
     /// The interface for the service class for appointments that allows the front end to interact with the database

@@ -21,10 +21,10 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 #endregion copyright
 
-using HarrisPharmacy.App.Data.Enums;
 using System.Collections.Generic;
+using HarrisPharmacy.Data.Enums;
 
-namespace HarrisPharmacy.App.Data.Entities.Forms
+namespace HarrisPharmacy.Data.Entities.Forms
 {
     /// <summary>
     /// Represents A field of a form

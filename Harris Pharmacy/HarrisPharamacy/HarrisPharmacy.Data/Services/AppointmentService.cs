@@ -25,13 +25,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HarrisPharmacy.App.Data.Entities.Appointments;
-using HarrisPharmacy.App.Data.Entities.Patients;
-using HarrisPharmacy.App.Data.Interfaces;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using HarrisPharmacy.Data.Entities.Appointments;
+using HarrisPharmacy.Data.Entities.Patients;
+using HarrisPharmacy.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace HarrisPharmacy.App.Data.Services
+namespace HarrisPharmacy.Data.Services
 {
     /// <summary>
     /// The service class for appointments that allows the front end to connect to the database
@@ -142,7 +141,6 @@ namespace HarrisPharmacy.App.Data.Services
             List<Appointment> openPatientList = await _applicationDbContext.Appointments
                 .Where(pl => pl.AppointmentState == "open").ToListAsync();
             return openPatientList.FindAll(pl => userId.Contains(pl.UserId));
-
         }
 
         /// <summary>
