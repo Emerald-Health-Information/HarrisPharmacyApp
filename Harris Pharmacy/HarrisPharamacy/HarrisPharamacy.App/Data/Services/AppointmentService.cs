@@ -43,6 +43,7 @@ namespace HarrisPharmacy.App.Data.Services
         /// </summary>
         /// <param name="patientId"></param>
         /// <returns></returns>
+
         public async Task<Patient> GetPatientAsync(string patientId)
         {
             return await _applicationDbContext.Patients
@@ -142,7 +143,6 @@ namespace HarrisPharmacy.App.Data.Services
             List<Appointment> openPatientList = await _applicationDbContext.Appointments
                 .Where(pl => pl.AppointmentState == "open").ToListAsync();
             return openPatientList.FindAll(pl => userId.Contains(pl.UserId));
-
         }
 
         /// <summary>

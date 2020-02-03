@@ -21,6 +21,7 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 #endregion copyright
 
+using System;
 using HarrisPharmacy.App.Data.Entities.Appointments;
 using HarrisPharmacy.App.Data.Entities.Forms;
 using HarrisPharmacy.App.Data.Entities.Patients;
@@ -30,6 +31,10 @@ namespace HarrisPharmacy.App.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        /// <summary>
+        /// Our Application Db Context Constructors
+        /// </summary>
+        /// <param name="options"></param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
