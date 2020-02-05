@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HarrisPharmacy.Data.Entities.Forms;
 using HarrisPharmacy.Data.Interfaces;
@@ -25,5 +26,11 @@ namespace HarrisPharmacy.API.Controllers.FormsAPI
             //return forms;
             return await _formService.GetFormFieldsAsync();
         }
+        [HttpGet("{id}")]
+        public async Task<FormField> GetFormFieldAsync(string id)
+        {
+            var result = await _formService.GetFormFieldAsync(id);
+            return result;
+        }
     }
-}
+}   
