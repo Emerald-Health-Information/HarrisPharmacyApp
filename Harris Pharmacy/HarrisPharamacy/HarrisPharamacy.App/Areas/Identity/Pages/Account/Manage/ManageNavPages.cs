@@ -43,6 +43,8 @@ namespace HarrisPharmacy.App.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthentication => "TwoFactorAuthentication";
 
+        public static string Fido2Mfa => "Fido2Mfa";
+
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
@@ -61,5 +63,7 @@ namespace HarrisPharmacy.App.Areas.Identity.Pages.Account.Manage
                 ?? System.IO.Path.GetFileNameWithoutExtension(viewContext.ActionDescriptor.DisplayName);
             return string.Equals(activePage, page, StringComparison.OrdinalIgnoreCase) ? "active" : null;
         }
+
+        public static string Fido2MfaNavClass(ViewContext viewContext) => PageNavClass(viewContext, Fido2Mfa);
     }
 }

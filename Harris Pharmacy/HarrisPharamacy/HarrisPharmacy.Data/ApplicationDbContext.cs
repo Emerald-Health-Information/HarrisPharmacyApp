@@ -22,6 +22,7 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 #endregion copyright
 
 using HarrisPharmacy.Data.Entities.Appointments;
+using HarrisPharmacy.Data.Entities.Fido;
 using HarrisPharmacy.Data.Entities.Forms;
 using HarrisPharmacy.Data.Entities.Patients;
 using Microsoft.EntityFrameworkCore;

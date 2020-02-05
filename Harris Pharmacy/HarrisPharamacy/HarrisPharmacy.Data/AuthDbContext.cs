@@ -23,6 +23,7 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using HarrisPharmacy.Data.Entities.Fido;
 
 namespace HarrisPharmacy.Data
 {
@@ -31,6 +32,14 @@ namespace HarrisPharmacy.Data
         public AuthDbContext(DbContextOptions<AuthDbContext> options)
             : base(options)
         {
+        }
+
+        public DbSet<FidoStoredCredential> FidoStoredCredential { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<FidoStoredCredential>().HasKey(m => m.Username);
+
+            base.OnModelCreating(builder);
         }
     }
 }

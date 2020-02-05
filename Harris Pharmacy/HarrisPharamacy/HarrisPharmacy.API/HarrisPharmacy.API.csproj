@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Fido2" Version="1.0.1" />
+    <PackageReference Include="Fido2.Models" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HarrisPharamacy.App\HarrisPharmacy.App.csproj" />
     <ProjectReference Include="..\HarrisPharmacy.Data\HarrisPharmacy.Data.csproj" />
   </ItemGroup>
