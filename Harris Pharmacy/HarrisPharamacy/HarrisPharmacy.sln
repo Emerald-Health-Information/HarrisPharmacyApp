@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.Data", "Harr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.API", "HarrisPharmacy.API\HarrisPharmacy.API.csproj", "{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "..\..\..\WebApplication1\WebApplication1\WebApplication1.csproj", "{5704C740-77D8-4196-88B2-F0D5B8DAE0EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{5704C740-77D8-4196-88B2-F0D5B8DAE0EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
