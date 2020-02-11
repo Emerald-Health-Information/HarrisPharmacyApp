@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.IntegrationT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.Data", "HarrisPharmacy.Data\HarrisPharmacy.Data.csproj", "{0116B918-637B-4C7A-A037-39DEE215BD0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HarrisPharmacy.API", "HarrisPharmacy.API\HarrisPharmacy.API.csproj", "{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.API", "HarrisPharmacy.API\HarrisPharmacy.API.csproj", "{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

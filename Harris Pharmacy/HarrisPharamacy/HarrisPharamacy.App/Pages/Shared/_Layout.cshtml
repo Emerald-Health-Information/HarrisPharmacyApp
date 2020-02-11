@@ -1,6 +1,4 @@
-﻿
-
-@using Microsoft.AspNetCore.Hosting
+﻿@using Microsoft.AspNetCore.Hosting
 @using Microsoft.AspNetCore.Mvc.ViewEngines
 @inject IWebHostEnvironment Environment
 @inject ICompositeViewEngine Engine
@@ -20,6 +18,13 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
     </environment>
     <link rel="stylesheet" href="~/Identity/css/site.css" />
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat-es5.js"></script>
+    <style>
+        #webchat {
+            min-height: 100%;
+            min-width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -53,6 +58,7 @@
         <partial name="_CookieConsentPartial" optional />
         <main role="main" class="pb-3">
             @RenderBody()
+            sadlsaldsa
         </main>
     </div>
     <footer class="footer border-top text-muted">

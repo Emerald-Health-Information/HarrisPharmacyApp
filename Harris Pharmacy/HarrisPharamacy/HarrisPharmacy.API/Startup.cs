@@ -48,7 +48,6 @@ namespace HarrisPharmacy.API
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-
             services.AddControllers();
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
