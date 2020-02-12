@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HarrisPharmacy.App.Data;
-using HarrisPharmacy.App.Data.Entities.Forms;
+using HarrisPharmacy.Data;
+using HarrisPharmacy.Data.Entities.Forms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
