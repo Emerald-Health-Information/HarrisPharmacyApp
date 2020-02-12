@@ -1,20 +1,24 @@
-﻿@page "/bot"
-@inject IJSRuntime JsRuntime
+﻿@inject IJSRuntime JsRuntime
 @using System.Net.Http.Headers
 @using System.Text
 @using HarrisPharmacy.App.Models
 @using Newtonsoft.Json
 
-<div id="webchat" role="main"></div>
+<iframe src='https://webchat.botframework.com/embed/Test-02-12-2020?s=XRhSDCI9lJM.jSjG2_NU23R93pENtVvin90I1HOxrYgb_15rdbMLYak' style='min-width: 400px; width: 100%; min-height: 500px;'></iframe>
+
+<!--
+
+<div id="webchat" role="main"></div>-->
 
 @code {
+    // this code is for using auth and direct line, couldn't get it to work but maybe in the future
     public ChatConfig chatConfig;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
 
-        chatConfig = await GetChatConfig();
-        await JsRuntime.InvokeAsync<object>("webChat", chatConfig.Token);
+     //   chatConfig = await GetChatConfig();
+    //    await JsRuntime.InvokeAsync<object>("webChat", chatConfig.Token);
 
     }
     public async Task<ChatConfig> GetChatConfig()
@@ -35,6 +39,7 @@
             "application/json");
 
         var response = await client.SendAsync(request);
+        Console.Write(response.Content);
         string token = String.Empty;
 
         if (response.IsSuccessStatusCode)
