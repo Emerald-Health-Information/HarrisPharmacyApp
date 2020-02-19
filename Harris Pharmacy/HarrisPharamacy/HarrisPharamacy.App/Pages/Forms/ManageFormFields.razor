@@ -23,6 +23,9 @@
 @using HarrisPharmacy.Data.Enums
 @using HarrisPharmacy.Data.Interfaces
 @using Microsoft.AspNetCore.Components
+@using System.Net.Http
+@using Newtonsoft.Json
+@inject HttpClient Http
 
 @inject IFormService FormService
 
@@ -264,7 +267,8 @@ else
             ToggleValuesBox();
 
         FormField.FormInputType = FormInputType;
-        await FormService.InsertFormFieldAsync(FormField);
+        ///await FormService.InsertFormFieldAsync(FormField);
+        await Http.PostJsonAsync("api/formfield/insert", FormField);
         FormFieldsList.Add(FormField);
         ToggleCreateModal();
 

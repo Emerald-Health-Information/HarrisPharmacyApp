@@ -109,6 +109,7 @@ namespace HarrisPharmacy.Data.Services
             formField.DateCreated = DateTime.Now;
             formField.DateUpdated = DateTime.Now;
             var result = await _applicationDbContext.FormFields.AddAsync(formField);
+            ///var result = await Http.PostAsync("api/formfield/insert", formField);
             await _applicationDbContext.SaveChangesAsync();
 
             return formField;
@@ -213,12 +214,12 @@ namespace HarrisPharmacy.Data.Services
             return formField;
         }
 
-        public async void UpdateFormFieldAsync(FormField formField)
+        public async Task<int> UpdateFormFieldAsync(FormField formField)
         {
             formField.DateUpdated = DateTime.Now;
 
             _applicationDbContext.FormFields.Update(formField);
-            await _applicationDbContext.SaveChangesAsync();
+            return await _applicationDbContext.SaveChangesAsync();
         }
 
         /// <summary>
