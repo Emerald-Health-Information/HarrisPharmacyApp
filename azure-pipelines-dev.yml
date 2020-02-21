@@ -62,4 +62,4 @@ steps:
     deployToSlotOrASE: true
     ResourceGroupName: 'harrisrg'
     SlotName: 'staging'
-    packageForLinux: '$(Build.ArtifactsDirectory)/**/WebApp.zip'
+    packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
