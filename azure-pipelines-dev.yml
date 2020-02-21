@@ -61,5 +61,5 @@ steps:
     WebAppName: 'harrisapp-dev'
     deployToSlotOrASE: true
     ResourceGroupName: 'harrisrg'
-    SlotName: 'production'
-    packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
+    SlotName: 'staging'
+    packageForLinux: '$(Build.ArtifactsDirectory)/**/WebApp.zip'
