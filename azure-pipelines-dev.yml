@@ -59,4 +59,4 @@ steps:
     azureSubscription: 'Azure subscription 1(ae9ad7be-3148-438a-90ae-bb0a0b1b670f)'
     appType: 'webApp'
     WebAppName: 'harrisapp-dev'
-    packageForLinux: '$(System.ArtifactsDirectory)/**/WebApp.zip'
+    package: '$(System.ArtifactsDirectory)/**/WebApp.zip'
