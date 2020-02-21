@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- master
+- dev
 
 pool:
   vmImage: 'windows-latest'
@@ -56,10 +56,10 @@ steps:
 
 
 - task: AzureRmWebAppDeployment@4
-  displayName: 'Azure App Service Deploy: HarrisTesting'
+  displayName: 'Azure App Service Deploy: harrisapp'
   inputs:
-    azureSubscription: harrisapp
-    WebAppName: harrisapp
+    azureSubscription: 'harrispharmacyapp - Azure'
+    WebAppName: harrisapp-dev
     package: $(System.ArtifactsDirectory)/**/WebApp.zip    
 
 
