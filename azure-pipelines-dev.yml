@@ -58,7 +58,7 @@ steps:
 - task: AzureRmWebAppDeployment@4
   displayName: 'Azure App Service Deploy: harrisapp'
   inputs:
-    azureSubscription: harrispharmacyapp
+    azureSubscription: 'harrispharmacyapp - Azure'
     WebAppName: harrisapp-dev
     package: $(System.ArtifactsDirectory)/**/WebApp.zip    
 
