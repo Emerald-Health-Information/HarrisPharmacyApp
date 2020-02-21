@@ -53,13 +53,12 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
 
-
-
 - task: AzureRmWebAppDeployment@4
-  displayName: 'Azure App Service Deploy: harrisapp'
   inputs:
-    azureSubscription: 'harrispharmacyapp - Azure'
-    WebAppName: Harris-App
-    package: $(System.ArtifactsDirectory)/**/WebApp.zip    
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(ae9ad7be-3148-438a-90ae-bb0a0b1b670f)'
+    appType: 'webApp'
+    WebAppName: 'harrisapp-dev'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
 
