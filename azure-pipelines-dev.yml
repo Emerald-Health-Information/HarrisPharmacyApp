@@ -59,7 +59,7 @@ steps:
   displayName: 'Azure App Service Deploy: harrisapp'
   inputs:
     azureSubscription: 'harrispharmacyapp - Azure'
-    WebAppName: harrisapp
+    WebAppName: harrispharmacyapp
     package: $(System.ArtifactsDirectory)/**/WebApp.zip    
 
 
