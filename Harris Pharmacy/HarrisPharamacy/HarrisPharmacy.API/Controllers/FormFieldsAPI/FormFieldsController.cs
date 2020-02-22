@@ -1,13 +1,35 @@
-﻿using System;
+﻿#region copyright
+
+/*
+
+Harrison1 COSC 470 2019
+
+File = FormService.cs
+
+Author = Taylor Adam
+
+Date = 2019-11-19
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0		Taylor Adam		2020-01-20			Initial
+v 1.1		Dakota Logan	2020-02-13			Added methods
+
+*/
+
+#endregion copyright
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HarrisPharmacy.Data.Entities.Forms;
 using HarrisPharmacy.Data.Interfaces;
-using HarrisPharmacy.Data.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
-namespace HarrisPharmacy.API.Controllers.FormsAPI
+namespace HarrisPharmacy.API.Controllers.FormFieldsAPI
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -32,19 +54,19 @@ namespace HarrisPharmacy.API.Controllers.FormsAPI
             return await _formService.GetFormFieldsAsync();
         }
 
-        [HttpGet("list/{id}")]
+        [HttpGet("{id}")]
         public async Task<FormField> GetFormFieldAsync(string id)
         {
             return await _formService.GetFormFieldAsync(id);
         }
 
-        [HttpPost("update")]
-        public async Task<int> UpdateFormFieldAsync(FormField formField)
+        [HttpPut("update")]
+        public async Task<FormField> UpdateFormFieldAsync(FormField formField)
         {
             return await _formService.UpdateFormFieldAsync(formField);
         }
 
-        [HttpGet("delete/{id}")]
+        [HttpDelete("{id}")]
         public async Task<FormField> DeleteFormFieldAsync(string id)
         {
             return await _formService.DeleteFormFieldAsync(id);

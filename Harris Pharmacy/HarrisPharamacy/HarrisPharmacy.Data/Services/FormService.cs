@@ -16,6 +16,7 @@ License = MIT
 
 Version		Author			Date				Desc
 v 1.0		Taylor Adam		2019-11-19			Added Headers
+v 1.1		Dakota Logan	2020-02-21		    Changed update to return formfield
 
 */
 
@@ -109,7 +110,6 @@ namespace HarrisPharmacy.Data.Services
             formField.DateCreated = DateTime.Now;
             formField.DateUpdated = DateTime.Now;
             var result = await _applicationDbContext.FormFields.AddAsync(formField);
-            ///var result = await Http.PostAsync("api/formfield/insert", formField);
             await _applicationDbContext.SaveChangesAsync();
 
             return formField;
@@ -214,12 +214,14 @@ namespace HarrisPharmacy.Data.Services
             return formField;
         }
 
-        public async Task<int> UpdateFormFieldAsync(FormField formField)
+        public async Task<FormField> UpdateFormFieldAsync(FormField formField)
         {
             formField.DateUpdated = DateTime.Now;
 
             _applicationDbContext.FormFields.Update(formField);
-            return await _applicationDbContext.SaveChangesAsync();
+            await _applicationDbContext.SaveChangesAsync();
+
+            return formField;
         }
 
         /// <summary>
