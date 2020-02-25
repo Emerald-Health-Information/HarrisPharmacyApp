@@ -10,10 +10,9 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'Harris Pharmacy/HarrisPharamacy/HarrisPharmacy.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-
 
 steps:
 - task: UseDotNet@2
@@ -22,10 +21,6 @@ steps:
     packageType: sdk
     version: '3.0.x'
     installationPath: $(Agent.ToolsDirectory)/dotnet
-
-- task: CmdLine@2
-  inputs:
-    script: 'cd ** ls'
 
 - task: NuGetToolInstaller@1
 
