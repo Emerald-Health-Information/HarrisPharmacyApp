@@ -79,8 +79,9 @@ else
 @functions {
     protected override async Task OnInitializedAsync()
     {
-        appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
-        //appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/{userId}");
+        //appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
+        string userid = "9d09ed27-75ab-4283-9eb3-598d7d432ac0";
+        appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/{userid}");
         appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
         if (appointments != null)
         {
