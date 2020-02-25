@@ -29,10 +29,14 @@
 @using HarrisPharmacy.Data.Entities.Appointments
 @using HarrisPharmacy.Data.Interfaces
 @using Microsoft.Data.SqlClient
+@using System.Net.Http
+@using Newtonsoft.Json
+@inject HttpClient Http
 @inject ApplicationDbContext Context
 @inject NavigationManager NavigationManager
 @inject IAppointmentService AppointmentService
 @inject IPatientInfoService PatientInfoService
+@inject ApplicationDbContext _applicationDbContext;
 
 <div class="row">
     <div class="col">
@@ -72,7 +76,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await AppointmentService.GetAppointmentAsync(patientListID);
+        //appt = await AppointmentService.GetAppointmentAsync(patientListID);
+        appt = await _applicationDbContext.Appointments.FindAsync(patientListID);
+        //appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/{patientListID}");
         var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
@@ -83,10 +89,10 @@
 
     public async void FinishAppointment()
     {
-        await AppointmentService.SetAppointmentStateFinishedAsync(patientListID);
+        //await AppointmentService.SetAppointmentStateFinishedAsync(appt);
+        appt.AppointmentState = "finished";
         appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
-        Context.Appointments.Update(appt);
-        await Context.SaveChangesAsync();
+        await Http.PutJsonAsync("api/appointments/{appt.AppointmentId}", appt);
         NavigationManager.NavigateTo("/");
     }
 
