@@ -206,11 +206,13 @@ else
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-
-        Items = FormService.GetFormFieldsMultiSelectListAsync();
-        FormFields = await Http.GetJsonAsync<List<FormField>>("api/formfield/list");
+        
+        Items = await Http.GetJsonAsync<List<SelectListItem>>("api/formfield/selectlist");
+        FormFields = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
+        //FormFields = await FormService.GetFormFieldsAsync();
         FormsList = await FormService.GetFormsAsync();
         Item = Items[0];
+        
     }
 
     /// <summary>

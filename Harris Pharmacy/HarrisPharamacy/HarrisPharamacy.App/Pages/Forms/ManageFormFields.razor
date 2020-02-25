@@ -179,7 +179,7 @@ else
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        FormFieldsList = await Http.GetJsonAsync<List<FormField>>("api/formfield/list");
+        FormFieldsList = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
     }
     /// <summary>
     /// Toggles the modal on/off
