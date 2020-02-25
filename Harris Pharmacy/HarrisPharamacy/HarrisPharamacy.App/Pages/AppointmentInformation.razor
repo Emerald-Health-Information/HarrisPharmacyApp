@@ -78,7 +78,7 @@
     {
         //appt = await AppointmentService.GetAppointmentAsync(patientListID);
         //appt = await _applicationDbContext.Appointments.FindAsync(patientListID);
-        appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/b9ad9c13-50d8-46f1-a575-afcc071686d5");
+        appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + patientListID);
         var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
