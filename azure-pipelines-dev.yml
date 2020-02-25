@@ -25,7 +25,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'ls'
+    script: 'cd ** ls'
 
 - task: NuGetToolInstaller@1
 
