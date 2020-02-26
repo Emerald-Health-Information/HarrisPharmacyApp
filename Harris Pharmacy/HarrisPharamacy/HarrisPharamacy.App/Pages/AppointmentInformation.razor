@@ -17,6 +17,7 @@
     v 1.2        Grayson King         2019-11-28            Added 'Back' button
     v 1.3        Jackson Bates        2019-12-2             Made finish appointment set flag rather than delete the appointment
     v 1.4        Taylor Adam          2019-12-2             Renamed
+    v 1.5        George Cairney       2020-02-25            Added API adaption
     -->
 *@
 @page "/AppointmentInformation/{patientListID}"
@@ -27,12 +28,16 @@
 @using HarrisPharmacy.App.Shared.Components
 @using HarrisPharmacy.Data
 @using HarrisPharmacy.Data.Entities.Appointments
+@using HarrisPharmacy.Data.Entities.Patients;
 @using HarrisPharmacy.Data.Interfaces
 @using Microsoft.Data.SqlClient
+@using System.Net.Http
+@using Newtonsoft.Json
 @inject ApplicationDbContext Context
 @inject NavigationManager NavigationManager
 @inject IAppointmentService AppointmentService
 @inject IPatientInfoService PatientInfoService
+@inject HttpClient Http
 
 <div class="row">
     <div class="col">
@@ -73,7 +78,7 @@
     protected override async Task OnInitializedAsync()
     {
         appt = await AppointmentService.GetAppointmentAsync(patientListID);
-        var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
+        var patient = await Http.GetJsonAsync<Patient>("api/patientinfo/patient/" + appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
