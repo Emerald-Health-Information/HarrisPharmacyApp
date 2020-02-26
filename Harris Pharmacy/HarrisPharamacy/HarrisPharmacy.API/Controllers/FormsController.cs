@@ -19,11 +19,20 @@ namespace HarrisPharmacy.API.Controllers.FormsAPI
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<FormField>>> GetAllFormsAsync()
+        public async Task<ActionResult<List<FormField>>> Get()
         {
             //List<Form> forms = await _formService.GetFormsAsync();
             //return forms;
             return await _formService.GetFormFieldsAsync();
+        }
+
+        [Route("GetOne")]
+        public async Task<string> GetAllFormsAsync(string id)
+        {
+            //List<Form> forms = await _formService.GetFormsAsync();
+            //return forms;
+            FormField f = await _formService.GetFormFieldAsync(id);
+            return f.FieldName + " " + f.FormFieldId;
         }
     }
 }
