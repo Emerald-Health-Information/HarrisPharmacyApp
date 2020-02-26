@@ -80,7 +80,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         //appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
-        string userid = "9d09ed27-75ab-4283-9eb3-598d7d432ac0";
         appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/" + UserId);
         appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
         if (appointments != null)
@@ -111,12 +110,14 @@ else
     /// <param name="pid"></param>
     protected async void SkipAppointment(string pid)
     {
-        var appointment = await AppointmentService.GetAppointmentAsync(pid);
+        //var appointment = await AppointmentService.GetAppointmentAsync(pid);
+        var appointment = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + pid);
         //await AppointmentService.DeleteAsync(pid);
         appointment.AppointmentState = "skipped";
         //await AppointmentService.UpdateAppointmentAsync(appointment);
-        await Http.PutJsonAsync("api/appointments/{appointment.AppointmentId}", appointment);
         appointments.Remove(appointment);
-        this.StateHasChanged();
+        await Http.PutJsonAsync("api/appointments/{appointment.AppointmentId}", appointment);  
+        //this.StateHasChanged();
+        navigationManager.NavigateTo("/");
     }
 }

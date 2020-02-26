@@ -111,7 +111,8 @@ else
     {
         Users = UserManager.Users.AsEnumerable().ToList();
         PatientsList = await AppointmentService.GetPatientsAsync();
-        AppointmentList = await AppointmentService.GetPatientListAsync();
+        //AppointmentList = await AppointmentService.GetPatientListAsync();
+        AppointmentList = await Http.GetJsonAsync<List<Appointment>>("api/appointments/list");
 
     }
 

@@ -165,13 +165,13 @@ namespace HarrisPharmacy.Data.Services
         {
             //var appointment = await _applicationDbContext.Appointments.FindAsync(a.AppointmentId);
             //if (appointment == null)
-                //return null;
+            //return null;
 
             //appointment.PatientId = a.PatientId;
 
             //appointment.DateUpdated = DateTime.Now;
             //appointment.Description = a.Description;
-
+            
             _applicationDbContext.Appointments.Update(appointment);
             await _applicationDbContext.SaveChangesAsync();
 
