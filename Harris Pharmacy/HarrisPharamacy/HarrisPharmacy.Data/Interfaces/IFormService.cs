@@ -127,6 +127,6 @@ namespace HarrisPharmacy.Data.Interfaces
         /// Updates a form field
         /// </summary>
         /// <param name="formField"></param>
-        Task<int> UpdateFormFieldAsync(FormField formField);
+        Task<FormField> UpdateFormFieldAsync(FormField formField);
     }
 }
