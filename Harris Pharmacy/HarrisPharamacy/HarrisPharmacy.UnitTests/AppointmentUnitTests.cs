@@ -1,8 +1,8 @@
-﻿using HarrisPharmacy.App.Data;
-using HarrisPharmacy.App.Data.Entities.Appointments;
-using HarrisPharmacy.App.Data.Entities.Patients;
-using HarrisPharmacy.App.Data.Interfaces;
-using HarrisPharmacy.App.Data.Services;
+﻿using HarrisPharmacy.Data;
+using HarrisPharmacy.Data.Entities.Appointments;
+using HarrisPharmacy.Data.Entities.Patients;
+using HarrisPharmacy.Data.Interfaces;
+using HarrisPharmacy.Data.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
