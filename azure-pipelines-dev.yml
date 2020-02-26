@@ -10,10 +10,9 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'Harris Pharmacy/HarrisPharamacy/HarrisPharmacy.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-
 
 steps:
 - task: UseDotNet@2
@@ -49,17 +48,12 @@ steps:
   inputs:
     command: publish
     publishWebProjects: True
-    projects: '**/*HarrisPharmacy.App.csproj'
+    projects: 'Harris Pharmacy/HarrisPharamacy/HarrisPharmacy.App.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
-
-
 
 - task: AzureRmWebAppDeployment@4
-  displayName: 'Azure App Service Deploy: harrisapp'
   inputs:
-    azureSubscription: 'harrispharmacyapp - Azure'
-    WebAppName: harrisapp-dev
-    package: $(System.ArtifactsDirectory)/**/WebApp.zip    
-
-
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(ae9ad7be-3148-438a-90ae-bb0a0b1b670f)'
+    WebAppName: 'harrisapp-dev'
+    package: '$(System.ArtifactsDirectory)/**/WebApp.zip'
