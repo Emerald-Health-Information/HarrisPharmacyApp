@@ -20,6 +20,7 @@ namespace HarrisPharmacy.API.Controllers.AppointmentsAPI
             this._appointmentService = appointmentService;
         }
 
+
         [HttpGet("delete/{appointmentId}")]
         public async Task<Appointment> DeleteAsync(string appointmentId)
         {
