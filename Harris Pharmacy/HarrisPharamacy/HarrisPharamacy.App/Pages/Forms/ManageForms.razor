@@ -206,13 +206,12 @@ else
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        
-        Items = await Http.GetJsonAsync<List<SelectListItem>>("api/formfield/selectlist");
-        FormFields = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
-        //FormFields = await FormService.GetFormFieldsAsync();
+        //Items = await Http.GetJsonAsync<List<SelectListItem>>("api/formfield/selectlist");
+        //FormFields = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
+        Items = FormService.GetFormFieldsMultiSelectListAsync();
+        FormFields = await FormService.GetFormFieldsAsync();
         FormsList = await FormService.GetFormsAsync();
         Item = Items[0];
-        
     }
 
     /// <summary>
@@ -298,8 +297,7 @@ else
     {
         if (id == null) return;
         Form = FormsList.Find(form => form.FormId == id);
-        SelectedFormFields = new List<FormField>
-            ();
+        SelectedFormFields = new List<FormField>();
         foreach (var formWithFields in Form.FormWithFields.ToList())
         {
             SelectedFormFields.Add(formWithFields.FormField);
