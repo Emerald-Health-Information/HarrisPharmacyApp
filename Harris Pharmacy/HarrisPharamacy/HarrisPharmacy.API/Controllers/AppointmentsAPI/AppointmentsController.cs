@@ -1,4 +1,29 @@
-﻿using System;
+﻿#region copyright
+
+/*
+
+Harrison1 COSC 470 2019
+
+File = AppointmentsController.cs
+
+Author = Jackson Bates
+
+Date = 2020-01-25
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0       Jackson Bates   2020-01-25          Initial
+v 1.1       Jackson Bates   2020-02-02          Update
+
+*/
+
+#endregion copyright
+
+
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HarrisPharmacy.Data.Entities.Appointments;
