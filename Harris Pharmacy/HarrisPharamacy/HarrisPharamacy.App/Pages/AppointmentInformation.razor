@@ -17,7 +17,7 @@
     v 1.2        Grayson King         2019-11-28            Added 'Back' button
     v 1.3        Jackson Bates        2019-12-2             Made finish appointment set flag rather than delete the appointment
     v 1.4        Taylor Adam          2019-12-2             Renamed
-    v 1.5        George Cairney       2020-02-25            Added API adaption
+    v 1.5        George Cairney       2020-02-25            Added API adaption for PatientInfo
     -->
 *@
 @page "/AppointmentInformation/{patientListID}"
@@ -38,6 +38,8 @@
 @inject IAppointmentService AppointmentService
 @inject IPatientInfoService PatientInfoService
 @inject HttpClient Http
+@inject ApplicationDbContext _applicationDbContext;
+
 
 <div class="row">
     <div class="col">
@@ -77,8 +79,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await AppointmentService.GetAppointmentAsync(patientListID);
         var patient = await Http.GetJsonAsync<Patient>("api/patientinfo/patient/" + appt.PatientId);
+        appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + patientListID);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
@@ -88,10 +90,10 @@
 
     public async void FinishAppointment()
     {
-        await AppointmentService.SetAppointmentStateFinishedAsync(patientListID);
+        //await AppointmentService.SetAppointmentStateFinishedAsync(appt);
+        appt.AppointmentState = "finished";
         appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
-        Context.Appointments.Update(appt);
-        await Context.SaveChangesAsync();
+        await Http.PutJsonAsync("api/appointments/{appt.AppointmentId}", appt);
         NavigationManager.NavigateTo("/");
     }
 
