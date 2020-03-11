@@ -79,8 +79,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var patient = await Http.GetJsonAsync<Patient>("api/patientinfo/patient/" + appt.PatientId);
         appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + patientListID);
+        var patient = await Http.GetJsonAsync<Patient>("api/patientinfo/patient/" + appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;
