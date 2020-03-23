@@ -1,17 +1,19 @@
-﻿@page "/StartRegistration"
-@model RegistrationModel
-<h2>Register</h2>
-<form asp-action="Register">
-   <div class="form-group">
-      <label asp-for="UserId"></label>
-      <input asp-for="UserId" class="form-control" />
-   </div>
-   <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+﻿@*
+    @page "/StartRegistration"
+    @model RegistrationModel
+    <h2>Register</h2>
+    <form asp-action="Register">
+       <div class="form-group">
+          <label asp-for="UserId"></label>
+          <input asp-for="UserId" class="form-control" />
+       </div>
+       <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 
-public async Task<IActionResult> Register(RegistrationModel model)
-   {
-   var challenge = await fido.InitiateRegistration(model.UserId);
+    public async Task<IActionResult> Register(RegistrationModel model)
+       {
+       var challenge = await fido.InitiateRegistration(model.UserId);
 
-   return View(challenge.ToBase64Dto());
-   }
+       return View(challenge.ToBase64Dto());
+       }
+*@

@@ -19,29 +19,29 @@
 *@
 
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
+<!--inject SignInManager<IdentityUser> SignInManager-->
 
-   <div id="mySidenav" class="sidenav">
+<div id="mySidenav" class="sidenav">
 
-      <NavLink onclick="closeNav()" href="/" Match="NavLinkMatch.All">
-         <span class="oi oi-home pr-2" aria-hidden="true"></span> Appointments
-      </NavLink>
+    <NavLink onclick="closeNav()" href="/" Match="NavLinkMatch.All">
+        <span class="oi oi-home pr-2" aria-hidden="true"></span> Appointments
+    </NavLink>
 
-      <NavLink onclick="closeNav()" href="CreateAppointment">
-         <span class="oi oi-plus pr-2" aria-hidden="true"></span> Create Appointment
-      </NavLink>
+    <NavLink onclick="closeNav()" href="CreateAppointment">
+        <span class="oi oi-plus pr-2" aria-hidden="true"></span> Create Appointment
+    </NavLink>
 
-      <NavLink onclick="closeNav()" href="ManageForms">
-         <span class="oi oi-spreadsheet pr-2" aria-hidden="true"></span> Manage Forms
-      </NavLink>
+    <NavLink onclick="closeNav()" href="ManageForms">
+        <span class="oi oi-spreadsheet pr-2" aria-hidden="true"></span> Manage Forms
+    </NavLink>
 
-      <NavLink onclick="closeNav()" href="ManageFormFields">
-         <span class="oi oi-list pr-2" aria-hidden="true"></span> Manage Form Fields
-      </NavLink>
-      <NavLink onclick="closeNav()" href="StartRegistration">
-         <span class="oi oi-list pr-2" aria-hidden="true"></span> Register Fingerprint
-      </NavLink>
-   </div>
+    <NavLink onclick="closeNav()" href="ManageFormFields">
+        <span class="oi oi-list pr-2" aria-hidden="true"></span> Manage Form Fields
+    </NavLink>
+    <NavLink onclick="closeNav()" href="StartRegistration">
+        <span class="oi oi-list pr-2" aria-hidden="true"></span> Register Fingerprint
+    </NavLink>
+</div>
 
 @code {
 

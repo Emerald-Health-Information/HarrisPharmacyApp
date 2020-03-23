@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.Data", "Harr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.API", "HarrisPharmacy.API\HarrisPharmacy.API.csproj", "{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FidoTesting", "FidoTesting\FidoTesting.csproj", "{0F161CC6-9603-4FCA-B056-F5532B9D85F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FidoTesting", "FidoTesting\FidoTesting.csproj", "{0F161CC6-9603-4FCA-B056-F5532B9D85F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
