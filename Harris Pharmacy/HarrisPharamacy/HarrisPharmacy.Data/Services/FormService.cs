@@ -57,7 +57,7 @@ namespace HarrisPharmacy.Data.Services
         {
             return await _applicationDbContext.Forms
                 .Include(f => f.FormWithFields)
-                    .ThenInclude(f=>f.FormField)
+                    .ThenInclude(f => f.FormField)
                 .ToListAsync();
         }
 
@@ -138,11 +138,14 @@ namespace HarrisPharmacy.Data.Services
         /// <returns></returns>
         public async Task<Form> UpdateFormAsync(Form f, List<FormField> selectedFormFields)
         {
-            var form = await _applicationDbContext.Forms.FindAsync(f.FormId);
+            var form = await _applicationDbContext.Forms
+                .Include(f => f.FormWithFields)
+                .FirstOrDefaultAsync(form => form.FormId == f.FormId);
             if (form == null)
                 return null;
 
-            _applicationDbContext.FormWithFields.RemoveRange(form.FormWithFields);
+            if (form.FormWithFields != null)
+                _applicationDbContext.FormWithFields.RemoveRange(form.FormWithFields);
 
             List<FormWithFields> formWithFields = CreateFormWithFields(f.Description, selectedFormFields, form);
 
