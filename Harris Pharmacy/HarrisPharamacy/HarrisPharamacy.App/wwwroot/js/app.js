@@ -18,6 +18,22 @@ v 1.1		Taylor Adam		2019-11-19			Added Js for sliding nav menu
 v 1.2       Nelson Murray   2019-11-30          Added toggle nav function
 
 */
+function webChat(c) {
+    console.log("in " + c);
+    window.WebChat.renderWebChat(
+        {
+            directLine: window.WebChat.createDirectLine({
+                token: c
+            }),
+            userID: 'YOUR_USER_ID',
+            username: 'Web Chat User',
+            locale: 'en-US',
+            botAvatarInitials: 'WC',
+            userAvatarInitials: 'WW'
+        },
+        document.getElementById('webchat')
+    );
+}
 
 /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
 function openNav() {
@@ -34,7 +50,7 @@ function closeNav() {
 function toggleNav() {
     var widthItem = document.getElementById("mySidenav");
 
-    if (widthItem.style.width === "350px" ) {
+    if (widthItem.style.width === "350px") {
         closeNav();
     } else {
         openNav();

@@ -21,6 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <ProjectReference Include="..\HarrisPharmacy.Data\HarrisPharmacy.Data.csproj" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 #endregion copyright
 
 using System;
-using HarrisPharmacy.App.Data;
+using HarrisPharmacy.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;

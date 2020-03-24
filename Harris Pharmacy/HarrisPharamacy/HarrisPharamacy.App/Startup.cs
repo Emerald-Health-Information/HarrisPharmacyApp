@@ -22,9 +22,10 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 #endregion copyright
 
 using HarrisPharmacy.App.Areas.Identity;
-using HarrisPharmacy.App.Data;
-using HarrisPharmacy.App.Data.Interfaces;
-using HarrisPharmacy.App.Data.Services;
+
+using HarrisPharmacy.Data;
+using HarrisPharmacy.Data.Interfaces;
+using HarrisPharmacy.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
