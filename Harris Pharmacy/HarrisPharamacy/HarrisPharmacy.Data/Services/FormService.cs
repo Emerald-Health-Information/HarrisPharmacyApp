@@ -281,7 +281,7 @@ namespace HarrisPharmacy.Data.Services
                     DateUpdated = DateTime.Now,
                     Description = description,
                     Form = form,
-                    FormField = formField,
+                    FormField = null,
                     FormId = form.FormId,
                     FormFieldId = formField.FormFieldId
                 };
