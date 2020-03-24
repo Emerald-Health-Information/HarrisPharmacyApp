@@ -57,6 +57,7 @@ namespace HarrisPharmacy.Data.Services
         {
             return await _applicationDbContext.Forms
                 .Include(f => f.FormWithFields)
+                    .ThenInclude(f=>f.FormField)
                 .ToListAsync();
         }
 
@@ -67,6 +68,7 @@ namespace HarrisPharmacy.Data.Services
         public async Task<List<FormField>> GetFormFieldsAsync()
         {
             return await _applicationDbContext.FormFields
+                .Include(e => e.FormWithFields)
                 .ToListAsync();
         }
 
