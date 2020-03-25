@@ -128,16 +128,5 @@ namespace HarrisPharmacy.Data.Interfaces
         /// </summary>
         /// <param name="formField"></param>
         void UpdateFormFieldAsync(FormField formField);
-
-        /// <summary>
-        /// Submits the form and its fields
-        /// </summary>
-        /// <param name="form"></param>
-        /// <param name="formFieldWithValueModels"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-
-        Task<FormSubmission> SubmitFormAsync(Form form, Dictionary<FormField, string> formFieldWithValueModels,
-            string userId);
     }
 }
