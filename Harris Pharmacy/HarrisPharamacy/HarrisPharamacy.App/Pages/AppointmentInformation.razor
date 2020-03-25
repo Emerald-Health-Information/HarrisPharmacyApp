@@ -42,7 +42,17 @@
         <p><b>Age: </b> @Age</p>
     </div>
 </div>
-<BotComponent />
+
+<button @onclick="@ToggleChatBot"> Use Chat Bot Instead? </button>
+
+@if (!ChatBot)
+{
+    <FormPickerComponent />
+}
+else
+{
+    <BotComponent />
+}
 
 <div class="row">
     <div class="col">
@@ -70,6 +80,17 @@
     private string Sex;
     private DateTime appointmentStartTime;
     Appointment appt;
+
+    /// <summary>
+    /// Determines if the user wants to use a chat bot or normal forms
+    /// </summary>
+    protected bool ChatBot { get; set; } = false;
+
+    protected void ToggleChatBot()
+    {
+        ChatBot = !ChatBot;
+
+    }
 
     protected override async Task OnInitializedAsync()
     {
