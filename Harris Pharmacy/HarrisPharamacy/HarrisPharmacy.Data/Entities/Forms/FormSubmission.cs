@@ -18,11 +18,6 @@ namespace HarrisPharmacy.Data.Entities.Forms
         public string FormName { get; set; }
 
         /// <summary>
-        /// The description of the form
-        /// </summary>
-        public string FormDescription { get; set; }
-
-        /// <summary>
         /// The user who submitted this form
         /// </summary>
         public string UserId { get; set; }
@@ -30,6 +25,6 @@ namespace HarrisPharmacy.Data.Entities.Forms
         /// <summary>
         /// The list of submissions related to this form
         /// </summary>
-        public List<FormFieldSubmission> FormFieldSubmissions { get; set; }
+        public List<FormFieldSubmission> FormFieldSubmissions { get; set; } = new List<FormFieldSubmission>();
     }
 }
