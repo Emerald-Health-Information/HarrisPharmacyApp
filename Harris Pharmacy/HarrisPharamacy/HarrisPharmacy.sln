@@ -9,13 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.UnitTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.IntegrationTests", "HarrisPharamacy.IntegrationTests\HarrisPharmacy.IntegrationTests.csproj", "{9D44F255-198A-4C8B-8103-E577F1C7FF8B}"
 EndProject
-<<<<<<< HEAD
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.RazorComponentTests", "HarrisPharmacy.RazorComponentTests\HarrisPharmacy.RazorComponentTests.csproj", "{A6913E53-93A6-41E7-83E3-572D516C3190}"
-=======
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.Data", "HarrisPharmacy.Data\HarrisPharmacy.Data.csproj", "{0116B918-637B-4C7A-A037-39DEE215BD0B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.API", "HarrisPharmacy.API\HarrisPharmacy.API.csproj", "{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}"
->>>>>>> 659e12884c6a95a61d4a23e42ee41822995f5964
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,12 +32,10 @@ Global
 		{9D44F255-198A-4C8B-8103-E577F1C7FF8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D44F255-198A-4C8B-8103-E577F1C7FF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D44F255-198A-4C8B-8103-E577F1C7FF8B}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{A6913E53-93A6-41E7-83E3-572D516C3190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6913E53-93A6-41E7-83E3-572D516C3190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6913E53-93A6-41E7-83E3-572D516C3190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6913E53-93A6-41E7-83E3-572D516C3190}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{0116B918-637B-4C7A-A037-39DEE215BD0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0116B918-637B-4C7A-A037-39DEE215BD0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0116B918-637B-4C7A-A037-39DEE215BD0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,7 +44,6 @@ Global
 		{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> 659e12884c6a95a61d4a23e42ee41822995f5964
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
