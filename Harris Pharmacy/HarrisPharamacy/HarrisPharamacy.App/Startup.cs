@@ -22,7 +22,6 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 #endregion copyright
 
 using HarrisPharmacy.App.Areas.Identity;
-
 using HarrisPharmacy.Data;
 using HarrisPharmacy.Data.Interfaces;
 using HarrisPharmacy.Data.Services;

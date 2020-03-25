@@ -24,7 +24,6 @@ v 1.0		Taylor Adam		2019-11-19			Added Headers
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using HarrisPharmacy.Data;
 using HarrisPharmacy.Data.Entities.Patients;
 using HarrisPharmacy.Data.Interfaces;
 
