@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HarrisPharmacy.Data;
 using HarrisPharmacy.Data.Entities.Appointments;
 using HarrisPharmacy.Data.Entities.Patients;
 using HarrisPharmacy.Data.Interfaces;
@@ -42,6 +43,7 @@ namespace HarrisPharmacy.Data.Services
         /// </summary>
         /// <param name="patientId"></param>
         /// <returns></returns>
+
         public async Task<Patient> GetPatientAsync(string patientId)
         {
             return await _applicationDbContext.Patients

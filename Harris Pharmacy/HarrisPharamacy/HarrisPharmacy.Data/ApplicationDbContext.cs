@@ -30,6 +30,10 @@ namespace HarrisPharmacy.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        /// <summary>
+        /// Our Application Db Context Constructors
+        /// </summary>
+        /// <param name="options"></param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
@@ -43,5 +47,7 @@ namespace HarrisPharmacy.Data
         public DbSet<PatientList> PatientLists { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<FormSubmission> FormSubmissions { get; set; }
+        public DbSet<FormFieldSubmission> FormFieldSubmissions { get; set; }
     }
 }
