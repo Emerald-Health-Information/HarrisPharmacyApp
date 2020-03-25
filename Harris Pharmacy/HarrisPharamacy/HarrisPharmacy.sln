@@ -10,6 +10,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.IntegrationTests", "HarrisPharamacy.IntegrationTests\HarrisPharmacy.IntegrationTests.csproj", "{9D44F255-198A-4C8B-8103-E577F1C7FF8B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.RazorComponentTests", "HarrisPharmacy.RazorComponentTests\HarrisPharmacy.RazorComponentTests.csproj", "{A6913E53-93A6-41E7-83E3-572D516C3190}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.Data", "HarrisPharmacy.Data\HarrisPharmacy.Data.csproj", "{0116B918-637B-4C7A-A037-39DEE215BD0B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HarrisPharmacy.API", "HarrisPharmacy.API\HarrisPharmacy.API.csproj", "{77EC6D9E-2F6F-4A80-B55F-D05F779DDBD8}"

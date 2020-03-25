@@ -1,0 +1,17 @@
+﻿@page "/ViewFormSubmissions"
+@using System.Security.Claims
+@using HarrisPharmacy.Data.Entities.Forms
+@using HarrisPharmacy.Data.Interfaces
+@inject IFormService FormService
+
+<h3>ViewSubmittedForms</h3>
+
+<AuthorizeView>
+    <Authorized>
+        <FormSubmissionsComponent UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier) />
+    </Authorized>
+</AuthorizeView>
+
+@code {
+
+}
