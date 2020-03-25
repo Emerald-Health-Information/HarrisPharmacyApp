@@ -139,5 +139,19 @@ namespace HarrisPharmacy.Data.Interfaces
 
         Task<FormSubmission> SubmitFormAsync(Form form, Dictionary<FormField, string> formFieldWithValueModels,
             string userId);
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<List<FormSubmission>> GetFormSubmissions(string userId);
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<FormSubmission> GetFormSubmission(string userId);
     }
 }

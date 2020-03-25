@@ -1,0 +1,65 @@
+﻿@using HarrisPharmacy.Data.Entities.Forms
+@using HarrisPharmacy.Data.Interfaces
+@using HarrisPharmacy.Data.Services
+@inject IFormService FormService
+
+@if (FormSubmissions == null)
+{
+    <h3> Sorry, you have not submitted any forms</h3>
+
+}
+<div class="row">
+    <div class="col-md-4">
+        <select @onchange="@FormClicked" class="form-control">
+            <option value="">-- Select Form --</option>
+            @foreach (var form in FormSubmissions)
+            {
+                <option value="@form.DateCreated">@form.FormName</option>
+            }
+        </select>
+    </div>
+</div>
+@if (FormSubmission != null)
+{
+    @foreach (var field in FormSubmission.FormFieldSubmissions)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                @field.FormFieldName - @field.FormFieldValue
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public string UserId { get; set; }
+
+    /// <summary>
+    /// The list of form submissions
+    /// </summary>
+    protected List<FormSubmission> FormSubmissions { get; set; }
+
+    protected FormSubmission FormSubmission { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        FormSubmissions = await FormService.GetFormSubmissions(UserId);
+
+    }
+
+    /// <summary>
+    /// Updates the state when the selected form changes
+    /// and assigns the form to FormSelected
+    ///</summary>
+    /// <param name="e"></param>
+    protected async void FormClicked(ChangeEventArgs e)
+    {
+
+        FormSubmission = FormSubmissions.Find(fs => fs.DateCreated.ToString() == e.Value.ToString());
+        //  FormFieldsDictionary = new List<FormFieldWithValueModel>();
+        this.StateHasChanged();
+    }
+
+}

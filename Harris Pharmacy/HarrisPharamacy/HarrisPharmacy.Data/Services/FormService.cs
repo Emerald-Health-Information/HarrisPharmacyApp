@@ -317,7 +317,6 @@ namespace HarrisPharmacy.Data.Services
                         FormInputType = formFieldWithValueModel.Key.FormInputType,
                         FormSubmission = formSubmission,
                         FormSubmissionId = formSubmission.FormSubmissionId,
-                    
                     }
                 );
             }
@@ -325,6 +324,31 @@ namespace HarrisPharmacy.Data.Services
             _applicationDbContext.FormSubmissions.Add(formSubmission);
             await _applicationDbContext.SaveChangesAsync();
             return formSubmission;
+        }
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<List<FormSubmission>> GetFormSubmissions(string userId)
+        {
+            return _applicationDbContext.FormSubmissions
+                .Include(f => f.FormFieldSubmissions)
+                .Where(f => f.UserId == userId)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FormSubmission> GetFormSubmission(string userId)
+        {
+            return await _applicationDbContext.FormSubmissions
+                .Include(f => f.FormFieldSubmissions)
+                .FirstOrDefaultAsync(f => f.UserId == userId);
         }
 
         /// <summary>
