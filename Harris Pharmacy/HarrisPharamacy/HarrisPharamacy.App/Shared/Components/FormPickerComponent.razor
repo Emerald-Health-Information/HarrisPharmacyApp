@@ -17,14 +17,10 @@
     -->
 *@
 
-@using System.Dynamic
-@using System.Security.Claims
-@using HarrisPharmacy.App.Models
 @using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Interfaces
 @using Microsoft.AspNetCore.Components
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor HttpContextAccessor
+
 @inject IFormService FormService
 
 <p><b>Select Form</b></p>
@@ -52,13 +48,7 @@ else
     </div>
     @if (FormSelected != null)
     {
-        <AuthorizeView>
-            <Authorized>
-                <FormComponent Form="FormSelected"
-                               FormFieldsDictionary="FormFieldsDictionary"
-                               UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier) />
-            </Authorized>
-        </AuthorizeView>
+        <FormComponent Form="FormSelected" />
 
     }
 
@@ -73,11 +63,6 @@ else
     /// Currently selected form
     ///</summary>
     public Form FormSelected;
-
-    /// <summary>
-    /// Keep a list of the fields and their values for form submission
-    /// </summary>
-    public List<FormFieldWithValueModel> FormFieldsDictionary;
 
     /// <summary>
     /// Method invoked when the component is ready to start, having received its initial parameters from its parent in the render tree.
@@ -98,7 +83,6 @@ else
     {
 
         FormSelected = await FormService.GetFormAsync(e.Value.ToString());
-        FormFieldsDictionary = new List<FormFieldWithValueModel>();
         this.StateHasChanged();
     }
 
