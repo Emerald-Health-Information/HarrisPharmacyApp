@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
 using System.Threading.Tasks;
 using HarrisPharmacy.App.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +32,7 @@ namespace HarrisPharmacy.API.Controllers
         public IActionResult StartRegistration() => View();
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegistrationModel model)
+        public HttpResponseMessage Register(RegistrationModel model)
         {
             //  var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
             /*var dto = new FidoRegistrationChallengeDTO()
@@ -42,9 +45,17 @@ namespace HarrisPharmacy.API.Controllers
                 ExcludedKeyIds = challenge.ExcludedKeyIds ?? (IEnumerable<byte[]>)new List<byte[]>(),
             };*/
 
-            var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
+            var challenge = fido.InitiateRegistration(model.UserId, model.DeviceName);
 
-            return View(challenge.ToBase64Dto());
+            var response = new HttpResponseMessage(HttpStatusCode.Moved);
+            response.Headers.Location = new Uri("/CompleteRegistration", UriKind.Relative);
+
+            return response;
+            //return View("Home/Register");
+            //return View(challenge.ToBase64Dto());
+            //return RedirectToAction(challenge.ToBase64Dto().ToString());
+            //return Redirect(challenge.ToBase64Dto().ToString());
+            //return View(challenge.ToBase64Dto().ToString());
         }
 
         [HttpPost]

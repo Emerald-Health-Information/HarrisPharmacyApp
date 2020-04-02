@@ -18,7 +18,7 @@
     <label asp-for="DeviceName"></label>
     <input @bind="@RegistrationModel.DeviceName" class="form-control" />
 </div>
-<button @onclick="SaveNewContact" class="btn btn-primary">Submit</button>
+<button @onclick="Register" class="btn btn-primary">Submit</button>
 
 @code {
 
@@ -30,21 +30,12 @@
 
     RegistrationModel RegistrationModel { get; set; }
 
-    public async Task SaveNewContact()
+    public Task Register()
     {
 
-        // var challenge = await httpClient.PostJsonAsync<Base64FidoRegistrationChallenge>("api/fido/register", RegistrationModel);
+        var response = httpClient.PostAsJsonAsync("api/fido/register", RegistrationModel);
+        bool returnValue = response.Content.ReadAsAsync<bool>();
 
-        //  var fidoChallenge = new FidoRegistrationChallenge(challenge.UserId, userHandle: challenge.UserHandle, challenge: challenge.Challenge, relyingPartyId: challenge.RelyingPartyId, deviceFriendlyName: challenge.DeviceFriendlyName);
-
-        // await JsRuntime.InvokeVoidAsync("fidoRegister", challenge);
-
-        await httpClient.PostJsonAsync("api/fido/register", RegistrationModel);
-
-        //    await Http.PutJsonAsync("api/appointments/{appt.AppointmentId}", appt);
-        //    PostJsonAsync("api/contacts", contact);
-
-        //  uriHelper.NavigateTo("contacts");
     }
 
 }

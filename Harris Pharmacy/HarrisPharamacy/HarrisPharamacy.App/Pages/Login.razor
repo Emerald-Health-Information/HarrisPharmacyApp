@@ -1,0 +1,50 @@
+﻿@page "/Login"
+@using System.Net
+@using HarrisPharmacy.App.Models
+@using Microsoft.JSInterop
+@using Rsk.AspNetCore.Fido.Dtos
+@using Microsoft.AspNetCore.Mvc;
+@using Rsk.AspNetCore.Fido.Models
+@inject IJSRuntime JsRuntime
+@inject HttpClient httpClient
+
+<h2>Register</h2>
+
+<div class="form-group">
+    <label asp-for="UserId"></label>
+    <input @bind="@RegistrationModel.UserId" class="form-control" />
+</div>
+<div class="form-group">
+    <label asp-for="DeviceName"></label>
+    <input @bind="@RegistrationModel.DeviceName" class="form-control" />
+</div>
+<button @onclick="SaveNewContact" class="btn btn-primary">Submit</button>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        RegistrationModel = new RegistrationModel();
+
+    }
+
+    RegistrationModel RegistrationModel { get; set; }
+
+    public async Task SaveNewContact()
+    {
+
+        // var challenge = await httpClient.PostJsonAsync<Base64FidoRegistrationChallenge>("api/fido/register", RegistrationModel);
+
+        //  var fidoChallenge = new FidoRegistrationChallenge(challenge.UserId, userHandle: challenge.UserHandle, challenge: challenge.Challenge, relyingPartyId: challenge.RelyingPartyId, deviceFriendlyName: challenge.DeviceFriendlyName);
+
+        // await JsRuntime.InvokeVoidAsync("fidoRegister", challenge);
+
+        await httpClient.PostJsonAsync("api/fido/register", RegistrationModel);
+
+        //    await Http.PutJsonAsync("api/appointments/{appt.AppointmentId}", appt);
+        //    PostJsonAsync("api/contacts", contact);
+
+        //  uriHelper.NavigateTo("contacts");
+    }
+
+}
