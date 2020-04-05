@@ -1,5 +1,8 @@
 ﻿@page "/StartRegistration"
 @using System.Net
+@using Microsoft.AspNetCore.Mvc;
+@using Rsk.AspNetCore.Fido;
+@using Rsk.AspNetCore.Fido.Dtos;
 @using HarrisPharmacy.App.Models
 @using Microsoft.JSInterop
 @using Rsk.AspNetCore.Fido.Dtos
@@ -7,6 +10,7 @@
 @using Rsk.AspNetCore.Fido.Models
 @inject IJSRuntime JsRuntime
 @inject HttpClient httpClient
+@inject NavigationManager NavigationManager
 
 <h2>Register</h2>
 
@@ -30,12 +34,21 @@
 
     RegistrationModel RegistrationModel { get; set; }
 
-    public Task Register()
+    public async Task Register()
     {
+        Task t = CallAPI();
+        await t;
+        NavigationManager.NavigateTo("/CompleteRegistration");
+    }
 
-        var response = httpClient.PostAsJsonAsync("api/fido/register", RegistrationModel);
-        bool returnValue = response.Content.ReadAsAsync<bool>();
-
+    public async Task CallAPI()
+    {
+        var response = await httpClient.PostAsJsonAsync("api/fido/register", RegistrationModel);
+        var returnValue = await response.Content.ReadAsStringAsync();
+        var url = response.Headers.Location.ToString();
+        Console.WriteLine(returnValue);
+        ViewResult vr = new ViewResult();
+        NavigationManager.NavigateTo("/CompleteRegistration");
     }
 
 }

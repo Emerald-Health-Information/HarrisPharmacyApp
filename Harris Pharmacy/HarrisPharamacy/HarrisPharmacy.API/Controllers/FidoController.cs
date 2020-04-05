@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rsk.AspNetCore.Fido;
 using Rsk.AspNetCore.Fido.Dtos;
 using Rsk.AspNetCore.Fido.Models;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HarrisPharmacy.API.Controllers
 {
@@ -32,7 +33,7 @@ namespace HarrisPharmacy.API.Controllers
         public IActionResult StartRegistration() => View();
 
         [HttpPost("register")]
-        public HttpResponseMessage Register(RegistrationModel model)
+        public async Task<HttpResponseMessage> Register(RegistrationModel model)
         {
             //  var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
             /*var dto = new FidoRegistrationChallengeDTO()
@@ -45,14 +46,15 @@ namespace HarrisPharmacy.API.Controllers
                 ExcludedKeyIds = challenge.ExcludedKeyIds ?? (IEnumerable<byte[]>)new List<byte[]>(),
             };*/
 
-            var challenge = fido.InitiateRegistration(model.UserId, model.DeviceName);
+            var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
 
             var response = new HttpResponseMessage(HttpStatusCode.Moved);
             response.Headers.Location = new Uri("/CompleteRegistration", UriKind.Relative);
-
+            response.Content = new StringContent(challenge.ToString());
+            Console.WriteLine(challenge.ToString());
+            //FidoRegistrationChallenge x = new FidoRegistrationChallenge();
             return response;
             //return View("Home/Register");
-            //return View(challenge.ToBase64Dto());
             //return RedirectToAction(challenge.ToBase64Dto().ToString());
             //return Redirect(challenge.ToBase64Dto().ToString());
             //return View(challenge.ToBase64Dto().ToString());
