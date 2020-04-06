@@ -150,6 +150,8 @@ namespace HarrisPharmacy.Data.Services
             List<FormWithFields> formWithFields = CreateFormWithFields(f.Description, selectedFormFields, form);
 
             form.FormWithFields = formWithFields;
+            form.Name = f.Name;
+            form.Description = f.Description;
             form.DateUpdated = DateTime.Now;
             _applicationDbContext.Forms.Update(form);
             await _applicationDbContext.SaveChangesAsync();
