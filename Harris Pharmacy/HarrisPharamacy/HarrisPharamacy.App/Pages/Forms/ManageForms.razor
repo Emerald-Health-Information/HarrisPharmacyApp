@@ -28,6 +28,7 @@
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.Data.SqlClient
+@using HarrisPharmacy.App.Models;
 @inject HttpClient Http
 @inject IFormService FormService
 @inject ApplicationDbContext Context
@@ -212,7 +213,8 @@ else
 
         FormFields = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
         // FormFields = await FormService.GetFormFieldsAsync();
-        FormsList = await FormService.GetFormsAsync();
+        // FormsList = await FormService.GetFormsAsync();
+        FormsList = await Http.GetJsonAsync<List<Form>>("api/form/all");
         Item = Items[0];
     }
 
@@ -290,7 +292,14 @@ else
     protected async void UpdateForm()
     {
         ToggleUpdateModal();
-        await FormService.UpdateFormAsync(Form, SelectedFormFields);
+        FormUpdateDTO dto = new FormUpdateDTO()
+        {
+            Form = Form,
+            FormFields = SelectedFormFields
+        };
+        await Http.PostJsonAsync("api/form/update", dto);
+        FormsList = await Http.GetJsonAsync<List<Form>>("api/form/all");
+        //await FormService.UpdateFormAsync(Form, SelectedFormFields);
 
         ClearFields();
     }
