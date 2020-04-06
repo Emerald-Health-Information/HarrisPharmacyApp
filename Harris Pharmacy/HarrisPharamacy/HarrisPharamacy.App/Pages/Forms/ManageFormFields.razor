@@ -254,6 +254,7 @@ else
         FormField.FormInputType = FormInputType;
         var tempFormField = await Http.PutJsonAsync<FormField>("api/formfield/update", FormField);
         FormFieldsList.Find(formField => formField.FormFieldId == tempFormField.FormFieldId).FieldName = tempFormField.FieldName;
+        FormFieldsList.Find(formField => formField.FormFieldId == tempFormField.FormFieldId).FormInputType = tempFormField.FormInputType;
         ToggleUpdateModal();
 
         this.StateHasChanged();
