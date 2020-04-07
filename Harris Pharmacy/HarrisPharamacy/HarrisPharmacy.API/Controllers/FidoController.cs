@@ -11,6 +11,8 @@ using Rsk.AspNetCore.Fido;
 using Rsk.AspNetCore.Fido.Dtos;
 using Rsk.AspNetCore.Fido.Models;
 using Org.BouncyCastle.Asn1.Ocsp;
+using System.Text.Json;
+using System.Text;
 
 namespace HarrisPharmacy.API.Controllers
 {
@@ -45,19 +47,17 @@ namespace HarrisPharmacy.API.Controllers
                 DeviceFriendlyName = challenge.DeviceFriendlyName,
                 ExcludedKeyIds = challenge.ExcludedKeyIds ?? (IEnumerable<byte[]>)new List<byte[]>(),
             };*/
-
-            var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
-
-            var response = new HttpResponseMessage(HttpStatusCode.Moved);
-            response.Headers.Location = new Uri("/CompleteRegistration", UriKind.Relative);
-            response.Content = new StringContent(challenge.ToString());
-            Console.WriteLine(challenge.ToString());
-            //FidoRegistrationChallenge x = new FidoRegistrationChallenge();
+            FidoRegistrationChallenge challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
+            var opt = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            string jsonUtf8 = JsonSerializer.Serialize<Base64FidoRegistrationChallenge>(challenge.ToBase64Dto(), opt);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Moved);
+            response.Headers.Location = new Uri("/StartRegistration", UriKind.Relative);
+            response.Content = new JsonContent(jsonUtf8, System.Text.Encoding.UTF8);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
             return response;
-            //return View("Home/Register");
-            //return RedirectToAction(challenge.ToBase64Dto().ToString());
-            //return Redirect(challenge.ToBase64Dto().ToString());
-            //return View(challenge.ToBase64Dto().ToString());
         }
 
         [HttpPost]
@@ -74,5 +74,18 @@ namespace HarrisPharmacy.API.Controllers
     {
         public string UserId { get; set; }
         public string DeviceName { get; set; }
+    }
+
+    public class JsonContent : StringContent
+    {
+        public JsonContent(string content) : this(content, Encoding.UTF8)
+        {
+
+        }
+
+        public JsonContent (string content, Encoding encoding) : base (content, encoding, "application/json")
+        {
+
+        }
     }
 }

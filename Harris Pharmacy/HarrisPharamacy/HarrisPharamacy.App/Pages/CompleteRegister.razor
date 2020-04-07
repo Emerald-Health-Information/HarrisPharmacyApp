@@ -1,4 +1,4 @@
-﻿@page "/CompleteRegistration"
+﻿@page "/CompleteRegistration/{Model}"
 @using System.Net
 @using HarrisPharmacy.App.Models
 @using Microsoft.JSInterop
@@ -10,5 +10,20 @@
 @inject HttpClient httpClient
 
 @code {
+    [Parameter]
+    public Base64FidoRegistrationChallenge Model { get; set; }
+}
 
+@functions{
+    protected override async Task OnInitializedAsync()
+    {
+        object[] args = new object[1];
+        args[0] = Model;
+        fidoRegister(args);
+    }
+
+    static void fidoRegister(object[] args)
+    {
+        Base64FidoAuthenticationChallenge res = JSRuntime.InvokeAsync<Base64FidoRegistrationChallenge>("fidoRegister", args);
+    }
 }

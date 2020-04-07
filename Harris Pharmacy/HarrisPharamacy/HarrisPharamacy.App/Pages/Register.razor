@@ -5,9 +5,18 @@
 @using Rsk.AspNetCore.Fido.Dtos;
 @using HarrisPharmacy.App.Models
 @using Microsoft.JSInterop
-@using Rsk.AspNetCore.Fido.Dtos
-@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Components
 @using Rsk.AspNetCore.Fido.Models
+@using System.Text.Json;
+@using System.Net.Http;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Web;
+@using System.Threading.Tasks;
+@using HarrisPharmacy.App.Models;
+@using System.Text.Json;
+@using System.Text;
 @inject IJSRuntime JsRuntime
 @inject HttpClient httpClient
 @inject NavigationManager NavigationManager
@@ -22,7 +31,7 @@
     <label asp-for="DeviceName"></label>
     <input @bind="@RegistrationModel.DeviceName" class="form-control" />
 </div>
-<button @onclick="Register" class="btn btn-primary">Submit</button>
+<button @onclick="StartRegister" class="btn btn-primary">Submit</button>
 
 @code {
 
@@ -34,21 +43,18 @@
 
     RegistrationModel RegistrationModel { get; set; }
 
-    public async Task Register()
+    public async Task StartRegister()
     {
-        Task t = CallAPI();
-        await t;
-        NavigationManager.NavigateTo("/CompleteRegistration");
+        Task<string> t = CallAPI();
+        String jsonStr = await t;
+        Base64FidoRegistrationChallenge challenge = JsonSerializer.Deserialize<Base64FidoRegistrationChallenge>(jsonStr);
+        NavigationManager.NavigateTo("/CompleteRegistration/" + challenge);
     }
 
-    public async Task CallAPI()
+    public async Task<string> CallAPI()
     {
-        var response = await httpClient.PostAsJsonAsync("api/fido/register", RegistrationModel);
-        var returnValue = await response.Content.ReadAsStringAsync();
-        var url = response.Headers.Location.ToString();
-        Console.WriteLine(returnValue);
-        ViewResult vr = new ViewResult();
-        NavigationManager.NavigateTo("/CompleteRegistration");
-    }
+        HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/fido/register", RegistrationModel);
+        return await response.Content.ReadAsStringAsync();
 
+    }
 }
