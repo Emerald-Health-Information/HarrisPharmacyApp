@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HarrisPharmacy.Data;
 using HarrisPharmacy.Data.Entities.Forms;
 using HarrisPharmacy.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -294,6 +295,70 @@ namespace HarrisPharmacy.Data.Services
             }
 
             return formsWithFields;
+        }
+
+        /// <summary>
+        /// Submits the form and its fields
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="formFieldWithValueModels"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FormSubmission> SubmitFormAsync(Form form, Dictionary<FormField, string> formFieldWithValueModels, string userId)
+        {
+            var formSubmission = new FormSubmission()
+            {
+                FormSubmissionId = Guid.NewGuid().ToString(),
+                FormName = form.Name,
+                Description = form.Description,
+                UserId = userId,
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now
+            };
+
+            foreach (var formFieldWithValueModel in formFieldWithValueModels)
+            {
+                formSubmission.FormFieldSubmissions.Add(
+                    new FormFieldSubmission()
+                    {
+                        FormFieldName = formFieldWithValueModel.Key.FieldName,
+                        FormFieldSubmissionId = Guid.NewGuid().ToString(),
+                        FormFieldValue = formFieldWithValueModel.Value,
+                        FormInputType = formFieldWithValueModel.Key.FormInputType,
+                        FormSubmission = formSubmission,
+                        FormSubmissionId = formSubmission.FormSubmissionId,
+                    }
+                );
+            }
+
+            _applicationDbContext.FormSubmissions.Add(formSubmission);
+            await _applicationDbContext.SaveChangesAsync();
+            return formSubmission;
+        }
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<List<FormSubmission>> GetFormSubmissions(string userId)
+        {
+            return _applicationDbContext.FormSubmissions
+                .Include(f => f.FormFieldSubmissions)
+                .Where(f => f.UserId == userId)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FormSubmission> GetFormSubmission(string userId)
+        {
+            return await _applicationDbContext.FormSubmissions
+                .Include(f => f.FormFieldSubmissions)
+                .FirstOrDefaultAsync(f => f.UserId == userId);
         }
 
         /// <summary>

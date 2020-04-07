@@ -1,0 +1,24 @@
+﻿<div class="input-group pt-1" data-target-input="nearest">
+    <select @onchange="@ExternalMethod" class="form-control">
+        <option>Select @Name</option>
+        @foreach (var (value, text) in ValuesDictionary)
+        {
+            <option value="@value">@text</option>
+        }
+    </select>
+</div>
+@code
+{
+
+    [Parameter]
+    public Dictionary<string, string>
+    ValuesDictionary
+    { get; set; }
+    [Parameter]
+    public EventCallback<ChangeEventArgs>
+        ExternalMethod
+    { get; set; }
+    [Parameter]
+    public string Name { get; set; }
+
+}
