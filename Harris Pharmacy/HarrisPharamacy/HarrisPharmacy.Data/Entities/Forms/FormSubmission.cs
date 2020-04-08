@@ -9,7 +9,15 @@ namespace HarrisPharmacy.Data.Entities.Forms
     /// </summary>
     public class FormSubmission : BaseEntity
     {
+        /// <summary>
+        /// The Id for the form submission
+        /// </summary>
         public string FormSubmissionId { get; set; }
+
+        /// <summary>
+        /// The Id of the patent this form was filled out for
+        /// </summary>
+        public string PatientId { get; set; }
 
         /// <summary>
         /// Name of the form

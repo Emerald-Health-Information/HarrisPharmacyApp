@@ -294,11 +294,12 @@ namespace HarrisPharmacy.Data.Services
         /// <param name="formFieldWithValueModels"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public async Task<FormSubmission> SubmitFormAsync(Form form, Dictionary<FormField, string> formFieldWithValueModels, string userId)
+        public async Task<FormSubmission> SubmitFormAsync(Form form, Dictionary<FormField, string> formFieldWithValueModels, string userId, string patientId)
         {
             var formSubmission = new FormSubmission()
             {
                 FormSubmissionId = Guid.NewGuid().ToString(),
+                PatientId = patientId,
                 FormName = form.Name,
                 Description = form.Description,
                 UserId = userId,

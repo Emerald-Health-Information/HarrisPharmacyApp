@@ -27,6 +27,7 @@
 @using HarrisPharmacy.App.Shared.Components
 @using HarrisPharmacy.Data
 @using HarrisPharmacy.Data.Entities.Appointments
+@using HarrisPharmacy.Data.Entities.Patients
 @using HarrisPharmacy.Data.Interfaces
 @using Microsoft.Data.SqlClient
 @inject ApplicationDbContext Context
@@ -48,7 +49,7 @@
 
 @if (!ChatBot)
 {
-    <FormPickerComponent />
+    <FormPickerComponent PatientId="@patient.PatientId" />
 }
 else
 {
@@ -80,6 +81,7 @@ else
     private string Age;
     private string Sex;
     private DateTime appointmentStartTime;
+    private Patient patient { get; set; }
     Appointment appt;
 
     /// <summary>
@@ -96,7 +98,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         appt = await AppointmentService.GetAppointmentAsync(patientListID);
-        var patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
+        patient = await PatientInfoService.GetPatientInformationAsync(appt.PatientId);
         FirstName = patient.FirstName;
         LastName = patient.LastName;
         Age = patient.Age;

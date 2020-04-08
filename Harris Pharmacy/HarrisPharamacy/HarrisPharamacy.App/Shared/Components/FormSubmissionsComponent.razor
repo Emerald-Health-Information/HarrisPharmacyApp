@@ -1,36 +1,61 @@
 ﻿@using HarrisPharmacy.Data.Entities.Forms
+@using HarrisPharmacy.Data.Entities.Patients
 @using HarrisPharmacy.Data.Interfaces
 @using HarrisPharmacy.Data.Services
 @inject IFormService FormService
+@inject IPatientInfoService PatientInfoService
 
-@if (FormSubmissions == null)
+@if (Patients == null)
 {
-    <h3> Sorry, you have not submitted any forms</h3>
-
+    <h3> Sorry, you have not submitted any forms for any patients </h3>
 }
-<div class="row">
-    <div class="col-md-4">
-        <select @onchange="@FormClicked" class="form-control">
-            <option value="">-- Select Form --</option>
-            @foreach (var form in FormSubmissions)
-            {
-                <option value="@form.DateCreated">@form.FormName</option>
-            }
-        </select>
-    </div>
-</div>
-@if (FormSubmission != null)
+else
 {
-    @foreach (var field in FormSubmission.FormFieldSubmissions)
+
+    <div class="row">
+        <div class="col-md-4">
+            <select @onchange="@PatientClicked" class="form-control">
+                <option value="">-- Select Form --</option>
+                @foreach (var patient in Patients)
+                {
+                    <option value="@patient.PatientId">@Patient.FirstName  @patient.LastName</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @if (Patient != null)
     {
+
+        @if (FormSubmissionsForPatient == null)
+        {
+            <h3> Sorry, you have not submitted any forms for @Patient.FirstName @Patient.LastName</h3>
+
+        }
         <div class="row">
             <div class="col-md-4">
-                @field.FormFieldName - @field.FormFieldValue
+                <select @onchange="@FormClicked" class="form-control">
+                    <option value="">-- Select Form --</option>
+                    @foreach (var form in FormSubmissionsForPatient)
+                    {
+                        <option value="@form.DateCreated">@form.FormName</option>
+                    }
+                </select>
             </div>
         </div>
+        @if (FormSubmission != null)
+        {
+            @foreach (var field in FormSubmission.FormFieldSubmissions)
+            {
+                <div class="row">
+                    <div class="col-md-4">
+                        @field.FormFieldName - @field.FormFieldValue
+                    </div>
+                </div>
+            }
+        }
     }
 }
-
 @code {
     [Parameter]
     public string UserId { get; set; }
@@ -38,14 +63,29 @@
     /// <summary>
     /// The list of form submissions
     /// </summary>
-    protected List<FormSubmission> FormSubmissions { get; set; }
+    protected List<FormSubmission> AllFormSubmissions { get; set; }
+    /// <summary>
+    /// The list of forms submitted for a specific patient
+    /// </summary>
+    protected List<FormSubmission> FormSubmissionsForPatient { get; set; }
+
+    /// <summary>
+    /// The list of patients for this user
+    /// </summary>
+    protected List<Patient> Patients { get; set; }
+
+    protected Patient Patient { get; set; }
 
     protected FormSubmission FormSubmission { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
 
-        FormSubmissions = await FormService.GetFormSubmissions(UserId);
+        AllFormSubmissions = await FormService.GetFormSubmissions(UserId);
+        foreach (var formSubmission in AllFormSubmissions)
+        {
+            Patients.Add(await PatientInfoService.GetPatientInformationAsync(formSubmission.PatientId));
+        }
 
     }
 
@@ -57,8 +97,22 @@
     protected async void FormClicked(ChangeEventArgs e)
     {
 
-        FormSubmission = FormSubmissions.Find(fs => fs.DateCreated.ToString() == e.Value.ToString());
-        //  FormFieldsDictionary = new List<FormFieldWithValueModel>();
+        FormSubmission = FormSubmissionsForPatient.Find(fs => fs.DateCreated.ToString() == e.Value.ToString());
+
+        this.StateHasChanged();
+    }
+
+    /// <summary>
+    /// Updates the state when the selected patient changes
+    /// and assigns the patient to Patient
+    /// ///</summary>
+    /// <param name="e"></param>
+    protected async void PatientClicked(ChangeEventArgs e)
+    {
+
+        Patient = Patients.Find(p => p.PatientId == e.Value.ToString());
+        if (Patient != null)
+            FormSubmissionsForPatient = AllFormSubmissions.Where(fs => fs.PatientId == Patient.PatientId).ToList();
         this.StateHasChanged();
     }
 
