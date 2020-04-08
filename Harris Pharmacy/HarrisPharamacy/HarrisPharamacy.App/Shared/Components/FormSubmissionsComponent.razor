@@ -88,7 +88,9 @@ else
         AllFormSubmissions = await FormService.GetFormSubmissions(UserId);
         foreach (var formSubmission in AllFormSubmissions)
         {
-            Patients.Add(await PatientInfoService.GetPatientInformationAsync(formSubmission.PatientId));
+            var patient = await PatientInfoService.GetPatientInformationAsync(formSubmission.PatientId);
+            if (!Patients.Contains(patient))
+                Patients.Add(patient);
         }
 
     }
