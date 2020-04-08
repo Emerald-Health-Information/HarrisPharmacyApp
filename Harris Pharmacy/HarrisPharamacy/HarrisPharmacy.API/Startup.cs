@@ -52,6 +52,11 @@ namespace HarrisPharmacy.API
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IPatientInfoService, PatientInfoService>();
+            /*services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                */
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

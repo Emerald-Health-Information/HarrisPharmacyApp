@@ -26,6 +26,9 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.Data.SqlClient
 @using Microsoft.AspNetCore.Components.Web;
+@using System.Net.Http
+@using Newtonsoft.Json
+@inject HttpClient Http
 @inject IAppointmentService AppointmentService
 @inject ApplicationDbContext Context
 @inject NavigationManager navigationManager
@@ -76,7 +79,8 @@ else
 @functions {
     protected override async Task OnInitializedAsync()
     {
-        appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
+        //appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
+        appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/" + UserId);
         appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
         if (appointments != null)
         {
@@ -106,12 +110,15 @@ else
     /// <param name="pid"></param>
     protected async void SkipAppointment(string pid)
     {
-
         var appointment = await AppointmentService.GetAppointmentAsync(pid);
+        //var appointment = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + pid);
         //await AppointmentService.DeleteAsync(pid);
         appointment.AppointmentState = "skipped";
         await AppointmentService.UpdateAppointmentAsync(appointment);
-        appointments.Remove(appointment);
+        appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/" + UserId);
+        totalAppointments = appointments.Count();
+        //await Http.PutJsonAsync("api/appointments/{appointment.AppointmentId}", appointment);  
         this.StateHasChanged();
+        //navigationManager.NavigateTo("/");
     }
 }

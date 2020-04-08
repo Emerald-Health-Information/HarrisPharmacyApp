@@ -31,6 +31,9 @@
 @using Microsoft.Data.SqlClient
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.EntityFrameworkCore
+@using System.Net.Http
+@using Newtonsoft.Json
+@inject HttpClient Http
 @inject IAppointmentService AppointmentService
 @inject ApplicationDbContext Context
 @inject NavigationManager NavigationManager
@@ -108,7 +111,8 @@ else
     {
         Users = UserManager.Users.AsEnumerable().ToList();
         PatientsList = await AppointmentService.GetPatientsAsync();
-        AppointmentList = await AppointmentService.GetPatientListAsync();
+        //AppointmentList = await AppointmentService.GetPatientListAsync();
+        AppointmentList = await Http.GetJsonAsync<List<Appointment>>("api/appointments/list");
 
     }
 
@@ -118,20 +122,18 @@ else
     /// <returns></returns>
     protected async Task CreateAppointmentAsync()
     {
-        if (UserId != null && PatientId != null)
+        Appointment appointment = new Appointment()
         {
-            Appointment appointment = new Appointment()
-            {
-                AppointmentId = Guid.NewGuid().ToString(),
-                UserId = UserId,
-                StartTime = DateTime.Now,
-                EndTime = DateTime.Now,
-                PatientId = PatientId,
-                Location = Location,
-                Description = Description,
-            };
-            await AppointmentService.InsertAsync(appointment);
-        }
+            AppointmentId = Guid.NewGuid().ToString(),
+            UserId = UserId,
+            StartTime = DateTime.Now,
+            EndTime = DateTime.Now,
+            PatientId = PatientId,
+            Location = Location,
+            Description = Description,
+        };
+        //await AppointmentService.InsertAsync(appointment);
+        await Http.PostJsonAsync("api/appointments/insert", appointment);
         ClearFields();
         NavigationManager.NavigateTo("/");
     }
