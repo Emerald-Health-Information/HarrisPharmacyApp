@@ -1,4 +1,5 @@
-﻿@using HarrisPharmacy.Data.Entities.Forms
+﻿@using System.Threading
+@using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Entities.Patients
 @using HarrisPharmacy.Data.Interfaces
 @using HarrisPharmacy.Data.Services
@@ -18,7 +19,7 @@ else
                 <option value="">-- Select Form --</option>
                 @foreach (var patient in Patients)
                 {
-                    <option value="@patient.PatientId">@Patient.FirstName  @patient.LastName</option>
+                    <option value="@patient.PatientId">@patient.FirstName  @patient.LastName</option>
                 }
             </select>
         </div>
@@ -32,17 +33,20 @@ else
             <h3> Sorry, you have not submitted any forms for @Patient.FirstName @Patient.LastName</h3>
 
         }
-        <div class="row">
-            <div class="col-md-4">
-                <select @onchange="@FormClicked" class="form-control">
-                    <option value="">-- Select Form --</option>
-                    @foreach (var form in FormSubmissionsForPatient)
-                    {
-                        <option value="@form.DateCreated">@form.FormName</option>
-                    }
-                </select>
+        else
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    <select @onchange="@FormClicked" class="form-control">
+                        <option value="">-- Select Form --</option>
+                        @foreach (var form in FormSubmissionsForPatient)
+                        {
+                            <option value="@form.DateCreated">@form.FormName</option>
+                        }
+                    </select>
+                </div>
             </div>
-        </div>
+        }
         @if (FormSubmission != null)
         {
             @foreach (var field in FormSubmission.FormFieldSubmissions)
@@ -72,7 +76,7 @@ else
     /// <summary>
     /// The list of patients for this user
     /// </summary>
-    protected List<Patient> Patients { get; set; }
+    protected List<Patient> Patients { get; set; } = new List<Patient>();
 
     protected Patient Patient { get; set; }
 
@@ -111,9 +115,13 @@ else
     {
 
         Patient = Patients.Find(p => p.PatientId == e.Value.ToString());
+        FormSubmission = null;
+        FormSubmissionsForPatient = null;
+        StateHasChanged();
         if (Patient != null)
             FormSubmissionsForPatient = AllFormSubmissions.Where(fs => fs.PatientId == Patient.PatientId).ToList();
-        this.StateHasChanged();
+
+        StateHasChanged();
     }
 
 }
