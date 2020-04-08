@@ -22,6 +22,11 @@ v 1.1		Taylor Adam		2019-11-27			Added Hours Type
 
 #endregion copyright
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace HarrisPharmacy.Data.Enums
 {
     public enum FormInputType

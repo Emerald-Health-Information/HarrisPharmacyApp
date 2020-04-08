@@ -17,36 +17,50 @@
     -->
 *@
 
+@using System.Dynamic
+@using System.Security.Claims
 @using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Enums
+@using HarrisPharmacy.Data.Services
+@using HarrisPharmacy.App.Models;
+@using HarrisPharmacy.Data.Interfaces
 @using Microsoft.AspNetCore.Components
+@using Microsoft.Data.SqlClient
+@inject IFormService FormService
 
-<form>
-    @foreach (var formWithField in Form.FormWithFields)
+@foreach (var formWithFields in Form.FormWithFields)
+{
+    FormFieldsDictionary.Add(new FormFieldWithValueModel() { FormField = formWithFields.FormField });
+}
+
+@foreach (var formWithField in Form.FormWithFields)
+{
+    var field = formWithField.FormField;
+
+    @if (field != null)
     {
-        var field = formWithField.FormField;
-        @if (field != null)
+        var formFieldWithValueModel = FormFieldsDictionary.Find(ff => ff.FormField == field);
+
+        @*Checking if it's the hour type, there is probably a better way *@
+        @if (Enum.Parse<FormInputType>(field.FormInputType.ToString()) == Enum.Parse<FormInputType>("Hour"))
         {
-            @*Checking if it's the hour type, there is probably a better way *@
-            @if (Enum.Parse<FormInputType>(field.FormInputType.ToString()) == Enum.Parse<FormInputType>("Hour"))
-            {
-                <div class="form-group">
-                    <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
-                    <input type="number" class="form-control mb-4" min="0" step="0.25" value="1.00" />
-                </div>
-            }
-            else
-            {
-                <div class="form-group" style="padding-top: 10px">
-                    <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
-                    <input class="form-control" type="@field.FormInputType" />
-                </div>
-            }
+            <div class="form-group">
+                <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                <input @onchange="@((e) => UpdateItem(formFieldWithValueModel, e))" type="number" class="form-control mb-4" min="0" step="0.25" />
+            </div>
+        }
+        else
+        {
+            <div class="form-group" style="padding-top: 10px">
+                <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                <input @onchange="@((e) => UpdateItem(formFieldWithValueModel, e))" class="form-control" type="@field.FormInputType" />
+            </div>
         }
     }
+}
 
-    @*<button type="button" @onclick="@ToggleModal" class="btn btn-primary">Submit</button>*@
-</form>
+<button type="button" @onclick="@SubmitForm" class="btn btn-primary">Submit</button>
+
 @if (_showModal)
 {
     <!--The modal TODO: Move to modal component, make it actually submit the form-->
@@ -70,11 +84,24 @@
     </div>
 }
 @code {
+
+    [Parameter]
+    public string PatientId { get; set; }
+
     /// <summary>
     /// The form being displayed
     /// </summary>
     [Parameter]
     public Form Form { get; set; }
+    /// <summary>
+    /// Keep a list of the fields and their values for form submission
+    /// </summary>
+    [Parameter]
+    public List<FormFieldWithValueModel> FormFieldsDictionary { get; set; }
+
+    [Parameter]
+    public string UserId { get; set; }
+
     /// <summary>
     /// the private backing field for showing the modal
     /// </summary>
@@ -88,4 +115,28 @@
         _showModal = !_showModal;
     }
 
+    /// <summary>
+    /// Submits the form to the DB
+    /// </summary>
+    protected async Task SubmitForm()
+    {
+        Dictionary<FormField, string> dict = new Dictionary<FormField, string>();
+        foreach (var entry in FormFieldsDictionary)
+        {
+            if (!dict.ContainsKey(entry.FormField))
+                dict.Add(entry.FormField, entry.Value);
+        }
+        await FormService.SubmitFormAsync(Form, dict, UserId, PatientId);
+        ToggleModal();
+        StateHasChanged();
+    }
+    /// <summary>
+    /// Updates the Item variable to be the selected item from the select input
+    ///</summary>
+    /// <param name="e"></param>
+    protected async Task UpdateItem(FormFieldWithValueModel formFieldWithValueModel, ChangeEventArgs e)
+    {
+
+        formFieldWithValueModel.Value = e.Value.ToString();
+    }
 }

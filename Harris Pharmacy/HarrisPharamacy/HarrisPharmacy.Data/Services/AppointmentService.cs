@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HarrisPharmacy.Data;
 using HarrisPharmacy.Data.Entities.Appointments;
 using HarrisPharmacy.Data.Entities.Patients;
 using HarrisPharmacy.Data.Interfaces;
@@ -42,6 +43,7 @@ namespace HarrisPharmacy.Data.Services
         /// </summary>
         /// <param name="patientId"></param>
         /// <returns></returns>
+
         public async Task<Patient> GetPatientAsync(string patientId)
         {
             return await _applicationDbContext.Patients
@@ -90,13 +92,12 @@ namespace HarrisPharmacy.Data.Services
         /// <summary>
         /// Set The state of the appointment to ""
         /// </summary>
-        public async Task<Appointment> SetAppointmentStateFinishedAsync(string id)
+        /*public async Task<Appointment> SetAppointmentStateFinishedAsync(Appointment appointment)
         {
-            var appointment = await _applicationDbContext.Appointments.FindAsync(id);
-            appointment.AppointmentState = "finished";
+            _applicationDbContext.Appointments.Update(appointment);
             await _applicationDbContext.SaveChangesAsync();
             return appointment;
-        }
+        }*/
 
         /// <summary>
         /// Gets the appointment with the corresponding appointment id
@@ -162,17 +163,17 @@ namespace HarrisPharmacy.Data.Services
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public async Task<Appointment> UpdateAppointmentAsync(Appointment a)
+        public async Task<Appointment> UpdateAppointmentAsync(Appointment appointment)
         {
-            var appointment = await _applicationDbContext.Appointments.FindAsync(a.AppointmentId);
-            if (appointment == null)
-                return null;
+            //var appointment = await _applicationDbContext.Appointments.FindAsync(a.AppointmentId);
+            //if (appointment == null)
+            //return null;
 
-            appointment.PatientId = a.PatientId;
+            //appointment.PatientId = a.PatientId;
 
-            appointment.DateUpdated = DateTime.Now;
-            appointment.Description = a.Description;
-
+            //appointment.DateUpdated = DateTime.Now;
+            //appointment.Description = a.Description;
+            
             _applicationDbContext.Appointments.Update(appointment);
             await _applicationDbContext.SaveChangesAsync();
 

@@ -14,6 +14,8 @@
     Version		Author			Date				Desc
     v 1.0		Taylor Adam		2019-11-19			Added Headers
     v 1.1		Taylor Adam		2019-11-27			Fixed bugs with the toggleing of the modals. Added the ability to use custom values but it's still a WIP
+    v 1.2		Dakota Logan	2020-02-21          Changed formfield service calls to use API
+
     -->
 *@
 
@@ -21,8 +23,12 @@
 
 @using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Enums
+
 @using HarrisPharmacy.Data.Interfaces
 @using Microsoft.AspNetCore.Components
+@using System.Net.Http
+@using Newtonsoft.Json
+@inject HttpClient Http
 
 @inject IFormService FormService
 
@@ -174,7 +180,7 @@ else
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        FormFieldsList = await FormService.GetFormFieldsAsync();
+        FormFieldsList = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
     }
     /// <summary>
     /// Toggles the modal on/off
@@ -223,7 +229,7 @@ else
     /// </summary>
     protected async void OpenUpdateFormField(string id)
     {
-        FormField = await FormService.GetFormFieldAsync(id);
+        FormField = await Http.GetJsonAsync<FormField>($"api/formfield/{id}");
         if (FormField.UseValues)
             _showValuesBox = true;
         else
@@ -233,7 +239,7 @@ else
         this.StateHasChanged();
     }
 
-    protected void UpdateFormField()
+    protected async void UpdateFormField()
     {
         if (_showValuesBox)
         {
@@ -246,10 +252,13 @@ else
             FormField.Values = null;
         }
 
+        FormField.FormInputType = FormInputType;
+        var tempFormField = await Http.PutJsonAsync<FormField>("api/formfield/update", FormField);
+        FormFieldsList.Find(formField => formField.FormFieldId == tempFormField.FormFieldId).FieldName = tempFormField.FieldName;
+        FormFieldsList.Find(formField => formField.FormFieldId == tempFormField.FormFieldId).FormInputType = tempFormField.FormInputType;
         ToggleUpdateModal();
 
-        FormField.FormInputType = FormInputType;
-        FormService.UpdateFormFieldAsync(FormField);
+        this.StateHasChanged();
     }
 
     /// <summary>
@@ -264,7 +273,7 @@ else
             ToggleValuesBox();
 
         FormField.FormInputType = FormInputType;
-        await FormService.InsertFormFieldAsync(FormField);
+        FormField = await Http.PostJsonAsync<FormField>("api/formfield/insert", FormField);
         FormFieldsList.Add(FormField);
         ToggleCreateModal();
 
@@ -275,7 +284,7 @@ else
     {
 
         if (id == null) return;
-        await FormService.DeleteFormFieldAsync(id);
+        await Http.DeleteAsync($"api/formfield/{id}");
         FormFieldsList.Remove(FormFieldsList.Find(formField => formField.FormFieldId == id));
         this.StateHasChanged();
     }

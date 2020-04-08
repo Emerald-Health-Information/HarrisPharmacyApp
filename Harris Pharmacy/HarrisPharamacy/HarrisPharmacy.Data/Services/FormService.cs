@@ -16,6 +16,7 @@ License = MIT
 
 Version		Author			Date				Desc
 v 1.0		Taylor Adam		2019-11-19			Added Headers
+v 1.1		Dakota Logan	2020-02-21		    Changed update to return formfield
 
 */
 
@@ -25,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HarrisPharmacy.Data;
 using HarrisPharmacy.Data.Entities.Forms;
 using HarrisPharmacy.Data.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -56,6 +58,7 @@ namespace HarrisPharmacy.Data.Services
         {
             return await _applicationDbContext.Forms
                 .Include(f => f.FormWithFields)
+                    .ThenInclude(f => f.FormField)
                 .ToListAsync();
         }
 
@@ -66,6 +69,7 @@ namespace HarrisPharmacy.Data.Services
         public async Task<List<FormField>> GetFormFieldsAsync()
         {
             return await _applicationDbContext.FormFields
+                .Include(e => e.FormWithFields)
                 .ToListAsync();
         }
 
@@ -135,15 +139,20 @@ namespace HarrisPharmacy.Data.Services
         /// <returns></returns>
         public async Task<Form> UpdateFormAsync(Form f, List<FormField> selectedFormFields)
         {
-            var form = await _applicationDbContext.Forms.FindAsync(f.FormId);
+            var form = await _applicationDbContext.Forms
+                .Include(f => f.FormWithFields)
+                .FirstOrDefaultAsync(form => form.FormId == f.FormId);
             if (form == null)
                 return null;
 
-            _applicationDbContext.FormWithFields.RemoveRange(form.FormWithFields);
+            if (form.FormWithFields != null)
+                _applicationDbContext.FormWithFields.RemoveRange(form.FormWithFields);
 
             List<FormWithFields> formWithFields = CreateFormWithFields(f.Description, selectedFormFields, form);
 
             form.FormWithFields = formWithFields;
+            form.Name = f.Name;
+            form.Description = f.Description;
             form.DateUpdated = DateTime.Now;
             _applicationDbContext.Forms.Update(form);
             await _applicationDbContext.SaveChangesAsync();
@@ -213,12 +222,14 @@ namespace HarrisPharmacy.Data.Services
             return formField;
         }
 
-        public async void UpdateFormFieldAsync(FormField formField)
+        public async Task<FormField> UpdateFormFieldAsync(FormField formField)
         {
             formField.DateUpdated = DateTime.Now;
 
             _applicationDbContext.FormFields.Update(formField);
             await _applicationDbContext.SaveChangesAsync();
+
+            return formField;
         }
 
         /// <summary>
@@ -276,7 +287,7 @@ namespace HarrisPharmacy.Data.Services
                     DateUpdated = DateTime.Now,
                     Description = description,
                     Form = form,
-                    FormField = formField,
+                    FormField = null,
                     FormId = form.FormId,
                     FormFieldId = formField.FormFieldId
                 };
@@ -284,6 +295,71 @@ namespace HarrisPharmacy.Data.Services
             }
 
             return formsWithFields;
+        }
+
+        /// <summary>
+        /// Submits the form and its fields
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="formFieldWithValueModels"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FormSubmission> SubmitFormAsync(Form form, Dictionary<FormField, string> formFieldWithValueModels, string userId, string patientId)
+        {
+            var formSubmission = new FormSubmission()
+            {
+                FormSubmissionId = Guid.NewGuid().ToString(),
+                PatientId = patientId,
+                FormName = form.Name,
+                Description = form.Description,
+                UserId = userId,
+                DateCreated = DateTime.Now,
+                DateUpdated = DateTime.Now
+            };
+
+            foreach (var formFieldWithValueModel in formFieldWithValueModels)
+            {
+                formSubmission.FormFieldSubmissions.Add(
+                    new FormFieldSubmission()
+                    {
+                        FormFieldName = formFieldWithValueModel.Key.FieldName,
+                        FormFieldSubmissionId = Guid.NewGuid().ToString(),
+                        FormFieldValue = formFieldWithValueModel.Value,
+                        FormInputType = formFieldWithValueModel.Key.FormInputType,
+                        FormSubmission = formSubmission,
+                        FormSubmissionId = formSubmission.FormSubmissionId,
+                    }
+                );
+            }
+
+            _applicationDbContext.FormSubmissions.Add(formSubmission);
+            await _applicationDbContext.SaveChangesAsync();
+            return formSubmission;
+        }
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<List<FormSubmission>> GetFormSubmissions(string userId)
+        {
+            return _applicationDbContext.FormSubmissions
+                .Include(f => f.FormFieldSubmissions)
+                .Where(f => f.UserId == userId)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Returns a list of the submitted forms for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<FormSubmission> GetFormSubmission(string userId)
+        {
+            return await _applicationDbContext.FormSubmissions
+                .Include(f => f.FormFieldSubmissions)
+                .FirstOrDefaultAsync(f => f.UserId == userId);
         }
 
         /// <summary>
