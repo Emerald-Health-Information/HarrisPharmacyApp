@@ -30,7 +30,7 @@ namespace HarrisPharmacy.Data.Entities.Forms
     /// <summary>
     /// Represents A field of a form
     /// </summary>
-    public class FormField : BaseEntity
+    public class FormField : BaseEntity, IEquatable<FormField>
     {
         /// <summary>
         /// Primary key
@@ -77,5 +77,10 @@ namespace HarrisPharmacy.Data.Entities.Forms
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
+        public bool Equals(FormField other)
+        {
+            if (other == null) return false;
+            return (this.FormFieldId.Equals(other.FormFieldId));
+        }
     }
 }

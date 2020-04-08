@@ -82,7 +82,7 @@ namespace HarrisPharmacy.Data.Interfaces
         /// <summary>
         /// Set The state of the appointment to ""
         /// </summary>
-        Task<Appointment> SetAppointmentStateFinishedAsync(string id);
+        //Task<Appointment> SetAppointmentStateFinishedAsync(Appointment appointment);
   
 
         /// <summary>
