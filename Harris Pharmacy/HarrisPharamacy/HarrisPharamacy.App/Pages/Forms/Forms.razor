@@ -77,7 +77,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         // FormsList = await FormService.GetFormsAsync();
-        FormsList = await Http.GetJsonAsync<List<Form>>("api/form/all");
+        FormsList = await Http.GetJsonAsync<List<Form>>("https://harris-api.azurewebsites.net/api/form/all");
     }
     /// <summary>
     /// Updates the state when the selected form changes
@@ -88,7 +88,7 @@ else
     {
 
         // FormSelected = await FormService.GetFormAsync(e.Value.ToString());
-        FormSelected = await Http.GetJsonAsync<Form>("api/form/form/" + e.Value.ToString());
+        FormSelected = await Http.GetJsonAsync<Form>("https://harris-api.azurewebsites.net/api/form/form/" + e.Value.ToString());
         this.StateHasChanged();
     }
 

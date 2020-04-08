@@ -180,7 +180,7 @@ else
     /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        FormFieldsList = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
+        FormFieldsList = await Http.GetJsonAsync<List<FormField>>("https://harris-api.azurewebsites.net/api/formfield/all");
     }
     /// <summary>
     /// Toggles the modal on/off
@@ -229,7 +229,7 @@ else
     /// </summary>
     protected async void OpenUpdateFormField(string id)
     {
-        FormField = await Http.GetJsonAsync<FormField>($"api/formfield/{id}");
+        FormField = await Http.GetJsonAsync<FormField>($"https://harris-api.azurewebsites.net/api/formfield/{id}");
         if (FormField.UseValues)
             _showValuesBox = true;
         else
@@ -253,7 +253,7 @@ else
         }
 
         FormField.FormInputType = FormInputType;
-        var tempFormField = await Http.PutJsonAsync<FormField>("api/formfield/update", FormField);
+        var tempFormField = await Http.PutJsonAsync<FormField>("https://harris-api.azurewebsites.net/api/formfield/update", FormField);
         FormFieldsList.Find(formField => formField.FormFieldId == tempFormField.FormFieldId).FieldName = tempFormField.FieldName;
         FormFieldsList.Find(formField => formField.FormFieldId == tempFormField.FormFieldId).FormInputType = tempFormField.FormInputType;
         ToggleUpdateModal();
@@ -273,7 +273,7 @@ else
             ToggleValuesBox();
 
         FormField.FormInputType = FormInputType;
-        FormField = await Http.PostJsonAsync<FormField>("api/formfield/insert", FormField);
+        FormField = await Http.PostJsonAsync<FormField>("https://harris-api.azurewebsites.net/api/formfield/insert", FormField);
         FormFieldsList.Add(FormField);
         ToggleCreateModal();
 
@@ -284,7 +284,7 @@ else
     {
 
         if (id == null) return;
-        await Http.DeleteAsync($"api/formfield/{id}");
+        await Http.DeleteAsync($"https://harris-api.azurewebsites.net/api/formfield/{id}");
         FormFieldsList.Remove(FormFieldsList.Find(formField => formField.FormFieldId == id));
         this.StateHasChanged();
     }
