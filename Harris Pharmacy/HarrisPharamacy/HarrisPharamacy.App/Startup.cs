@@ -39,6 +39,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace HarrisPharmacy.App
 {
@@ -76,6 +77,11 @@ namespace HarrisPharmacy.App
             services.AddTransient<IFormService, FormService>();
             services.AddTransient<IAppointmentService, AppointmentService>();
             services.AddTransient<IPatientInfoService, PatientInfoService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HarrisPharmacyApp API", Version = "v1" });
+            });
 
             // Server Side Blazor doesn't register HttpClient by default
             if (services.All(x => x.ServiceType != typeof(HttpClient)))
@@ -115,6 +121,12 @@ namespace HarrisPharmacy.App
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "HarrisPharmacyApp API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {

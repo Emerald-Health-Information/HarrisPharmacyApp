@@ -103,8 +103,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + patientListID);
-        Patient = await Http.GetJsonAsync<Patient>("api/patientinfo/patient/" + appt.PatientId);
+        appt = await Http.GetJsonAsync<Appointment>("https://harris-api.azurewebsites.net/api/appointments/list/" + patientListID);
+        Patient = await Http.GetJsonAsync<Patient>("https://harris-api.azurewebsites.net/api/patientinfo/patient/" + appt.PatientId);
         FirstName = Patient.FirstName;
         LastName = Patient.LastName;
         Age = Patient.Age;
@@ -117,7 +117,7 @@ else
         //await AppointmentService.SetAppointmentStateFinishedAsync(appt);
         appt.AppointmentState = "finished";
         appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
-        await Http.PutJsonAsync("api/appointments/{appt.AppointmentId}", appt);
+        await Http.PutJsonAsync("https://harris-api.azurewebsites.net/api/appointments/{appt.AppointmentId}", appt);
         NavigationManager.NavigateTo("/");
     }
 
