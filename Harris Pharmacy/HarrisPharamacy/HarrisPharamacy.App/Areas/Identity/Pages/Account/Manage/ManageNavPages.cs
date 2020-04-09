@@ -2,20 +2,20 @@
 
 /*
 
-Harrison1 COSC 470 2019
+Harrison1 COSC 471 2019
 
-File =
+File = ManageNavPages.cs
 
-Author =
+Author = Nelson Murray
 
-Date = 2019-11-19
+Date = 2020 - 01 - 10
 
 License = MIT
 
-				Modification History
+            Modification History
 
-Version		Author			Date				Desc
-v 1.0		Taylor Adam		2019-11-19			Added Headers
+Version     Author Date           Desc
+v 1.0		Nelson Murray     2020-01-10			Created
 
 */
 

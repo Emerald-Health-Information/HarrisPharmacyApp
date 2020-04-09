@@ -1,22 +1,40 @@
-﻿@page
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = RegisterConfirmation.cshtml
+
+   Author = Nelson Murray
+
+   Date = 2020-01-10
+
+   License = MIT
+
+               Modification History
+
+   Version		Author			Date				Desc
+   v 1.0		Nelson Murray		2020-01-10			Created
+
+*@
+@page
 @model RegisterConfirmationModel
 @{
-    ViewData["Title"] = "Register confirmation";
+   ViewData["Title"] = "Register confirmation";
 }
 
 <h1>@ViewData["Title"]</h1>
 @{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
+   if (@Model.DisplayConfirmAccountLink)
+   {
+      <p>
+         This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+         Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+      </p>
+   }
+   else
+   {
+      <p>
+         Please check your email to confirm your account.
+      </p>
+   }
 }

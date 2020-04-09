@@ -4,9 +4,9 @@
 
 Harrison1 COSC 470 2019
 
-File =
+File = IdentityHostingStartup.cs
 
-Author =
+Author = Taylor Adam
 
 Date = 2019-11-19
 

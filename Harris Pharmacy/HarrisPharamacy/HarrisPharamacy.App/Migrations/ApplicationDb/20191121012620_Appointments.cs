@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+
+Harrison1 COSC 471 2019
+
+File = 20191121012620_Appointments.cs
+
+Author = Grayson King
+
+Date = 2020 - 01 - 10
+
+License = MIT
+
+            Modification History
+
+Version     Author Date           Desc
+v 1.0		Grayson King     2020-01-10			Created
+
+*/
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HarrisPharmacy.App.Migrations.ApplicationDb
