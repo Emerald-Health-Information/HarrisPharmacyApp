@@ -1,12 +1,30 @@
-﻿<AuthorizeView>
-    <Authorized>
-        <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
-        <form method="post" action="Identity/Account/LogOut">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
-        </form>
-    </Authorized>
-    <NotAuthorized>
-        <a href="Identity/Account/Register" class="button">Register</a>
-        <a href="Identity/Account/Login" class="=button">Log in</a>
-    </NotAuthorized>
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = LoginDisplay.razor
+
+   Author = Nelson Murray
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Nelson Murray     2020-01-20			Created
+
+*@
+<AuthorizeView>
+   <Authorized>
+      <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
+      <form method="post" action="Identity/Account/LogOut">
+         <button type="submit" class="nav-link btn btn-link">Log out</button>
+      </form>
+   </Authorized>
+   <NotAuthorized>
+      <a href="Identity/Account/Register" class="button">Register</a>
+      <a href="Identity/Account/Login" class="=button">Log in</a>
+   </NotAuthorized>
 </AuthorizeView>

@@ -1,4 +1,22 @@
-﻿@page "/ViewFormSubmissions"
+﻿@*
+
+Harrison1 COSC 471 2019
+
+File = ViewSubmittedForms.razor
+
+Author = Taylor Adam
+
+Date = 2020 - 01 - 10
+
+License = MIT
+
+            Modification History
+
+Version     Author Date           Desc
+v 1.0		Taylor Adam     2020-01-20			Created
+
+*@
+@page "/ViewFormSubmissions"
 @using System.Security.Claims
 @using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Interfaces
@@ -7,9 +25,9 @@
 <h3>View Submitted Forms</h3>
 
 <AuthorizeView>
-    <Authorized>
-        <FormSubmissionsComponent UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier) />
-    </Authorized>
+   <Authorized>
+      <FormSubmissionsComponent UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier) />
+   </Authorized>
 </AuthorizeView>
 
 @code {

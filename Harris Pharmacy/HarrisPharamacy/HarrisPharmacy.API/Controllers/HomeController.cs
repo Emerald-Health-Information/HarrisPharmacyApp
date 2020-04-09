@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+
+Harrison1 COSC 471 2019
+
+File = HomeController
+
+Author = Taylor Adam
+
+Date = 2020-03-20	
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0		Taylor Adam	2020-03-20			Created
+
+*/
+using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
