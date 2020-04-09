@@ -211,10 +211,10 @@ else
 
         Items = FormService.GetFormFieldsMultiSelectListAsync();
 
-        FormFields = await Http.GetJsonAsync<List<FormField>>("api/formfield/all");
+        FormFields = await Http.GetJsonAsync<List<FormField>>("https://harris-api.azurewebsites.net/api/formfield/all");
         // FormFields = await FormService.GetFormFieldsAsync();
         // FormsList = await FormService.GetFormsAsync();
-        FormsList = await Http.GetJsonAsync<List<Form>>("api/form/all");
+        FormsList = await Http.GetJsonAsync<List<Form>>("https://harris-api.azurewebsites.net/api/form/all");
         Item = Items[0];
     }
 
@@ -297,8 +297,8 @@ else
             Form = Form,
             FormFields = SelectedFormFields
         };
-        await Http.PostJsonAsync("api/form/update", dto);
-        FormsList = await Http.GetJsonAsync<List<Form>>("api/form/all");
+        await Http.PostJsonAsync("https://harris-api.azurewebsites.net/api/form/update", dto);
+        FormsList = await Http.GetJsonAsync<List<Form>>("https://harris-api.azurewebsites.net/api/form/all");
         //await FormService.UpdateFormAsync(Form, SelectedFormFields);
 
         ClearFields();

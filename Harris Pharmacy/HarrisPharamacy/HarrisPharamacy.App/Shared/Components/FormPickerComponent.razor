@@ -56,7 +56,8 @@ else
             <Authorized>
                 <FormComponent Form="FormSelected"
                                FormFieldsDictionary="FormFieldsDictionary"
-                               UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier) />
+                               UserId=@context.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                               PatientId=@PatientId />
             </Authorized>
         </AuthorizeView>
 
@@ -65,6 +66,9 @@ else
 }
 
 @code {
+    [Parameter]
+    public string PatientId { get; set; }
+
     /// <summary>
     /// List of the forms
     //</summary>

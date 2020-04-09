@@ -80,7 +80,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         //appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
-        appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/" + UserId);
+        appointments = await Http.GetJsonAsync<List<Appointment>>("https://harris-api.azurewebsites.net/api/appointments/getOpenPatientListUser/" + UserId);
         appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
         if (appointments != null)
         {
@@ -115,9 +115,9 @@ else
         //await AppointmentService.DeleteAsync(pid);
         appointment.AppointmentState = "skipped";
         await AppointmentService.UpdateAppointmentAsync(appointment);
-        appointments = await Http.GetJsonAsync<List<Appointment>>("api/appointments/getOpenPatientListUser/" + UserId);
+        appointments = await Http.GetJsonAsync<List<Appointment>>("https://harris-api.azurewebsites.net/api/appointments/getOpenPatientListUser/" + UserId);
         totalAppointments = appointments.Count();
-        //await Http.PutJsonAsync("api/appointments/{appointment.AppointmentId}", appointment);  
+        //await Http.PutJsonAsync("api/appointments/{appointment.AppointmentId}", appointment);
         this.StateHasChanged();
         //navigationManager.NavigateTo("/");
     }

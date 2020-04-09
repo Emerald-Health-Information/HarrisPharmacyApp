@@ -40,7 +40,6 @@
 @inject HttpClient Http
 @inject ApplicationDbContext _applicationDbContext;
 
-
 <div class="row">
     <div class="col">
         <p><b>Patient Name: </b> @FirstName @LastName</p>
@@ -55,7 +54,7 @@
 
 @if (!ChatBot)
 {
-    <FormPickerComponent />
+    <FormPickerComponent PatientId="@Patient.PatientId" />
 }
 else
 {
@@ -89,6 +88,8 @@ else
     private DateTime appointmentStartTime;
     Appointment appt;
 
+    protected Patient Patient { get; set; } = new Patient();
+
     /// <summary>
     /// Determines if the user wants to use a chat bot or normal forms
     /// </summary>
@@ -102,12 +103,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        appt = await Http.GetJsonAsync<Appointment>("api/appointments/list/" + patientListID);
-        var patient = await Http.GetJsonAsync<Patient>("api/patientinfo/patient/" + appt.PatientId);
-        FirstName = patient.FirstName;
-        LastName = patient.LastName;
-        Age = patient.Age;
-        Sex = patient.Sex;
+        appt = await Http.GetJsonAsync<Appointment>("https://harris-api.azurewebsites.net/api/appointments/list/" + patientListID);
+        Patient = await Http.GetJsonAsync<Patient>("https://harris-api.azurewebsites.net/api/patientinfo/patient/" + appt.PatientId);
+        FirstName = Patient.FirstName;
+        LastName = Patient.LastName;
+        Age = Patient.Age;
+        Sex = Patient.Sex;
         appointmentStartTime = DateTime.Now;
     }
 
@@ -116,7 +117,7 @@ else
         //await AppointmentService.SetAppointmentStateFinishedAsync(appt);
         appt.AppointmentState = "finished";
         appt.DurationInSeconds = (int)((DateTime.Now - appointmentStartTime).TotalSeconds);
-        await Http.PutJsonAsync("api/appointments/{appt.AppointmentId}", appt);
+        await Http.PutJsonAsync("https://harris-api.azurewebsites.net/api/appointments/{appt.AppointmentId}", appt);
         NavigationManager.NavigateTo("/");
     }
 

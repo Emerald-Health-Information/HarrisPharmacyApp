@@ -84,6 +84,10 @@
     </div>
 }
 @code {
+
+    [Parameter]
+    public string PatientId { get; set; }
+
     /// <summary>
     /// The form being displayed
     /// </summary>
@@ -119,10 +123,10 @@
         Dictionary<FormField, string> dict = new Dictionary<FormField, string>();
         foreach (var entry in FormFieldsDictionary)
         {
-            if(!dict.ContainsKey(entry.FormField))
+            if (!dict.ContainsKey(entry.FormField))
                 dict.Add(entry.FormField, entry.Value);
         }
-        await FormService.SubmitFormAsync(Form, dict, UserId);
+        await FormService.SubmitFormAsync(Form, dict, UserId, PatientId);
         ToggleModal();
         StateHasChanged();
     }

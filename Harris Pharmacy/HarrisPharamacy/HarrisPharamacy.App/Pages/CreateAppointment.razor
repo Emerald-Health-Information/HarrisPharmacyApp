@@ -112,7 +112,7 @@ else
         Users = UserManager.Users.AsEnumerable().ToList();
         PatientsList = await AppointmentService.GetPatientsAsync();
         //AppointmentList = await AppointmentService.GetPatientListAsync();
-        AppointmentList = await Http.GetJsonAsync<List<Appointment>>("api/appointments/list");
+        AppointmentList = await Http.GetJsonAsync<List<Appointment>>("https://harris-api.azurewebsites.net/api/appointments/list");
 
     }
 
@@ -133,7 +133,7 @@ else
             Description = Description,
         };
         //await AppointmentService.InsertAsync(appointment);
-        await Http.PostJsonAsync("api/appointments/insert", appointment);
+        await Http.PostJsonAsync("https://harris-api.azurewebsites.net/api/appointments/insert", appointment);
         ClearFields();
         NavigationManager.NavigateTo("/");
     }
