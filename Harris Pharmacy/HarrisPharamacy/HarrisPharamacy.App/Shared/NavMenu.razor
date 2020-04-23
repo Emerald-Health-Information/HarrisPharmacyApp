@@ -1,50 +1,68 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href=""><img src="img/harris-small.png" width="30" height="30" alt="" class="small">Harris Healthcare</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = LoginDisplay.razor
+
+   Author = Nelson Murray
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Nelson Murray     2020-01-20			Created
+
+*@
+<div class="top-row pl-4 navbar navbar-dark">
+   <a class="navbar-brand" href=""><img src="img/harris-small.png" width="30" height="30" alt="" class="small">Harris Healthcare</a>
+   <button class="navbar-toggler" @onclick="ToggleNavMenu">
+      <span class="navbar-toggler-icon"></span>
+   </button>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Appointments
-            </NavLink>
-        </li>
+   <ul class="nav flex-column">
+      <li class="nav-item px-3">
+         <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Appointments
+         </NavLink>
+      </li>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="createappointment">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Create Appointments
-            </NavLink>
-        </li>
-        <li class="nav-item px-4 text-white"> Admin</li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="manageforms">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Manage Forms
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="manageformfields">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Manage Form Fields
-            </NavLink>
-        </li>
+      <li class="nav-item px-3">
+         <NavLink class="nav-link" href="createappointment">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Create Appointments
+         </NavLink>
+      </li>
+      <li class="nav-item px-4 text-white"> Admin</li>
+      <li class="nav-item px-3">
+         <NavLink class="nav-link" href="manageforms">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Manage Forms
+         </NavLink>
+      </li>
+      <li class="nav-item px-3">
+         <NavLink class="nav-link" href="manageformfields">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Manage Form Fields
+         </NavLink>
+      </li>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="ViewFormSubmissions">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> View Form Submissions
-            </NavLink>
-        </li>
-    </ul>
+      <li class="nav-item px-3">
+         <NavLink class="nav-link" href="ViewFormSubmissions">
+            <span class="oi oi-file" aria-hidden="true"></span> Form Submissions
+         </NavLink>
+      </li>
+   </ul>
 </div>
 
 @code {
-    bool _collapseNavMenu = true;
+   bool _collapseNavMenu = true;
 
-    string NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
+   string NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
 
-    void ToggleNavMenu()
-    {
-        _collapseNavMenu = !_collapseNavMenu;
-    }
+   void ToggleNavMenu()
+   {
+      _collapseNavMenu = !_collapseNavMenu;
+   }
 }

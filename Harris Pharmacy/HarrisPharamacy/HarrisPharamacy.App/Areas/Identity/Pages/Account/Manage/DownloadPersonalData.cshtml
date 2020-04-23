@@ -1,12 +1,30 @@
-﻿@page
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = DownloadPersonalData.cshtml
+
+   Author = Nelson Murray
+
+   Date = 2020-01-10
+
+   License = MIT
+
+               Modification History
+
+   Version		Author			Date				Desc
+   v 1.0		Nelson Murray		2020-01-10			Created
+
+*@
+@page
 @model DownloadPersonalDataModel
 @{
-    ViewData["Title"] = "Download Your Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+   ViewData["Title"] = "Download Your Data";
+   ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
 <h4>@ViewData["Title"]</h4>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+   <partial name="_ValidationScriptsPartial" />
 }

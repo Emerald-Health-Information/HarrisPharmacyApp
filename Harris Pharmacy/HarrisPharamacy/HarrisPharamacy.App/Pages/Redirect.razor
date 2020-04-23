@@ -1,4 +1,22 @@
-﻿@page "/redirect/{page}"
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = Redirect.razor
+
+   Author = Taylor Adam
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Taylor Adam     2020-01-20			Created
+
+*@
+@page "/redirect/{page}"
 
 @inject NavigationManager navigationManager
 
@@ -6,11 +24,11 @@
 @{ Direct();}
 
 @code {
-    [Parameter]
-    public string page { get; set; }
+   [Parameter]
+   public string page { get; set; }
 
-    protected void Direct()
-    {
-        navigationManager.NavigateTo("/" + page);
-    }
+   protected void Direct()
+   {
+      navigationManager.NavigateTo("/" + page);
+   }
 }

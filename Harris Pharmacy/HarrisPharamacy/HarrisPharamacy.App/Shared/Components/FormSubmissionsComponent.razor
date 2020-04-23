@@ -1,4 +1,22 @@
-﻿@using System.Threading
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = FormSubmissionsComponent.razor
+
+   Author = Taylor Adam
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Taylor Adam     2020-01-20			Created
+
+*@
+@using System.Threading
 @using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Entities.Patients
 @using HarrisPharmacy.Data.Interfaces
@@ -8,122 +26,122 @@
 
 @if (Patients == null)
 {
-    <h3> Sorry, you have not submitted any forms for any patients </h3>
+   <h3> Sorry, you have not submitted any forms for any patients </h3>
 }
 else
 {
 
-    <div class="row">
-        <div class="col-md-4">
-            <select @onchange="@PatientClicked" class="form-control">
-                <option value="">-- Select Form --</option>
-                @foreach (var patient in Patients)
-                {
-                    <option value="@patient.PatientId">@patient.FirstName  @patient.LastName</option>
-                }
-            </select>
-        </div>
-    </div>
-
-    @if (Patient != null)
-    {
-
-        @if (FormSubmissionsForPatient == null)
-        {
-            <h3> Sorry, you have not submitted any forms for @Patient.FirstName @Patient.LastName</h3>
-
-        }
-        else
-        {
-            <div class="row">
-                <div class="col-md-4">
-                    <select @onchange="@FormClicked" class="form-control">
-                        <option value="">-- Select Form --</option>
-                        @foreach (var form in FormSubmissionsForPatient)
-                        {
-                            <option value="@form.DateCreated">@form.FormName</option>
-                        }
-                    </select>
-                </div>
-            </div>
-        }
-        @if (FormSubmission != null)
-        {
-            @foreach (var field in FormSubmission.FormFieldSubmissions)
+   <div class="row">
+      <div class="col-md-4">
+         <select @onchange="@PatientClicked" class="form-control">
+            <option value="">-- Select Form --</option>
+            @foreach (var patient in Patients)
             {
-                <div class="row">
-                    <div class="col-md-4">
-                        @field.FormFieldName - @field.FormFieldValue
-                    </div>
-                </div>
+               <option value="@patient.PatientId">@patient.FirstName  @patient.LastName</option>
             }
-        }
-    }
+         </select>
+      </div>
+   </div>
+
+   @if (Patient != null)
+   {
+
+      @if (FormSubmissionsForPatient == null)
+      {
+         <h3> Sorry, you have not submitted any forms for @Patient.FirstName @Patient.LastName</h3>
+
+      }
+      else
+      {
+         <div class="row">
+            <div class="col-md-4">
+               <select @onchange="@FormClicked" class="form-control">
+                  <option value="">-- Select Form --</option>
+                  @foreach (var form in FormSubmissionsForPatient)
+                  {
+                     <option value="@form.DateCreated">@form.FormName</option>
+                  }
+               </select>
+            </div>
+         </div>
+      }
+      @if (FormSubmission != null)
+      {
+         @foreach (var field in FormSubmission.FormFieldSubmissions)
+         {
+            <div class="row">
+               <div class="col-md-4">
+                  @field.FormFieldName - @field.FormFieldValue
+               </div>
+            </div>
+         }
+      }
+   }
 }
 @code {
-    [Parameter]
-    public string UserId { get; set; }
+   [Parameter]
+   public string UserId { get; set; }
 
-    /// <summary>
-    /// The list of form submissions
-    /// </summary>
-    protected List<FormSubmission> AllFormSubmissions { get; set; }
-    /// <summary>
-    /// The list of forms submitted for a specific patient
-    /// </summary>
-    protected List<FormSubmission> FormSubmissionsForPatient { get; set; }
+   /// <summary>
+   /// The list of form submissions
+   /// </summary>
+   protected List<FormSubmission> AllFormSubmissions { get; set; }
+   /// <summary>
+   /// The list of forms submitted for a specific patient
+   /// </summary>
+   protected List<FormSubmission> FormSubmissionsForPatient { get; set; }
 
-    /// <summary>
-    /// The list of patients for this user
-    /// </summary>
-    protected List<Patient> Patients { get; set; } = new List<Patient>();
+   /// <summary>
+   /// The list of patients for this user
+   /// </summary>
+   protected List<Patient> Patients { get; set; } = new List<Patient>();
 
-    protected Patient Patient { get; set; }
+   protected Patient Patient { get; set; }
 
-    protected FormSubmission FormSubmission { get; set; }
+   protected FormSubmission FormSubmission { get; set; }
 
-    protected override async Task OnInitializedAsync()
-    {
+   protected override async Task OnInitializedAsync()
+   {
 
-        AllFormSubmissions = await FormService.GetFormSubmissions(UserId);
-        foreach (var formSubmission in AllFormSubmissions)
-        {
-            var patient = await PatientInfoService.GetPatientInformationAsync(formSubmission.PatientId);
-            if (!Patients.Contains(patient))
-                Patients.Add(patient);
-        }
+      AllFormSubmissions = await FormService.GetFormSubmissions(UserId);
+      foreach (var formSubmission in AllFormSubmissions)
+      {
+         var patient = await PatientInfoService.GetPatientInformationAsync(formSubmission.PatientId);
+         if (!Patients.Contains(patient))
+            Patients.Add(patient);
+      }
 
-    }
+   }
 
-    /// <summary>
-    /// Updates the state when the selected form changes
-    /// and assigns the form to FormSelected
-    ///</summary>
-    /// <param name="e"></param>
-    protected async void FormClicked(ChangeEventArgs e)
-    {
+   /// <summary>
+   /// Updates the state when the selected form changes
+   /// and assigns the form to FormSelected
+   ///</summary>
+   /// <param name="e"></param>
+   protected async void FormClicked(ChangeEventArgs e)
+   {
 
-        FormSubmission = FormSubmissionsForPatient.Find(fs => fs.DateCreated.ToString() == e.Value.ToString());
+      FormSubmission = FormSubmissionsForPatient.Find(fs => fs.DateCreated.ToString() == e.Value.ToString());
 
-        this.StateHasChanged();
-    }
+      this.StateHasChanged();
+   }
 
-    /// <summary>
-    /// Updates the state when the selected patient changes
-    /// and assigns the patient to Patient
-    /// ///</summary>
-    /// <param name="e"></param>
-    protected async void PatientClicked(ChangeEventArgs e)
-    {
+   /// <summary>
+   /// Updates the state when the selected patient changes
+   /// and assigns the patient to Patient
+   /// ///</summary>
+   /// <param name="e"></param>
+   protected async void PatientClicked(ChangeEventArgs e)
+   {
 
-        Patient = Patients.Find(p => p.PatientId == e.Value.ToString());
-        FormSubmission = null;
-        FormSubmissionsForPatient = null;
-        StateHasChanged();
-        if (Patient != null)
-            FormSubmissionsForPatient = AllFormSubmissions.Where(fs => fs.PatientId == Patient.PatientId).ToList();
+      Patient = Patients.Find(p => p.PatientId == e.Value.ToString());
+      FormSubmission = null;
+      FormSubmissionsForPatient = null;
+      StateHasChanged();
+      if (Patient != null)
+         FormSubmissionsForPatient = AllFormSubmissions.Where(fs => fs.PatientId == Patient.PatientId).ToList();
 
-        StateHasChanged();
-    }
+      StateHasChanged();
+   }
 
 }

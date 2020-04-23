@@ -1,12 +1,30 @@
-﻿<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-    </Found>
-    <NotFound>
-        <CascadingAuthenticationState>
-            <LayoutView Layout="@typeof(MainLayout)">
-                <p>Sorry, there's nothing at this address.</p>
-            </LayoutView>
-        </CascadingAuthenticationState>
-    </NotFound>
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = App.razor
+
+   Author =
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Brandon Chesley    2020-01-20			Added Headers
+
+*@
+<Router AppAssembly="@typeof(Program).Assembly">
+   <Found Context="routeData">
+      <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+   </Found>
+   <NotFound>
+      <CascadingAuthenticationState>
+         <LayoutView Layout="@typeof(MainLayout)">
+            <p>Sorry, there's nothing at this address.</p>
+         </LayoutView>
+      </CascadingAuthenticationState>
+   </NotFound>
 </Router>

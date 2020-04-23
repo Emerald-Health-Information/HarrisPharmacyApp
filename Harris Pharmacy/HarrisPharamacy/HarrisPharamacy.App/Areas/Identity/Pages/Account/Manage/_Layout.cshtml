@@ -1,22 +1,40 @@
-﻿@{
-    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+﻿@*
+
+Harrison1 COSC 471 2019
+
+File = Layout.cshtml
+
+Author = Nelson Murray
+
+Date = 2020-01-10
+
+License = MIT
+
+				Modification History
+
+Version		Author			Date				Desc
+v 1.0		Nelson Murray		2020-01-10			Created
+
+*@
+@{
+   Layout = "/Areas/Identity/Pages/_Layout.cshtml";
 }
 
 <h1>Manage your account</h1>
 
 <div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
-    </div>
+   <h4>Change your account settings</h4>
+   <hr />
+   <div class="row">
+      <div class="col-md-3">
+         <partial name="_ManageNav" />
+      </div>
+      <div class="col-md-9">
+         @RenderBody()
+      </div>
+   </div>
 </div>
 
 @section Scripts {
-    @RenderSection("Scripts", required: false)
+   @RenderSection("Scripts", required: false)
 }
