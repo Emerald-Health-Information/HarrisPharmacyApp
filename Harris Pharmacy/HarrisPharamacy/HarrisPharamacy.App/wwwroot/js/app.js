@@ -127,7 +127,7 @@ function fidoRegister(Model) {
         userHandle[i] = userHandleBytesAsString.charCodeAt(i);
     }
     let user = {
-        name:Model.userId,
+        name: Model.userId,
         displayName: Model.userId,
         id: userHandle
     };
@@ -147,7 +147,7 @@ function fidoRegister(Model) {
             };
             // post to register callback endpoint and redirect to homepage
             $.ajax({
-                url: '/api/fido/CompleteRegistration',
+                url: 'api/home/CompleteRegistration',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(encodedCredentials),

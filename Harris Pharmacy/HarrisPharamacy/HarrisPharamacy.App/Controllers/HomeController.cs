@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace HarrisPharmacy.App.Controllers
 {
+    [Route("api/[controller]")]
     public class HomeController : Controller
     {
         private readonly IFidoAuthentication fido;
@@ -28,7 +29,7 @@ namespace HarrisPharmacy.App.Controllers
         public IActionResult StartRegistration() => View();
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+   
         public async Task<IActionResult> Register(RegistrationModel model)
         {
             var challenge = await fido.InitiateRegistration(model.UserId);
