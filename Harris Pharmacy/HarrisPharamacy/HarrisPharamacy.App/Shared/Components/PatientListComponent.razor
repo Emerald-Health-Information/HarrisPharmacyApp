@@ -54,11 +54,11 @@
                     @{ AssignPatient(appointment.PatientId); }
                     @if (patient != null)
                     {
-                        <span>
-                            <span>@appointment.StartTime.ToString("HH:mm")</span>
-                            @appointment.Location -
-                            @patient.FirstName @patient.LastName
-                        </span>
+                    <span>
+                        @appointment.StartTime.ToString("HH:mm") -
+                        @appointment.Location -
+                        @patient.LastName, @patient.FirstName[0]
+                    </span>
 
                     }
                 </button>
