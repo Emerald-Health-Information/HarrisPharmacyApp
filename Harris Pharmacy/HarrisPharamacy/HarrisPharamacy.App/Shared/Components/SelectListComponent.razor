@@ -1,24 +1,42 @@
-﻿<div class="input-group pt-1" data-target-input="nearest">
-    <select @onchange="@ExternalMethod" class="form-control">
-        <option>Select @Name</option>
-        @foreach (var (value, text) in ValuesDictionary)
-        {
-            <option value="@value">@text</option>
-        }
-    </select>
+﻿@*
+
+   Harrison1 COSC 471 2019
+
+   File = SelectListComponent.razor
+
+   Author = Taylor Adam
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Taylor Adam     2020-01-20			Created
+
+*@
+<div class="input-group pt-1" data-target-input="nearest">
+   <select @onchange="@ExternalMethod" class="form-control">
+      <option>Select @Name</option>
+      @foreach (var (value, text) in ValuesDictionary)
+      {
+         <option value="@value">@text</option>
+      }
+   </select>
 </div>
 @code
 {
 
-    [Parameter]
-    public Dictionary<string, string>
-    ValuesDictionary
-    { get; set; }
-    [Parameter]
-    public EventCallback<ChangeEventArgs>
-        ExternalMethod
-    { get; set; }
-    [Parameter]
-    public string Name { get; set; }
+   [Parameter]
+   public Dictionary<string, string>
+   ValuesDictionary
+   { get; set; }
+   [Parameter]
+   public EventCallback<ChangeEventArgs>
+       ExternalMethod
+   { get; set; }
+   [Parameter]
+   public string Name { get; set; }
 
 }

@@ -1,4 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿/*
+
+   Harrison1 COSC 471 2019
+
+   File = 20200408022235_patientIdtoSubmittedForm
+
+   Author =
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Brandon Chesley    2020-01-20			Added Headers
+
+*/
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HarrisPharmacy.App.Migrations.ApplicationDb
 {

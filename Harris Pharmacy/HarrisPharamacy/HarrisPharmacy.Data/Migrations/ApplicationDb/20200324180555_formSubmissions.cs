@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+
+   Harrison1 COSC 471 2019
+
+   File = 20200324180555_formSubmissions
+
+   Author =
+
+   Date = 2020 - 01 - 10
+
+   License = MIT
+
+               Modification History
+
+   Version     Author Date           Desc
+   v 1.0		Brandon Chesley    2020-01-20			Added Headers
+
+*/
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HarrisPharmacy.App.Migrations.ApplicationDb
