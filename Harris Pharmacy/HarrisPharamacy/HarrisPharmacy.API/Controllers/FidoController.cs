@@ -35,7 +35,7 @@ namespace HarrisPharmacy.API.Controllers
         public IActionResult StartRegistration() => View();
 
         [HttpPost("register")]
-        public async Task<HttpResponseMessage> Register(RegistrationModel model)
+        public async Task<Base64FidoRegistrationChallenge> Register(RegistrationModel model)
         {
             //  var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
             /*var dto = new FidoRegistrationChallengeDTO()
@@ -48,7 +48,7 @@ namespace HarrisPharmacy.API.Controllers
                 ExcludedKeyIds = challenge.ExcludedKeyIds ?? (IEnumerable<byte[]>)new List<byte[]>(),
             };*/
             FidoRegistrationChallenge challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
-            var opt = new JsonSerializerOptions
+            /*var opt = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
@@ -56,8 +56,8 @@ namespace HarrisPharmacy.API.Controllers
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Moved);
             response.Headers.Location = new Uri("/StartRegistration", UriKind.Relative);
             response.Content = new JsonContent(jsonUtf8, System.Text.Encoding.UTF8);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-            return response;
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);*/
+            return challenge.ToBase64Dto();
         }
 
         [HttpPost]
@@ -80,12 +80,10 @@ namespace HarrisPharmacy.API.Controllers
     {
         public JsonContent(string content) : this(content, Encoding.UTF8)
         {
-
         }
 
-        public JsonContent (string content, Encoding encoding) : base (content, encoding, "application/json")
+        public JsonContent(string content, Encoding encoding) : base(content, encoding, "application/json")
         {
-
         }
     }
 }

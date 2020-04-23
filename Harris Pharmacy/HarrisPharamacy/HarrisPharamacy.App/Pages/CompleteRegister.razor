@@ -11,7 +11,7 @@
 
 @code {
     [Parameter]
-    public Base64FidoRegistrationChallenge Model { get; set; }
+    public string Model { get; set; }
 }
 
 @functions{
@@ -22,8 +22,9 @@
         fidoRegister(args);
     }
 
-    static void fidoRegister(object[] args)
+    protected async Task fidoRegister(object[] args)
     {
-        Base64FidoAuthenticationChallenge res = JSRuntime.InvokeAsync<Base64FidoRegistrationChallenge>("fidoRegister", args);
+        var res = await JsRuntime.InvokeAsync<string>("fidoRegister", args);
+        Console.Write(res);
     }
 }

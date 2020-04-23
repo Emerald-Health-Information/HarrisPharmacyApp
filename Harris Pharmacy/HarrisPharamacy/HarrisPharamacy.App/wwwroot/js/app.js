@@ -57,7 +57,8 @@ function toggleNav() {
     }
 }
 function fidoRegister(Model) {
-    let challengeBytesAsString = atob("@Html.Raw(Model.Challenge)");
+    console.log(Model);
+    let challengeBytesAsString = atob(Model.base64Challenge);
     let challenge = new Uint8Array(challengeBytesAsString.length);
     for (let i = 0; i < challengeBytesAsString.length; i++) {
         challenge[i] = challengeBytesAsString.charCodeAt(i);
@@ -115,19 +116,19 @@ function fidoRegister(Model) {
     ];
     // Relying party details
     let rp = {
-        id: "@Model.RelyingPartyId",
+        id: Model.relyingPartyId,
         name: "RSK FIDO Quickstart - Core"
     };
 
     // User handle
-    let userHandleBytesAsString = atob("@Html.Raw(Model.UserHandle)");
+    let userHandleBytesAsString = atob(Model.base64UserHandle);
     let userHandle = new Uint8Array(userHandleBytesAsString.length);
     for (let i = 0; i < userHandleBytesAsString.length; i++) {
         userHandle[i] = userHandleBytesAsString.charCodeAt(i);
     }
     let user = {
-        name: "@Model.UserId",
-        displayName: "@Model.UserId",
+        name:Model.userId,
+        displayName: Model.userId,
         id: userHandle
     };
     navigator.credentials.create({ publicKey: { challenge, rp, user, pubKeyCredParams } })

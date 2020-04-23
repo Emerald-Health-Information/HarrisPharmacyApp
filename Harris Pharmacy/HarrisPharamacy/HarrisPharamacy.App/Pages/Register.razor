@@ -45,16 +45,23 @@
 
     public async Task StartRegister()
     {
-        Task<string> t = CallAPI();
-        String jsonStr = await t;
-        Base64FidoRegistrationChallenge challenge = JsonSerializer.Deserialize<Base64FidoRegistrationChallenge>(jsonStr);
-        NavigationManager.NavigateTo("/CompleteRegistration/" + challenge);
+        //    Task<string> t = CallAPI();
+        //  String jsonStr = await t;
+        //  Base64FidoRegistrationChallenge challenge = JsonSerializer.Deserialize<Base64FidoRegistrationChallenge>(jsonStr);
+        Base64FidoRegistrationChallenge challenge = await httpClient.PostJsonAsync<Base64FidoRegistrationChallenge>("api/fido/register", RegistrationModel);
+        var res = await JsRuntime.InvokeAsync<string>("fidoRegister", challenge);
+        //NavigationManager.NavigateTo("/CompleteRegistration/" + challenge);
     }
 
-    public async Task<string> CallAPI()
+    /*public async Task<string> CallAPI()
     {
-        HttpResponseMessage response = await httpClient.PostAsJsonAsync("api/fido/register", RegistrationModel);
+        HttpResponseMessage response =
         return await response.Content.ReadAsStringAsync();
+
+    }*/
+
+    protected async Task fidoRegister(object[] args)
+    {
 
     }
 }
