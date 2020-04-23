@@ -39,7 +39,7 @@
 @inject NavigationManager NavigationManager
 @inject UserManager<IdentityUser> UserManager;
 @inject IHttpContextAccessor HttpContextAccessor;
-
+@inject IJSRuntime JsRuntime
 @if (PatientsList == null)
 {
     <p><em>Loading...</em></p>
@@ -50,6 +50,7 @@ else if (PatientsList.Count == 0 || Users.Count == 0 || AppointmentList.Count ==
 }
 else
 {
+
     <div class="input-group pt-1" data-target-input="nearest">
         <select @bind="@PatientId" class="form-control">
             <option value="">-- Choose Patient --</option>
@@ -71,16 +72,20 @@ else
         }
     </select>
 </div>
-
-<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-    <input @bind="@StartTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time" />
-    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
-        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+<div class="form-group">
+    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+        <span class="input-group-addon" data-target="#datetimepicker1" data-toggle="datetimepicker">
+            <span class="fa fa-calendar"></span>
+        </span>
     </div>
+    <p>
+        Date is : <span id="getDate"></span>
+    </p>
 </div>
 
 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-    <input @bind="@EndTime" type="text" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker2" placeholder="End Time" />
+    <input type="datetime-local" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker2" placeholder="End Time" />
     <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker" style="margin-bottom: 1em;">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
@@ -101,8 +106,8 @@ else
 
     private string PatientId { get; set; }
     private string UserId { get; set; }
-    private string StartTime { get; set; }
-    private string EndTime { get; set; }
+    private DateTime StartTime { get; set; }
+    private DateTime EndTime { get; set; }
     private string Location { get; set; }
     private string Description { get; set; }
     private string Delete { get; set; }
@@ -116,18 +121,31 @@ else
 
     }
 
+    /*
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+                await JsRuntime.InvokeVoidAsync("testing");
+
+        }
+    */
+
     /// <summary>
     /// Inserts a new Appointment into the db using appointment service
     /// </summary>
     /// <returns></returns>
     protected async Task CreateAppointmentAsync()
     {
+        var startTime = await JsRuntime.InvokeAsync<DateTime>("getStartDate");
+        var endTime = await JsRuntime.InvokeAsync<DateTime>("getEndDate");
+        startTime = startTime.AddHours(-7);
+        endTime = endTime.AddHours(-7);
         Appointment appointment = new Appointment()
         {
             AppointmentId = Guid.NewGuid().ToString(),
             UserId = UserId,
-            StartTime = DateTime.Now,
-            EndTime = DateTime.Now,
+            StartTime = startTime,
+            EndTime = endTime,
             PatientId = PatientId,
             Location = Location,
             Description = Description,
@@ -158,10 +176,17 @@ else
     protected void ClearFields()
     {
         UserId = string.Empty;
-        StartTime = string.Empty;
-        EndTime = string.Empty;
+        StartTime = DateTime.Now;
+        EndTime = DateTime.Now;
         Location = string.Empty;
         Delete = string.Empty;
         Description = string.Empty;
     }
+
+    /*    protected async void OnStartChange(ChangeEventArgs e)
+        {
+            StartTime = e.Value.ToString();
+            await JsRuntime.InvokeVoidAsync("testing");
+        }*/
+
 }
