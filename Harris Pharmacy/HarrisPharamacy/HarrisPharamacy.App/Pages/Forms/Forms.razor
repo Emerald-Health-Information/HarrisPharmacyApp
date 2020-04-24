@@ -79,6 +79,7 @@ else
         // FormsList = await FormService.GetFormsAsync();
         FormsList = await Http.GetJsonAsync<List<Form>>("https://harris-api.azurewebsites.net/api/form/all");
     }
+
     /// <summary>
     /// Updates the state when the selected form changes
     /// and assigns the form to FormSelected

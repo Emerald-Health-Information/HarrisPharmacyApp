@@ -88,12 +88,27 @@ function setMinDate() {
         minDate: new Date()
     });
 }
-
+function isFormValid(formRef) {
+    return formRef.checkValidity();
+}
 /*function setEndDate() {
-
     var d = $('#datetimepicker1').datetimepicker.('viewDate');
 
     $('#datetimepicker2').datetimepicker({
         minDate: d
     });
 }*/
+
+/*function initializeValidator() {
+    $(document).ready(function () {
+        $("#selectedForm").validate();
+    });
+}
+
+function isFormValid() {
+    var form = $('#selectedForm');
+    return form.valid();
+}*/
+
+
+
