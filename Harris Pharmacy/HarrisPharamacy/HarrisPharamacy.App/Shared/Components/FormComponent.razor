@@ -19,47 +19,53 @@
 
 @using System.Dynamic
 @using System.Security.Claims
+@using HarrisPharmacy.App.HelperClasses
 @using HarrisPharmacy.Data.Entities.Forms
 @using HarrisPharmacy.Data.Enums
 @using HarrisPharmacy.Data.Services
 @using HarrisPharmacy.App.Models;
 @using HarrisPharmacy.Data.Interfaces
+
 @using Microsoft.AspNetCore.Components
 @using Microsoft.Data.SqlClient
 @inject IFormService FormService
+@inject IJSRuntime JsRuntime
 
 @foreach (var formWithFields in Form.FormWithFields)
 {
     FormFieldsDictionary.Add(new FormFieldWithValueModel() { FormField = formWithFields.FormField });
 }
-
-@foreach (var formWithField in Form.FormWithFields)
-{
-    var field = formWithField.FormField;
-
-    @if (field != null)
+<form @ref="SelectedForm" class="@(FormValidated? "was-validated" : "needs-validation")" novalidate>
+    @foreach (var formWithField in Form.FormWithFields)
     {
-        var formFieldWithValueModel = FormFieldsDictionary.Find(ff => ff.FormField == field);
 
-        @*Checking if it's the hour type, there is probably a better way *@
-        @if (Enum.Parse<FormInputType>(field.FormInputType.ToString()) == Enum.Parse<FormInputType>("Hour"))
+        var field = formWithField.FormField;
+
+        @if (field != null)
         {
-            <div class="form-group">
-                <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
-                <input @onchange="@((e) => UpdateItem(formFieldWithValueModel, e))" type="number" class="form-control mb-4" min="0" step="0.25" />
-            </div>
-        }
-        else
-        {
-            <div class="form-group" style="padding-top: 10px">
-                <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
-                <input @onchange="@((e) => UpdateItem(formFieldWithValueModel, e))" class="form-control" type="@field.FormInputType" />
-            </div>
+            var formFieldWithValueModel = FormFieldsDictionary.Find(ff => ff.FormField == field);
+
+            @*Checking if it's the hour type, there is probably a better way *@
+            @if (Enum.Parse<FormInputType>(field.FormInputType.ToString()) == Enum.Parse<FormInputType>("Hour"))
+            {
+                <div class="form-group">
+                    <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                    <input @onchange="@((e) => UpdateItem(formFieldWithValueModel, e))" name="@field.FieldName" type="number" class="form-control mb-4" min="0" step="0.25" required />
+                    <div class="invalid-feedback"> Please enter a valid @field.FieldName</div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group" style="padding-top: 10px">
+                    <label class="col-form-label" for="@field.FieldName">@field.FieldName</label>
+                    <input @onchange="@((e) => UpdateItem(formFieldWithValueModel, e))" name="@field.FieldName" class="form-control" type="@field.FormInputType" required />
+                    <div class="invalid-feedback"> Please enter a valid @field.FieldName</div>
+                </div>
+            }
         }
     }
-}
-
-<button type="button" @onclick="@SubmitForm" class="btn btn-primary">Submit</button>
+</form>
+<button class="btn btn-primary" @onclick="@SubmitForm">Submit</button>
 
 @if (_showModal)
 {
@@ -87,6 +93,10 @@
 
     [Parameter]
     public string PatientId { get; set; }
+
+    protected bool Valid { get; set; } = true;
+    protected bool FormValidated = false;
+    private ElementReference SelectedForm { get; set; }
 
     /// <summary>
     /// The form being displayed
@@ -120,6 +130,11 @@
     /// </summary>
     protected async Task SubmitForm()
     {
+        var formValid = await JsRuntime.InvokeAsync<bool>("isFormValid", SelectedForm);
+        FormValidated = true;
+
+        if (!formValid) return;
+
         Dictionary<FormField, string> dict = new Dictionary<FormField, string>();
         foreach (var entry in FormFieldsDictionary)
         {
@@ -129,7 +144,21 @@
         await FormService.SubmitFormAsync(Form, dict, UserId, PatientId);
         ToggleModal();
         StateHasChanged();
+
     }
+
+    /*protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JsRuntime.InvokeVoidAsync("initializeValidator");
+
+    }*/
+
+    /*protected override async Task OnInitializedAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("initializeValidator");
+    }*/
+
     /// <summary>
     /// Updates the Item variable to be the selected item from the select input
     ///</summary>

@@ -56,3 +56,48 @@ function toggleNav() {
         openNav();
     }
 }
+
+var LastElementDOM;
+var LastValueDOM;
+
+function mutateDOM(ElementDOM, value) {
+    if (LastElementDOM == ElementDOM && LastValueDOM == value)
+        return false;
+
+    LastElementDOM = ElementDOM;
+    LastValueDOM = value;
+
+    var event = new Event('change');
+    ElementDOM.dispatchEvent(event);
+}
+
+function selectChange(_this) {
+    mutateDOM(_this, _this.value);
+    return "Done";
+}
+
+function getStartDate() {
+    return $('#datetimepicker1').datetimepicker('viewDate');
+}
+function getEndDate() {
+    return $('#datetimepicker2').datetimepicker('viewDate');
+}
+
+function setMinDate() {
+    $('#datetimepicker1').datetimepicker({
+        minDate: new Date()
+    });
+}
+
+function setEndDate() {
+    var d = $('#datetimepicker1').datetimepicker('viewDate');
+
+    $('#datetimepicker2').datetimepicker('destroy');
+
+    $('#datetimepicker2').datetimepicker({
+        minDate: d
+    });
+}
+function isFormValid(formRef) {
+    return formRef.checkValidity();
+}

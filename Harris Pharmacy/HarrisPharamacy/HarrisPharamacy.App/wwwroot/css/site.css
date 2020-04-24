@@ -148,6 +148,13 @@ a.button {
 .btn-info {
     background-color: #5f9ba5;
 }
+.appt-btn {
+    margin-bottom: 1em;
+}
+
+#cbot {
+    margin-bottom: 1em;
+}
 
 .navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);

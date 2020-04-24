@@ -18,39 +18,47 @@
     -->
 *@
 @using System.Net
+
 @using HarrisPharmacy.Data
 @using HarrisPharmacy.Data.Entities.Appointments
 @using HarrisPharmacy.Data.Entities.Patients
 @using HarrisPharmacy.Data.Interfaces
+@using System.Collections.Generic;
 @using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.Data.SqlClient
 @using Microsoft.AspNetCore.Components.Web;
 @using System.Net.Http
+@using System.Security.Claims;
+
 @using Newtonsoft.Json
 @inject HttpClient Http
 @inject IAppointmentService AppointmentService
 @inject ApplicationDbContext Context
+@inject UserManager<IdentityUser> UserManager
 @inject NavigationManager navigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 @if (totalAppointments > 0)
 {
     @foreach (var appointment in appointments)
     {
 
-        <div class="row pr-4 pb-2">
+        <div class="row pr-4 mb-2">
             <div class="col-1 align-self-center text-center wider-mbl">
-                <span>@appointment.StartTime.ToString("HH:mm")</span>
+                <span>@appointment.StartTime.ToString("MMMM dd")</span>
             </div>
             <div class="col pr-2 pl-2">
                 <button class="btn btn-info btn-block" @onclick="@(e => GoToPatient(appointment.AppointmentId))" style="height:60px;">
                     @{ AssignPatient(appointment.PatientId); }
                     @if (patient != null)
                     {
-                        <span>
-                            @appointment.Location -
-                            @patient.FirstName @patient.LastName
-                        </span>
+                    <span>
+                        @appointment.StartTime.ToString("HH:mm") -
+                        @appointment.Location -
+                        @patient.LastName, @patient.FirstName[0]
+                    </span>
 
                     }
                 </button>
@@ -65,11 +73,14 @@
 }
 else
 {
-    <p><i>There are no appointments for @UserId.</i></p>
+    <p><i>There are no appointments for @Email.</i></p>
 }
 
 @code {
+
     [Parameter] public string UserId { get; set; }
+    [Parameter] public string Email { get; set; }
+    public static string email;
     public static List<Appointment> appointments { get; set; }
     public static List<Appointment> openAppointments { get; set; }
     public int totalAppointments = 0;
@@ -79,9 +90,12 @@ else
 @functions {
     protected override async Task OnInitializedAsync()
     {
+
         //appointments = await AppointmentService.GetOpenPatientListUserAsync(UserId);
         appointments = await Http.GetJsonAsync<List<Appointment>>("https://harris-api.azurewebsites.net/api/appointments/getOpenPatientListUser/" + UserId);
-        appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
+        //appointments.OrderBy(x => Convert.ToDateTime(x.StartTime));
+
+        appointments.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
         if (appointments != null)
         {
             totalAppointments = appointments.Count();
