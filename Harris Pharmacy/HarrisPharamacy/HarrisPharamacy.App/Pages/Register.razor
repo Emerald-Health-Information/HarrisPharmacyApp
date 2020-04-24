@@ -48,7 +48,7 @@
         //    Task<string> t = CallAPI();
         //  String jsonStr = await t;
         //  Base64FidoRegistrationChallenge challenge = JsonSerializer.Deserialize<Base64FidoRegistrationChallenge>(jsonStr);
-        Base64FidoRegistrationChallenge challenge = await httpClient.PostJsonAsync<Base64FidoRegistrationChallenge>("api/fido/register", RegistrationModel);
+        Base64FidoRegistrationChallenge challenge = await httpClient.PostJsonAsync<Base64FidoRegistrationChallenge>("https://bioapptest.azurewebsites.net/api/home/register", RegistrationModel);
         var res = await JsRuntime.InvokeAsync<string>("fidoRegister", challenge);
         //NavigationManager.NavigateTo("/CompleteRegistration/" + challenge);
     }

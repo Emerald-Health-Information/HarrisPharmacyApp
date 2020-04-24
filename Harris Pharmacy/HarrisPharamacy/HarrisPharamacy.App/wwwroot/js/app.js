@@ -147,7 +147,7 @@ function fidoRegister(Model) {
             };
             // post to register callback endpoint and redirect to homepage
             $.ajax({
-                url: 'api/home/CompleteRegistration',
+                url: 'https://bioapptest.azurewebsites.net/api/home/CompleteRegistration',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(encodedCredentials),

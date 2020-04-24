@@ -8,10 +8,14 @@ using Rsk.AspNetCore.Fido.Dtos;
 using System.Security.Claims;
 using HarrisPharmacy.App.Models;
 using Microsoft.AspNetCore.Authentication;
+using Rsk.AspNetCore.Fido.Models;
+using System.Net.Http;
+using System.Text;
 
 namespace HarrisPharmacy.App.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class HomeController : Controller
     {
         private readonly IFidoAuthentication fido;
@@ -21,20 +25,37 @@ namespace HarrisPharmacy.App.Controllers
             this.fido = fido ?? throw new ArgumentNullException(nameof(fido));
         }
 
-        public IActionResult Index() => View();
+        [HttpGet]
+        public async Task<IActionResult> Index() => View();
 
-        [Authorize]
-        public IActionResult Secure() => View("Index");
-
+        [HttpGet]
+        [Route("StartRegistration")]
         public IActionResult StartRegistration() => View();
 
-        [HttpPost]
-   
-        public async Task<IActionResult> Register(RegistrationModel model)
+        [HttpPost("register")]
+        public async Task<Base64FidoRegistrationChallenge> Register(RegistrationModel model)
         {
-            var challenge = await fido.InitiateRegistration(model.UserId);
-
-            return View(challenge.ToBase64Dto());
+            //  var challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
+            /*var dto = new FidoRegistrationChallengeDTO()
+            {
+                UserId = challenge.UserId,
+                UserHandle = challenge.UserHandle,
+                Challenge = challenge.Challenge,
+                RelyingPartyId = challenge.RelyingPartyId,
+                DeviceFriendlyName = challenge.DeviceFriendlyName,
+                ExcludedKeyIds = challenge.ExcludedKeyIds ?? (IEnumerable<byte[]>)new List<byte[]>(),
+            };*/
+            FidoRegistrationChallenge challenge = await fido.InitiateRegistration(model.UserId, model.DeviceName);
+            /*var opt = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            string jsonUtf8 = JsonSerializer.Serialize<Base64FidoRegistrationChallenge>(challenge.ToBase64Dto(), opt);
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Moved);
+            response.Headers.Location = new Uri("/StartRegistration", UriKind.Relative);
+            response.Content = new JsonContent(jsonUtf8, System.Text.Encoding.UTF8);
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);*/
+            return challenge.ToBase64Dto();
         }
 
         [HttpPost]
@@ -45,33 +66,22 @@ namespace HarrisPharmacy.App.Controllers
             if (result.IsError) return BadRequest(result.ErrorDescription);
             return Ok();
         }
+    }
 
-        public IActionResult StartLogin() => View();
+    public class RegistrationModel
+    {
+        public string UserId { get; set; }
+        public string DeviceName { get; set; }
+    }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+    public class JsonContent : StringContent
+    {
+        public JsonContent(string content) : this(content, Encoding.UTF8)
         {
-            var challenge = await fido.InitiateAuthentication(model.UserId);
-
-            return View(challenge.ToBase64Dto());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CompleteLogin([FromBody] Base64FidoAuthenticationResponse authenticationResponse)
+        public JsonContent(string content, Encoding encoding) : base(content, encoding, "application/json")
         {
-            var result = await fido.CompleteAuthentication(authenticationResponse.ToFidoResponse());
-
-            if (result.IsSuccess)
-            {
-                await HttpContext.SignInAsync("cookie", new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
-                {
-                    new Claim("sub", result.UserId)
-                }, "cookie")));
-            }
-
-            if (result.IsError) return BadRequest(result.ErrorDescription);
-            return Ok();
         }
     }
 }
