@@ -82,3 +82,18 @@ function getStartDate() {
 function getEndDate() {
     return $('#datetimepicker2').datetimepicker('viewDate');
 }
+
+function setMinDate() {
+    $('#datetimepicker1').datetimepicker({
+        minDate: new Date()
+    });
+}
+
+/*function setEndDate() {
+
+    var d = $('#datetimepicker1').datetimepicker.('viewDate');
+
+    $('#datetimepicker2').datetimepicker({
+        minDate: d
+    });
+}*/

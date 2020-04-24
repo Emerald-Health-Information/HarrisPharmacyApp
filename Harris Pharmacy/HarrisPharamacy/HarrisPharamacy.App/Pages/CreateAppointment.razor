@@ -74,7 +74,7 @@ else
 </div>
 
 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-    <input type="datetime-local" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time"/>
+    <input type="datetime-local"  class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time"/>
     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
     </div>
@@ -115,6 +115,7 @@ else
         //AppointmentList = await AppointmentService.GetPatientListAsync();
         AppointmentList = await Http.GetJsonAsync<List<Appointment>>("https://harris-api.azurewebsites.net/api/appointments/list");
 
+        await JsRuntime.InvokeVoidAsync("setMinDate");
     }
 
     /*
@@ -151,6 +152,16 @@ else
         ClearFields();
         NavigationManager.NavigateTo("/");
     }
+
+    /// <summary>
+    /// Set end date to start date
+    /// </summary>
+    /// <returns></returns>
+    protected async Task SetEndDateAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("setEndDate");
+    }
+
     /// <summary>
     /// Delete an Appointment from the db
     /// </summary>
