@@ -90,7 +90,6 @@ function setMinDate() {
 }
 
 function setEndDate() {
-
     var d = $('#datetimepicker1').datetimepicker('viewDate');
 
     $('#datetimepicker2').datetimepicker('destroy');
@@ -98,4 +97,7 @@ function setEndDate() {
     $('#datetimepicker2').datetimepicker({
         minDate: d
     });
+}
+function isFormValid(formRef) {
+    return formRef.checkValidity();
 }
