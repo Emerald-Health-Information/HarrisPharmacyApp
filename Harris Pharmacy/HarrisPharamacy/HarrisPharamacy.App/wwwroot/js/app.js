@@ -89,11 +89,13 @@ function setMinDate() {
     });
 }
 
-/*function setEndDate() {
+function setEndDate() {
 
-    var d = $('#datetimepicker1').datetimepicker.('viewDate');
+    var d = $('#datetimepicker1').datetimepicker('viewDate');
+
+    $('#datetimepicker2').datetimepicker('destroy');
 
     $('#datetimepicker2').datetimepicker({
         minDate: d
     });
-}*/
+}
