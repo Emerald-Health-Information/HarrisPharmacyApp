@@ -74,16 +74,14 @@ else
 </div>
 
 <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-    <input type="datetime-local" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker1" placeholder="Start Time" />
-    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
-        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    <div class="input-group" data-target="#datetimepicker1" data-toggle="datetimepicker" style="margin-bottom: 1em;">
+        <input @onfocusout="@SetEndDateAsync" type="datetime-local" class="form-control datetimepicker-input" data-target="#datetimepicker1" placeholder="Start Time" />
     </div>
 </div>
-
+ 
 <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
-    <input type="datetime-local" class="form-control datetimepicker-input" style="margin-bottom: 1em;" data-target="#datetimepicker2" placeholder="End Time" />
-    <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker" style="margin-bottom: 1em;">
-        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    <div class="input-group" data-target="#datetimepicker2" data-toggle="datetimepicker" style="margin-bottom: 1em;">
+        <input type="datetime-local" class="form-control datetimepicker-input" data-target="#datetimepicker2" placeholder="End Time" />
     </div>
 </div>
 
@@ -99,6 +97,7 @@ else
     public SelectListItem Item { get; set; } = null!;
     public List<Appointment> AppointmentList;
     public List<IdentityUser> Users;
+    public Action MinDate;
 
     private string PatientId { get; set; }
     private string UserId { get; set; }
@@ -117,6 +116,11 @@ else
 
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("setMinDate");
+    }
+
     /*
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -125,11 +129,6 @@ else
 
         }
     */
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JsRuntime.InvokeVoidAsync("setMinDate");
-    }
 
     /// <summary>
     /// Inserts a new Appointment into the db using appointment service
